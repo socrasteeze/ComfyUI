@@ -110,16 +110,40 @@ Comfy GUI".
   SwarmUI extensions remain untested against a live backend — clear that
   checklist first (see that repo's HANDOFF).
 
+## Install status (verified 2026-08-30 12:12, log `user/comfyui_8888.log`)
+
+Both packs imported clean — one-node-flux-2-klein 0.0s, H3-Optimizations 0.6s,
+no IMPORT FAILED, no conflict warnings. Registered node classes confirmed via
+live `/object_info` on port 8888:
+`FluxKleinOneNode`; `H3MemoryOptimization`, `H3SparseAttention`,
+`H3SparseAttentionAdvanced`, `H3AIMDOResidencyLimiter`.
+AIO Pro v4.1 workflow present as
+`user/default/workflows/flux2KleinUltimateAIOProT2iI2iInpaint_v41.json`
+(9 subgraphs, 64 distinct real node types) — **all 64 resolve, 0 missing**.
+
+Correction to the earlier caveat: `native/` ships full CUDA source, CMake,
+Dockerfile, PROVENANCE and an Apache-2.0 LICENSE — the `.dll`/`.so` are
+buildable, not opaque. The pack root still has no license (Python side
+all-rights-reserved).
+
 ## Open
 
-1. Install one-node-flux-2-klein + Zironic (memory node only) into
-   `custom_nodes/`; restart; verify both load clean in the log.
-2. Download the Civitai AIO Pro v4.1 workflow JSON; A/B vs
-   `Flux2 Klein SwapAnything V1.2 - Sam3.json` on the same image/seed.
-3. Grab the prompt-composer HTML for local use.
-4. Same-seed H3 sanity run (ref2va, 5s) before/after adding the Zironic
-   memory node to confirm no output drift (expected: none — chunking only).
-5. Deferred: Klein engine for SwarmUI SheetEngines.cs — only after that
+1. Fix two model dropdowns in the AIO workflow before first run:
+   - VAE: workflow asks `flux2-vae.safetensors`, file lives at
+     `vae/Flux/flux2-vae.safetensors` — re-select (14 other Klein
+     workflows already reference the `Flux\` prefixed path).
+   - CLIP: workflow asks `qwen_3_8b_fp8mixed.safetensors` — **not on disk**.
+     Either re-select `qwen_3_8b.safetensors` (present, used by 14
+     workflows) or download the fp8mixed variant.
+2. A/B the AIO vs `Flux2 Klein SwapAnything V1.2 - Sam3.json`, same
+   image/seed; keep the winner.
+3. Same-seed H3 sanity run (ref2va, 5s) with and without
+   `H3MemoryOptimization` — expected drift zero (chunking only). Any drift
+   means something else is patching attention.
+4. Grab the prompt-composer HTML for local use.
+5. Decide whether the two Klein-capable packs are wanted in the SwarmUI
+   ComfyUI backend too — see Traps; they are NOT there now.
+6. Deferred: Klein engine for SwarmUI SheetEngines.cs — only after that
    repo's live-backend checklist clears.
 
 ## Traps
@@ -134,6 +158,16 @@ Comfy GUI".
   claims of the accepted items were NOT code-audited.
 - The one-node repo uses branch `master`, not `main` — commit-history checks
   against `main` 404.
+- **Two separate ComfyUI installs exist.** This one, and the SwarmUI backend
+  under `dlbackend/comfy/ComfyUI` with its own 19-pack `custom_nodes` tree.
+  The new packs, the whole H3 acceleration stack, subject-eraser, Impact
+  Pack, easy-use, CropAndStitch and lora-manager are in THIS tree only, so
+  the AIO workflow cannot run on the SwarmUI backend as-is.
+- `Flux2-Klein-Ultimate-AIO.json` (238 bytes) is an EMPTY canvas, not the
+  workflow and not a config. The real file is
+  `flux2KleinUltimateAIOProT2iI2iInpaint_v41.json`.
+- Active log is `user/comfyui_8888.log`; `user/comfyui.log` is stale from
+  January and will mislead any check that greps it.
 
 ## Verify
 
