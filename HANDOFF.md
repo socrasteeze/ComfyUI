@@ -126,15 +126,19 @@ Dockerfile, PROVENANCE and an Apache-2.0 LICENSE — the `.dll`/`.so` are
 buildable, not opaque. The pack root still has no license (Python side
 all-rights-reserved).
 
+Model refs in the AIO workflow were repointed on 2026-08-30 (4 widget values:
+2 on subgraph instance node 6, 2 on loaders 759/92 inside subgraph c8077536):
+`flux2-vae.safetensors` -> `Flux\flux2-vae.safetensors`, and
+`qwen_3_8b_fp8mixed.safetensors` (absent) -> `qwen_3_8b.safetensors`.
+Both verified present in the live VAELoader/CLIPLoader enums. Structure
+diffed against the pre-edit copy: node/link/subgraph counts identical, exactly
+4 widget diffs, no others. Empty 238-byte `Flux2-Klein-Ultimate-AIO.json`
+deleted.
+
 ## Open
 
-1. Fix two model dropdowns in the AIO workflow before first run:
-   - VAE: workflow asks `flux2-vae.safetensors`, file lives at
-     `vae/Flux/flux2-vae.safetensors` — re-select (14 other Klein
-     workflows already reference the `Flux\` prefixed path).
-   - CLIP: workflow asks `qwen_3_8b_fp8mixed.safetensors` — **not on disk**.
-     Either re-select `qwen_3_8b.safetensors` (present, used by 14
-     workflows) or download the fp8mixed variant.
+1. Open the AIO workflow in the UI and confirm the two loaders show the new
+   values, then run one image. File was patched on disk, not through the UI.
 2. A/B the AIO vs `Flux2 Klein SwapAnything V1.2 - Sam3.json`, same
    image/seed; keep the winner.
 3. Same-seed H3 sanity run (ref2va, 5s) with and without
@@ -163,9 +167,14 @@ all-rights-reserved).
   The new packs, the whole H3 acceleration stack, subject-eraser, Impact
   Pack, easy-use, CropAndStitch and lora-manager are in THIS tree only, so
   the AIO workflow cannot run on the SwarmUI backend as-is.
-- `Flux2-Klein-Ultimate-AIO.json` (238 bytes) is an EMPTY canvas, not the
-  workflow and not a config. The real file is
-  `flux2KleinUltimateAIOProT2iI2iInpaint_v41.json`.
+- Patching a Windows path into a workflow through a shell heredoc corrupts
+  `Flux\f...` into a formfeed (`\x0c`). It reads correct in terminal output.
+  Build the separator as `chr(92)` in a script file and verify with `repr`.
+- Subgraph workflows carry each model name TWICE — once on the loader inside
+  `definitions.subgraphs`, once as a promoted widget on the instance node.
+  Patch both or the UI and the executed graph disagree.
+- The AIO file was rewritten with `indent=2`, so it is ~2.5x larger on disk
+  than the Civitai original. Whitespace only; structure verified identical.
 - Active log is `user/comfyui_8888.log`; `user/comfyui.log` is stale from
   January and will mislead any check that greps it.
 
