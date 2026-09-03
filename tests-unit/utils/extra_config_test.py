@@ -28,8 +28,8 @@ def mock_yaml_content():
 
 
 @pytest.fixture
-def mock_expanded_home():
-    return '/home/user'
+def mock_expanded_home(tmp_path):
+    return os.fspath(tmp_path / 'home')
 
 
 @pytest.fixture
