@@ -43,12 +43,16 @@ This happens with no `merge.autoStash` configured anywhere, and also under
 Mark those placeholders `skip-worktree` for the duration of the merge:
 
     git fetch upstream
-    git status --porcelain | sed 's/^ D //' > paths.txt
+    git status --porcelain | grep '^ D ' | sed 's/^ D //' > paths.txt
     # Confirm paths.txt lists ONLY placeholders under input/, models/, output/
     git update-index --skip-worktree --stdin < paths.txt
     git merge upstream/master --no-edit
     git update-index --no-skip-worktree --stdin < paths.txt
     rm paths.txt
+
+The `grep '^ D '` filter is required, not cosmetic: the redirection creates
+`paths.txt` before `git status` runs, so an unfiltered list captures that file as a
+39th entry and `git update-index` then fails on it. Check the count before applying.
 
 `skip-worktree` is the right tool because it also stops git from writing those
 paths out during the merge. Clear the flags in the same session; left set, they
@@ -163,7 +167,16 @@ and cause.
 
 ## Sync Log
 
-- 2026-09-04: No upstream adoption. Documented the sync procedure, the symlink
+- 2026-09-04: Adopted ten upstream commits through `acb2a019`: Comfy Compiler
+  (CORE-389), Meta Muse Image nodes, Tripo node expansion, MiniMax H3 Max Turbo,
+  workflow-templates 0.11.55 and node category updates. Clean merge, no conflicts;
+  both local fixes above survived untouched. `requirements.txt` moved two pins
+  (workflow-templates 0.11.54 to 0.11.55, comfy-aimdo 0.4.15 to 0.5.1) and was
+  reinstalled after a dry run confirmed torch, torchvision and onnxruntime were
+  absent from the plan. Validation: 22 changed modules byte-compiled and imported,
+  GPU acceleration check passed. Corrected the `paths.txt` command above, which
+  captured its own output file on first real use.
+- 2026-09-04: Documented the sync procedure, the symlink
   merge trap, and the dependency and ONNX Runtime constraints here, so a session
   holding only this fork can sync it correctly. Host-specific paths and
   inventories stay in the untracked host notes.
