@@ -167,6 +167,16 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-05 (second sync): Adopted one upstream commit, `18ebc2af`, a lone `comfy-kitchen`
+  pin bump from 0.2.31 to 0.2.33 (#16133). No source changed, so validation was the dry run,
+  the install and an import check rather than a full compile pass. The dry run listed only
+  `comfy-kitchen-0.2.33` under "Would install" — torch and torchvision absent, as required —
+  and the install replaced 0.2.31 in place with nothing else touched. `import comfy_kitchen`
+  succeeds and reports 0.2.33. The GPU acceleration check passed on both installs. Clean
+  merge, no conflicts; the fork's two local fixes (`folder_paths.py`, `extra_config_test.py`)
+  were not in the window and are untouched, and the fork surface is still those two files
+  plus this one. The placeholder-deletion baseline was restored to its expected count after
+  the merge, with nothing else modified or untracked.
 - 2026-09-05: Adopted two upstream commits, `8a43c6bd` and `f00bfd61`, both partner-node
   maintenance. `8a43c6bd` adds GPT-6 Astra to the ChatGPT node along with a `reasoning`
   request field and a per-model effort table (`SUPPORTED_REASONING_EFFORTS`), so each model
