@@ -167,6 +167,11 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-04: Adopted one upstream commit, `6e3c0bda`, a lone `comfy-aimdo` pin bump
+  from 0.5.1 to 0.5.2. No source changed, so validation was the dry run, the install and
+  an import check rather than a full compile pass; the GPU acceleration check passed.
+  Repaired `refs/remotes/origin/HEAD`, which still pointed at a deleted branch and made
+  tooling report the fork as untracked; `git remote set-head origin -a` re-resolves it.
 - 2026-09-04: Adopted ten upstream commits through `acb2a019`: Comfy Compiler
   (CORE-389), Meta Muse Image nodes, Tripo node expansion, MiniMax H3 Max Turbo,
   workflow-templates 0.11.55 and node category updates. Clean merge, no conflicts;
