@@ -167,6 +167,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-04: Adopted one upstream commit, `250b2e95`, the Comfy Cloud partner nodes
+  (#15935): a new `comfy_api_nodes/nodes_comfy_cloud.py` and `apis/comfy_cloud.py`, small
+  additions to `util/client.py` and `util/download_helpers.py`, and a new test module.
+  Clean merge, both local fixes untouched, `requirements.txt` unchanged so no reinstall.
+  Validation: five changed modules byte-compiled and the new node module imported; GPU
+  acceleration check passed on both installs. The new module registers through the
+  `comfy_entrypoint` extension API, so its `NODE_CLASS_MAPPINGS` is empty by design.
 - 2026-09-04: Adopted one upstream commit, `6e3c0bda`, a lone `comfy-aimdo` pin bump
   from 0.5.1 to 0.5.2. No source changed, so validation was the dry run, the install and
   an import check rather than a full compile pass; the GPU acceleration check passed.
