@@ -167,6 +167,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-05: Adopted two upstream commits, `8a43c6bd` and `f00bfd61`, both partner-node
+  maintenance. `8a43c6bd` adds GPT-6 Astra to the ChatGPT node along with a `reasoning`
+  request field and a per-model effort table (`SUPPORTED_REASONING_EFFORTS`), so each model
+  now advertises only the efforts it accepts. `f00bfd61` deletes nodes for models the
+  vendors retired: the DALL-E 2 and DALL-E 3 nodes, the LTX-2 Pro and Fast text/image-to-video
+  nodes, the Seedream 3.0 node and the Seedance 1.0 Lite models, and the Kling Video Extend
+  node. Six files, +63/-861 — a net removal, so any saved workflow still referencing one of
+  those nodes will now fail to load; that is upstream's intent, not a merge fault. Clean
+  merge, no conflicts; the fork's two local fixes (`folder_paths.py`, `extra_config_test.py`)
+  were not in the window and are untouched, and the fork surface is still those two files
+  plus this one. `requirements.txt` unchanged, so no reinstall. Validation: all six changed
+  modules byte-compiled and the four changed node modules imported cleanly; their
+  `NODE_CLASS_MAPPINGS` are empty by design, as with the previous partner-node sync, because
+  registration goes through the `comfy_entrypoint` extension API. GPU acceleration check
+  passed on both installs. The placeholder-deletion baseline was restored to its expected
+  count after the merge, with nothing else modified or untracked.
 - 2026-09-04: Adopted one upstream commit, `250b2e95`, the Comfy Cloud partner nodes
   (#15935): a new `comfy_api_nodes/nodes_comfy_cloud.py` and `apis/comfy_cloud.py`, small
   additions to `util/client.py` and `util/download_helpers.py`, and a new test module.
