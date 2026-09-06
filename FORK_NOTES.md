@@ -167,6 +167,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-06: Adopted three upstream commits through `15eb748b`: a new Sparse Attention node
+  (`e308cc73`, `comfy_extras/nodes_sparse_attention.py`, +414 lines, registered in `nodes.py`),
+  a guard against `supports_fp64` being called with `None` in `comfy/model_management.py`
+  (`d1c5e641`), and an embedded-docs pin bump 0.5.10 to 0.5.11 (`15eb748b`, `requirements.txt`
+  only). `comfy/ldm/minimax/model.py` and `comfy/model_detection.py` picked up small related
+  changes in the same window. Clean merge, no conflicts; the fork's two local fixes
+  (`folder_paths.py`, `extra_config_test.py`) were not in the window and are untouched.
+  Merge is `ab02f366`; merge base was `18ebc2af`, the tip of the previous sync.
+  Validation: this session has no GPU runtime or installed dependencies (fresh scratch
+  clone, not a host installation), so `torch`/`comfy_kitchen` imports are unavailable here —
+  the six changed/added modules were checked with `py_compile` only (all clean) and the
+  full-tree conflict-marker sweep is zero. Reinstalling `requirements.txt` and the GPU
+  acceleration check are unrun; do both on the next session that holds a live installation,
+  per the dependency-pin section above. Full-suite tests were likewise not run in this
+  environment.
 - 2026-09-05 (second sync): Adopted one upstream commit, `18ebc2af`, a lone `comfy-kitchen`
   pin bump from 0.2.31 to 0.2.33 (#16133). No source changed, so validation was the dry run,
   the install and an import check rather than a full compile pass. The dry run listed only
