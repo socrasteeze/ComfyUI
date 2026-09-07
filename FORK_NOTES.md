@@ -199,7 +199,11 @@ and cause.
   `py_compile` is what stands in for it, per the pattern the two entries below already
   established for a dependency-less session. Full-tree conflict-marker sweep is zero. No
   pre-merge baseline test run was possible (no pytest here either), so there is no Gate 6 diff
-  for this sync.
+  for this sync. (This entry supersedes and folds in what would otherwise be a separate
+  2026-09-06 entry for `ab02f366`/`15eb748b` — that merge landed on `origin/main` directly
+  from the stray branch between this session's merge and its push, so the reconciliation
+  merge here carries no additional content beyond what is already described above; see the
+  "three commits already reviewed" sentence.)
 - 2026-09-05 (second sync): Adopted one upstream commit, `18ebc2af`, a lone `comfy-kitchen`
   pin bump from 0.2.31 to 0.2.33 (#16133). No source changed, so validation was the dry run,
   the install and an import check rather than a full compile pass. The dry run listed only
