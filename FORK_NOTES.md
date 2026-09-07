@@ -167,6 +167,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-07 (fourth sync): Adopted three upstream commits through `41db8f4f`:
+  `313a76fb` disables int8 weight-only quantization on devices lacking `torch._int_mm`
+  (an MPS crash fix; touches `comfy/ops.py`, `comfy/controlnet.py`, `comfy/model_management.py`,
+  `comfy_extras/nodes_model_patch.py`, plus a new `test_mixed_precision.py`), `9ac7352f` fixes
+  node registration issues in `nodes.py`/`main.py` (adds `main_prestartup_test.py` and
+  `test_ignore_display_name.py`), and `41db8f4f` verifies aotriton kernels actually launch
+  before enabling pytorch attention in `model_management.py`. Nine files, +258/-15; clean
+  merge via the skip-worktree procedure above (38 placeholders flagged and cleared), zero
+  conflict markers, deletion baseline restored to 38 with nothing else modified or untracked.
+  Both fork-local fixes (`folder_paths.py` `m2v`, `extra_config_test.py` fixture) verified
+  intact. `requirements.txt` unchanged, so no reinstall. Validation on the live install: all
+  nine changed files byte-compiled clean, `comfy_extras.nodes_model_patch` imported, and the
+  GPU acceleration check passed on both installs (`ALL INSTALLS OK`, exit 0). Merge commit
+  `7b22e580`; pre-merge fork HEAD was `f7f6bfd0`.
 - 2026-09-07 (third sync): Adopted one upstream commit, `eb357862`, a lone
   `comfyui-frontend-package` pin bump from 1.51.9 to 1.51.10 (#16118). No source changed.
   Clean merge, zero conflict markers anywhere in the tree; both fork-local fixes
