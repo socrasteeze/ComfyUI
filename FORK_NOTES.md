@@ -167,6 +167,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-07 (second sync): Adopted one upstream commit, `ea33b154`, a Porter-Duff alpha-blend
+  fix for compositing (#15721): `nodes_compositing.py`'s blend modes now composite the RGB
+  channels using the correct source/destination alpha weighting instead of blending alpha into
+  the result unconditionally, and a new `nodes_compositing_test.py` pins the corrected output
+  for `normal`, `multiply`, and `screen` against a partially-transparent source. Two files,
+  +66/-6; clean merge, zero conflict markers anywhere in the tree, no fork touchpoint (neither
+  file carries prior fork edits — `nodes_compositing.py` has never been in this fork's
+  divergence list). `requirements.txt` unchanged, so no reinstall. Validation: this session has
+  no GPU runtime and no installed dependencies (fresh scratch clone — no torch, no numpy, no
+  pytest), so the full reinstall, GPU acceleration check, and pytest suite are unrun, consistent
+  with every other dependency-less-session entry in this log; both changed files byte-compiled
+  clean with `py_compile`, which is what stands in for the import/test check per that same
+  pattern. Merge commit `b346d39c`; merge base `ea33b154`'s parent (the tip of this morning's
+  sync); pre-merge fork HEAD was `d4815c4` (this morning's sync commit).
 - 2026-09-07: Adopted thirteen upstream commits through `fbed745c`: a batch of alpha-channel
   correctness fixes across the image nodes (Invert Image `fbed745c`, Blend Images `f9c706f3`,
   Draw Text Overlay `20f1a412`, Quantize Image `aa4582f9`, the color adjustment nodes
