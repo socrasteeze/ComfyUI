@@ -167,6 +167,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-07 (third sync): Adopted one upstream commit, `eb357862`, a lone
+  `comfyui-frontend-package` pin bump from 1.51.9 to 1.51.10 (#16118). No source changed.
+  Clean merge, zero conflict markers anywhere in the tree; both fork-local fixes
+  (`folder_paths.py`'s `m2v` MIME entry, `extra_config_test.py`'s absolute-tmp-home fixture)
+  verified intact and untouched. Validation: this session has no GPU runtime and no installed
+  dependencies (fresh scratch clone — no torch, no numpy, no pytest deps), so the full
+  reinstall, GPU acceleration check, and pytest suites are unrun, consistent with every other
+  dependency-less-session entry in this log. In place of that: a full-tree `python -m
+  py_compile` over all 822 tracked `.py` files, run before and after the merge, is clean both
+  times (0 errors, byte-identical empty output); `ruff check .` reports "All checks passed!"
+  both times too (one incidental `# noqa`-syntax warning on an untouched file,
+  `comfy/ldm/sam3/detector.py:12`, appeared on the pre-merge run and not the post-merge one on
+  a rerun with no tree change in between — a ruff-side flake, not a merge effect, since that
+  file is outside this window's diff). A scoped `pip install --dry-run
+  comfyui-frontend-package==1.51.10` shows only that package under "Would install", confirming
+  no other packages (torch/torchvision included) are pulled in by the bump. This session's
+  starting branch (`claude/tender-noether-z02bsu`) was found already fully merged into
+  `origin/main` (identical tip, zero divergence) before this sync began, so it was reset to
+  `origin/main` and this sync's two commits (merge + this entry) were built on top of that,
+  then pushed back to `origin/main`. Merge base `eb357862`'s parent, i.e. `ea33b154` (the tip
+  of this morning's second sync).
 - 2026-09-07 (second sync): Adopted one upstream commit, `ea33b154`, a Porter-Duff alpha-blend
   fix for compositing (#15721): `nodes_compositing.py`'s blend modes now composite the RGB
   channels using the correct source/destination alpha weighting instead of blending alpha into
