@@ -167,6 +167,39 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-07: Adopted thirteen upstream commits through `fbed745c`: a batch of alpha-channel
+  correctness fixes across the image nodes (Invert Image `fbed745c`, Blend Images `f9c706f3`,
+  Draw Text Overlay `20f1a412`, Quantize Image `aa4582f9`, the color adjustment nodes
+  `25dfc16f`, Detect Edges/Canny `d03a2430`, RGB/YUV conversion `07dd46dc` — these previously
+  inverted, blended, or otherwise mutated the alpha channel where they should have left it
+  alone), a new color space conversion node (`7b3b262b`), a test-isolation fix for a leaked
+  `cli_args` singleton (`82db4037`, rewrites `tests-unit/comfy_test/folder_path_test.py` to use
+  `monkeypatch` instead of `sys.argv` patching), a comfy-compiler change pausing it for
+  long-lived sparse allocations (`a99d1f9c`), and three commits already reviewed and staged on
+  a stray branch from an earlier session (`15eb748b` embedded-docs 0.5.10→0.5.11,
+  `e308cc73` Sparse Attention node, `d1c5e641` an mps `supports_fp64(None)` guard) that had
+  never reached `origin/main` — that branch (`claude/tender-noether-v202mp`) held a real
+  completed merge (`ab02f366`) plus its log entry, stranded off-branch; this sync supersedes it
+  by merging upstream directly into `main`, so those three commits are adopted here instead.
+  The fork owner should delete the stray branch once this lands, since its content is now
+  fully subsumed by `main`. 21 files changed, 20 python + this file; clean merge, zero conflict
+  markers anywhere in the tree. Both fork-local fixes (`folder_paths.py`'s `m2v` MIME entry,
+  `extra_config_test.py`'s absolute-tmp-home fixture) verified intact and untouched by the
+  merge — neither overlaps the `cli_args`/`folder_path_test.py` rewrite. `requirements.txt`
+  moved one pin (`comfyui-embedded-docs` 0.5.10→0.5.11); a scoped dry-run install of that pin
+  alone shows only that package under "Would install", confirming it does not pull in torch or
+  torchvision. Validation: this session has no GPU runtime and no installed dependencies at all
+  (fresh scratch clone — not even numpy is present, let alone torch/comfy_kitchen), so the full
+  reinstall and the GPU acceleration check are unrun; do both on the next session that holds a
+  live installation. All 21 changed/added Python files (7 `comfy`/`comfy_extras` sources plus
+  `folder_paths.py`, `nodes.py`, and 13 test files) byte-compiled clean with `py_compile`.
+  Attempted imports of the seven changed `comfy_extras.*` modules all failed on missing
+  dependencies (`torch`, `numpy`, `kornia`, `av`, `typing_extensions`, `comfy_kitchen` — none
+  installed here), so the import-check half of validation could not run in this container;
+  `py_compile` is what stands in for it, per the pattern the two entries below already
+  established for a dependency-less session. Full-tree conflict-marker sweep is zero. No
+  pre-merge baseline test run was possible (no pytest here either), so there is no Gate 6 diff
+  for this sync.
 - 2026-09-05 (second sync): Adopted one upstream commit, `18ebc2af`, a lone `comfy-kitchen`
   pin bump from 0.2.31 to 0.2.33 (#16133). No source changed, so validation was the dry run,
   the install and an import check rather than a full compile pass. The dry run listed only
