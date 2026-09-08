@@ -167,6 +167,32 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-08: First reconciled two stranded prior syncs, then adopted two new upstream
+  commits. The session branch `claude/tender-noether-ykvwnh` held 29 commits (including
+  the 2026-09-07 fourth-sync merge and its log entry) that a previous session never
+  fast-forwarded onto `main`; `git merge --ff-only` from `main` onto that branch tip
+  (`271e44b0` to `61adeb96`) applied cleanly with no divergence to reconcile. From there,
+  `git fetch upstream` (adding the `upstream` remote fresh in this checkout, push URL set
+  to `DISABLED` and verified before any other remote operation) found two new upstream
+  commits: `5bbdf8a7` ("Harmonize model attention nodes", #16154), which reworks
+  `nodes_model_advanced.py`'s and `nodes_sparse_attention.py`'s attention-node wiring, and
+  `f5ed117b` ("Remove useless code", #16169), a 7-line dead-code removal in
+  `comfy/ldm/cosmos/predict2.py`. Neither commit touches a fork-local file. Clean merge via
+  `git merge upstream/master --no-edit`, zero conflict markers anywhere in the tree; the
+  symlink-trap workaround was checked and not needed (`input`/`models`/`output` are plain
+  directories in this container, not symlinks — `git status --porcelain | grep '^ D '`
+  found zero placeholders). Both fork-local fixes (`folder_paths.py`'s `m2v` MIME entry,
+  `extra_config_test.py`'s absolute-tmp-home fixture) verified intact and untouched.
+  `requirements.txt` unchanged, so no reinstall. Validation: this session has no GPU and no
+  installed dependencies (no torch, numpy, or comfy_kitchen), consistent with every other
+  dependency-less-session entry in this log — a full-tree `python -m py_compile` over every
+  tracked `.py` file is clean (0 errors), and the three merge-touched files
+  (`comfy_extras/nodes_model_advanced.py`, `comfy_extras/nodes_sparse_attention.py`,
+  `comfy/ldm/cosmos/predict2.py`) byte-compile clean individually too; attempted imports of
+  those modules fail only on the missing `torch`/`comfy_kitchen` dependencies, not on any
+  merge defect. The GPU acceleration check could not run at all (no GPU, no `nvidia-smi`,
+  no torch) — noted rather than skipped silently, per this log's own standard. Merge commit
+  `71e01d1d`; pre-merge (post-fast-forward) fork HEAD was `61adeb96`.
 - 2026-09-07 (fourth sync): Adopted three upstream commits through `41db8f4f`:
   `313a76fb` disables int8 weight-only quantization on devices lacking `torch._int_mm`
   (an MPS crash fix; touches `comfy/ops.py`, `comfy/controlnet.py`, `comfy/model_management.py`,
