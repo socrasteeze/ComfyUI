@@ -167,27 +167,55 @@ and cause.
 
 ## Sync Log
 
-- 2026-09-07 (fifth sync): Adopted three upstream commits through `efa6c8f8`: `f5ed117b`
-  removes seven lines of dead code from `comfy/ldm/cosmos/predict2.py`, `5bbdf8a7` harmonizes
-  the model attention nodes by porting `ModelAttentionBackend` (in `nodes_model_advanced.py`)
-  and the Block Sparse Attention nodes (in `nodes_sparse_attention.py`) from the legacy
-  `INPUT_TYPES`/`RETURN_TYPES` form to the `comfy_api.latest.io` schema class form -- display
-  names, tooltips, and `is_experimental` flags are added, but the node ids and behaviour are
-  unchanged, so saved workflows keep loading -- and `efa6c8f8` adds the LTXV generated-keyframe
-  nodes plus Freeze Latent as a new `comfy_extras/nodes_lt_keyframes.py` (1051 lines) with a
-  911-line test module, registered by the one added line in `nodes.py`. Six files, +2020/-45;
-  clean merge via the skip-worktree procedure above (38 placeholders flagged and cleared), zero
-  conflict markers, deletion baseline restored to 38 with nothing else modified or untracked.
-  No fork touchpoint: neither fork-local fix (`folder_paths.py` `m2v`, `extra_config_test.py`
-  fixture) is in this window, and both were verified intact afterwards. `requirements.txt`
-  unchanged, so no reinstall. Validation on the live install: all six changed files
-  byte-compiled clean, and `nodes_lt_keyframes`, `nodes_model_advanced`, and
-  `nodes_sparse_attention` all imported. The two new-style modules report empty
-  `NODE_CLASS_MAPPINGS` by design (they register through the `comfy_entrypoint` extension API);
-  `nodes_model_advanced` keeps its legacy mapping and still exposes `ModelAttentionBackend`
-  there, now as an `io.ComfyNode`. The GPU acceleration check passed on both installs
-  (`ALL INSTALLS OK`, exit 0). Merge commit `ff02a854`; pre-merge fork HEAD was `61adeb96`.
-
+- 2026-09-07 (fifth sync): Reconciles with the 2026-09-08 entry below, which was pushed to
+  `origin/main` from a dependency-less container while this session's merge was in flight, and
+  adds the one upstream commit that entry did not reach. This session merged all three commits
+  then new on `upstream/master` -- `f5ed117b`, `5bbdf8a7`, and `efa6c8f8` -- as merge commit
+  `ff02a854` off `61adeb96`; the push was then rejected because that other session had already
+  landed the first two as `71e01d1d`. Merging `origin/main` back in left `efa6c8f8` as the only
+  net-new content here: it adds the LTXV generated-keyframe nodes plus Freeze Latent as a new
+  `comfy_extras/nodes_lt_keyframes.py` (1051 lines) with a 911-line test module, registered by
+  one added line in `nodes.py`. The only merge conflict in either direction was this file's log
+  section, resolved by keeping the 2026-09-08 entry verbatim and rewriting this one around it;
+  zero conflict markers in the tree, both merges done via the skip-worktree procedure above (38
+  placeholders flagged and cleared each time), deletion baseline restored to 38 with nothing
+  else modified or untracked. No fork touchpoint in any of the three commits, and both
+  fork-local fixes (`folder_paths.py` `m2v`, `extra_config_test.py` fixture) verified intact.
+  `requirements.txt` unchanged, so no reinstall. Validation ran on the live install rather than
+  a bare container, so it also covers the two commits the entry below could only byte-compile:
+  all six changed files byte-compiled clean, and `nodes_lt_keyframes`, `nodes_model_advanced`,
+  and `nodes_sparse_attention` all imported against real torch. `nodes_lt_keyframes` and
+  `nodes_sparse_attention` report empty `NODE_CLASS_MAPPINGS` by design (they register through
+  the `comfy_entrypoint` extension API); `nodes_model_advanced` keeps its legacy mapping and
+  still exposes `ModelAttentionBackend` there, now as an `io.ComfyNode`, so `5bbdf8a7`'s
+  rewrite does not drop a node. The GPU acceleration check passed on both installs
+  (`ALL INSTALLS OK`, exit 0) -- the check the entry below records as unrunnable.
+- 2026-09-08: First reconciled two stranded prior syncs, then adopted two new upstream
+  commits. The session branch `claude/tender-noether-ykvwnh` held 29 commits (including
+  the 2026-09-07 fourth-sync merge and its log entry) that a previous session never
+  fast-forwarded onto `main`; `git merge --ff-only` from `main` onto that branch tip
+  (`271e44b0` to `61adeb96`) applied cleanly with no divergence to reconcile. From there,
+  `git fetch upstream` (adding the `upstream` remote fresh in this checkout, push URL set
+  to `DISABLED` and verified before any other remote operation) found two new upstream
+  commits: `5bbdf8a7` ("Harmonize model attention nodes", #16154), which reworks
+  `nodes_model_advanced.py`'s and `nodes_sparse_attention.py`'s attention-node wiring, and
+  `f5ed117b` ("Remove useless code", #16169), a 7-line dead-code removal in
+  `comfy/ldm/cosmos/predict2.py`. Neither commit touches a fork-local file. Clean merge via
+  `git merge upstream/master --no-edit`, zero conflict markers anywhere in the tree; the
+  symlink-trap workaround was checked and not needed (`input`/`models`/`output` are plain
+  directories in this container, not symlinks — `git status --porcelain | grep '^ D '`
+  found zero placeholders). Both fork-local fixes (`folder_paths.py`'s `m2v` MIME entry,
+  `extra_config_test.py`'s absolute-tmp-home fixture) verified intact and untouched.
+  `requirements.txt` unchanged, so no reinstall. Validation: this session has no GPU and no
+  installed dependencies (no torch, numpy, or comfy_kitchen), consistent with every other
+  dependency-less-session entry in this log — a full-tree `python -m py_compile` over every
+  tracked `.py` file is clean (0 errors), and the three merge-touched files
+  (`comfy_extras/nodes_model_advanced.py`, `comfy_extras/nodes_sparse_attention.py`,
+  `comfy/ldm/cosmos/predict2.py`) byte-compile clean individually too; attempted imports of
+  those modules fail only on the missing `torch`/`comfy_kitchen` dependencies, not on any
+  merge defect. The GPU acceleration check could not run at all (no GPU, no `nvidia-smi`,
+  no torch) — noted rather than skipped silently, per this log's own standard. Merge commit
+  `71e01d1d`; pre-merge (post-fast-forward) fork HEAD was `61adeb96`.
 - 2026-09-07 (fourth sync): Adopted three upstream commits through `41db8f4f`:
   `313a76fb` disables int8 weight-only quantization on devices lacking `torch._int_mm`
   (an MPS crash fix; touches `comfy/ops.py`, `comfy/controlnet.py`, `comfy/model_management.py`,
