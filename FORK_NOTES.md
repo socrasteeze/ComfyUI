@@ -167,6 +167,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-08 (sixth sync): Adopted one upstream commit, `00d34d9` ("Comfy Aimdo 0.5.3 +
+  Memory compiler fixes", #16180): a `comfy-aimdo` pin bump from 0.5.2 to 0.5.3 plus memory
+  compiler fixes across `comfy/model_prefetch.py`, `comfy/multigpu.py`, `comfy/sd.py`, and
+  small dtype/device touch-ups in `comfy/latent_formats.py`,
+  `comfy/ldm/lightricks/av_model.py`, `comfy/ldm/minimax/model.py`,
+  `comfy/ldm/minimax_music/ar.py`, `comfy/model_management.py`,
+  `comfy/text_encoders/llama.py`, `comfy_extras/nodes_sparse_attention.py`, and
+  `latent_preview.py`, plus a new `tests-unit/execution_test/preview_compiler_test.py`.
+  13 files, +153/-59. Clean merge, zero conflict markers anywhere in the tree; the symlink
+  trap did not apply (`input`/`models`/`output` are plain directories in this container, not
+  symlinks — `git status --porcelain | grep '^ D '` found zero placeholders). Both fork-local
+  fixes (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture) verified intact and untouched — neither file is in this window.
+  `requirements.txt` moved one pin (`comfy-aimdo` 0.5.2→0.5.3); a scoped
+  `pip install --dry-run comfy-aimdo==0.5.3` shows only that package under "Would install",
+  confirming no other packages (torch/torchvision included) are pulled in by the bump.
+  Validation: this session has no GPU and no installed dependencies (no torch, numpy, or
+  comfy_kitchen), consistent with every other dependency-less-session entry in this log — a
+  full-tree `python -m py_compile` over every tracked `.py` file is clean (0 errors), and
+  `ruff check .` reports "All checks passed!" (the same pre-existing `sam3/detector.py:12`
+  `# noqa` warning as prior syncs, on an untouched file outside this window's diff). The GPU
+  acceleration check could not run at all (no GPU, no `nvidia-smi`, no torch) — noted rather
+  than skipped silently, per this log's own standard. Merge commit `3dc4aaf`; pre-merge fork
+  HEAD was `b1db5cd`.
 - 2026-09-07 (fifth sync): Reconciles with the 2026-09-08 entry below, which was pushed to
   `origin/main` from a dependency-less container while this session's merge was in flight, and
   adds the one upstream commit that entry did not reach. This session merged all three commits
