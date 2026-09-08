@@ -167,6 +167,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-07 (fifth sync): Adopted three upstream commits through `efa6c8f8`: `f5ed117b`
+  removes seven lines of dead code from `comfy/ldm/cosmos/predict2.py`, `5bbdf8a7` harmonizes
+  the model attention nodes by porting `ModelAttentionBackend` (in `nodes_model_advanced.py`)
+  and the Block Sparse Attention nodes (in `nodes_sparse_attention.py`) from the legacy
+  `INPUT_TYPES`/`RETURN_TYPES` form to the `comfy_api.latest.io` schema class form -- display
+  names, tooltips, and `is_experimental` flags are added, but the node ids and behaviour are
+  unchanged, so saved workflows keep loading -- and `efa6c8f8` adds the LTXV generated-keyframe
+  nodes plus Freeze Latent as a new `comfy_extras/nodes_lt_keyframes.py` (1051 lines) with a
+  911-line test module, registered by the one added line in `nodes.py`. Six files, +2020/-45;
+  clean merge via the skip-worktree procedure above (38 placeholders flagged and cleared), zero
+  conflict markers, deletion baseline restored to 38 with nothing else modified or untracked.
+  No fork touchpoint: neither fork-local fix (`folder_paths.py` `m2v`, `extra_config_test.py`
+  fixture) is in this window, and both were verified intact afterwards. `requirements.txt`
+  unchanged, so no reinstall. Validation on the live install: all six changed files
+  byte-compiled clean, and `nodes_lt_keyframes`, `nodes_model_advanced`, and
+  `nodes_sparse_attention` all imported. The two new-style modules report empty
+  `NODE_CLASS_MAPPINGS` by design (they register through the `comfy_entrypoint` extension API);
+  `nodes_model_advanced` keeps its legacy mapping and still exposes `ModelAttentionBackend`
+  there, now as an `io.ComfyNode`. The GPU acceleration check passed on both installs
+  (`ALL INSTALLS OK`, exit 0). Merge commit `ff02a854`; pre-merge fork HEAD was `61adeb96`.
+
 - 2026-09-07 (fourth sync): Adopted three upstream commits through `41db8f4f`:
   `313a76fb` disables int8 weight-only quantization on devices lacking `torch._int_mm`
   (an MPS crash fix; touches `comfy/ops.py`, `comfy/controlnet.py`, `comfy/model_management.py`,
