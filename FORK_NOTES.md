@@ -167,6 +167,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-09 (tenth sync): Adopted one upstream commit, `6f3895ed` ("main: bump the AMD
+  Windows VA quota to 4TB", #16199): raises `main.py`'s ROCm `OCL_SET_SVM_SIZE` env var from
+  `262144` (256KB, the AMD-requested value from a prior upstream commit) to `4194304` (4TB),
+  bringing AMD's Windows GPU virtual-memory quota in line with the other platforms' headroom.
+  1 file, +1/-1. Clean merge, zero conflict markers; the symlink trap did not apply
+  (`input`/`models`/`output` are absent in this container, not symlinks). Neither fork-local
+  fix (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture) is in this window; both verified intact and untouched —
+  `requirements.txt` did not change, so no reinstall flag this time. Validation: this
+  session has no GPU and no installed dependencies (no torch, no numpy), consistent with
+  every other dependency-less-session entry in this log — `python -m py_compile` on
+  `main.py` and a full-tree sweep over all tracked `.py` files are both clean (0 errors),
+  and `ruff check .` reports "All checks passed!" (the same pre-existing
+  `sam3/detector.py:12` `# noqa` warning as prior syncs, on an untouched file outside this
+  window's diff). Merge commit is the tip of `origin/main` after this sync.
+
 - 2026-09-09 (ninth sync): Adopted six upstream commits, `be47aa22` through `54e03f53`:
   `be47aa22` ([Partner Nodes] add GPT Image 2.5 Flare and Sunburst models to the OpenAI node,
   #16190), `02dfb63b` (chores: update tooltips of 3D nodes, CORE-323, #16179), `6517734f`
