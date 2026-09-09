@@ -167,6 +167,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-09 (ninth sync): Adopted six upstream commits, `be47aa22` through `54e03f53`:
+  `be47aa22` ([Partner Nodes] add GPT Image 2.5 Flare and Sunburst models to the OpenAI node,
+  #16190), `02dfb63b` (chores: update tooltips of 3D nodes, CORE-323, #16179), `6517734f`
+  (chore: update workflow templates to v0.11.57, #16192), `3074d0e3` (report the file saved
+  by Save 3D (Advanced) as a standard 3d output item, #16171, plus its new unit test),
+  `40c4fcdf` (ComfyUI v0.35.0 version bump), and `54e03f53` (add new model blueprints and
+  reorganize subgraph categories, #14785 — the bulk of the diff: ~30 new `blueprints/*.json`
+  workflow files plus edits to existing ones). All adopted as-is; nothing in this window
+  matches a rejected-feature pattern. 87 files changed, +59584/-372 (the blueprint JSON
+  additions dominate the line count). Clean merge, zero conflict markers; the symlink trap
+  did not apply (`input`/`models`/`output` are absent in this container, not symlinks).
+  Neither fork-local fix (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture) is in this window;
+  both verified intact and untouched. `requirements.txt` changed (2 lines) — flagging for
+  reinstall on the next real installation; this session has no installed dependencies to
+  reinstall against. Validation: this session has no GPU and no installed dependencies (no
+  torch, no numpy), consistent with every other dependency-less-session entry in this log —
+  a full-tree `python -m py_compile` over all 829 tracked `.py` files is clean (0 errors),
+  and `ruff check .` reports "All checks passed!" (the same pre-existing
+  `sam3/detector.py:12` `# noqa` warning as prior syncs, on an untouched file outside this
+  window's diff). The GPU acceleration check and the new `nodes_load_3d`/`nodes_save_3d`/
+  `nodes_openai` import checks could not run (`ModuleNotFoundError` for `torch`/`numpy`) —
+  noted rather than skipped silently, per this log's own standard. Merge commit `5d60520c`.
+
 - 2026-09-09 (eighth sync): Adopted one upstream commit, `672ba9e5` ("Only lock repo PRs
   after merging if they contain a CLA signature.", #16191): a CLA-bot workflow change to
   `.github/workflows/cla.yml` only, gating the allowlist/CLA-assistant steps on
