@@ -167,6 +167,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-08 (seventh sync): Reconciled local `main` with the already-published sixth sync,
+  then adopted five upstream commits, `488e8f8a` through `421a1c24`: Pixal3D multiview
+  support, two quantized text-encoder matrix-multiply fixes including Gemma4 prefill cache
+  positions, a new LTXV pre-encoded latent-guide node, and a MiniMax H3 denoise-mask fix.
+  11 files, +728/-147. All five commits were adopted as-is. None touches either fork-local
+  fix. The merge used the documented symlink procedure with all 38 placeholders protected;
+  the flags were cleared in the same operation and the 38-deletion baseline returned with no
+  other visible file. Zero unmerged paths and zero exact conflict markers remained. The
+  earlier origin reconciliation moved three package pins (`comfyui-frontend-package` 1.51.9
+  to 1.51.10, `comfyui-embedded-docs` 0.5.10 to 0.5.11, and `comfy-aimdo` 0.5.2 to 0.5.3):
+  a dry run showed only those packages would install, the live install was updated without
+  changing torch or torchvision, and the mandatory GPU check passed afterward. The remaining
+  five-commit window did not touch `requirements.txt`. Pre-merge and post-merge fallback gates
+  were green: all tracked Python files byte-compiled (827 before, 829 after), Ruff passed,
+  and the changed `comfy_extras.nodes_lt` and `comfy_extras.nodes_trellis2` modules imported
+  against the live torch environment. The `.m2v` MIME entry and native Windows temporary-home
+  fixture remain intact. The GPU acceleration check passed post-merge on both installations
+  (`ALL INSTALLS OK`). `pytest` and Pylint remain unavailable in the portable environment;
+  they were not installed because the documented dependency policy forbids risking the
+  GPU-only ONNX Runtime stack.
 - 2026-09-08 (sixth sync): Adopted one upstream commit, `00d34d9` ("Comfy Aimdo 0.5.3 +
   Memory compiler fixes", #16180): a `comfy-aimdo` pin bump from 0.5.2 to 0.5.3 plus memory
   compiler fixes across `comfy/model_prefetch.py`, `comfy/multigpu.py`, `comfy/sd.py`, and
