@@ -167,6 +167,23 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-09 (eighth sync): Adopted one upstream commit, `672ba9e5` ("Only lock repo PRs
+  after merging if they contain a CLA signature.", #16191): a CLA-bot workflow change to
+  `.github/workflows/cla.yml` only, gating the allowlist/CLA-assistant steps on
+  `pull_request_target` events that are not a close, and adding a `lock-pullrequest-aftermerge:
+  false` input plus a new post-merge step that locks a merged PR itself once a CLA signature
+  or bot approval comment is found on it. 1 file, +27/-3. Clean merge, zero conflict markers;
+  the symlink trap did not apply (`input`/`models`/`output` are absent in this container, not
+  symlinks). Neither fork-local fix (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture) is in this window;
+  both verified intact and untouched. `requirements.txt` untouched, no reinstall needed.
+  Validation: this session has no GPU and no installed dependencies (no torch), consistent
+  with every other dependency-less-session entry in this log — a full-tree `python -m
+  py_compile` over all 829 tracked `.py` files is clean (0 errors), and `ruff check .`
+  reports "All checks passed!" (the same pre-existing `sam3/detector.py:12` `# noqa` warning
+  as prior syncs, on an untouched file outside this window's diff). The GPU acceleration
+  check could not run (no GPU, no `nvidia-smi`, no torch) — noted rather than skipped
+  silently. Merge commit `9787404`; pre-merge fork HEAD was `cfd8be3`.
 - 2026-09-08 (seventh sync): Reconciled local `main` with the already-published sixth sync,
   then adopted five upstream commits, `488e8f8a` through `421a1c24`: Pixal3D multiview
   support, two quantized text-encoder matrix-multiply fixes including Gemma4 prefill cache
