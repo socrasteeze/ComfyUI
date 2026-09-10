@@ -147,6 +147,8 @@ paths; the untracked host notes name it.
 - Classify `.m2v` as video explicitly; it is absent from some system MIME tables.
 - Use a native absolute temporary home path in the extra-config test fixture.
   A root-relative Unix path is not an absolute Windows home path.
+- Use a relative special-token map path in the Hunyuan DiT tokenizer config.
+  Keep the upstream developer's home path out of published configuration.
 
 ## Verification
 
@@ -166,6 +168,26 @@ verification checkout's published changes. Record baseline failures by test name
 and cause.
 
 ## Sync Log
+
+- 2026-09-09 (eleventh sync): Reconciled the local checkout with the three already-published
+  syncs through `edb5e321`, then adopted `4989cdd9` and `be923968` as-is: OpenRouter
+  MAI-Image-2.6 image nodes and provider-error details, a string-validation message fix,
+  and removal of the dead ROCm Triton architecture gate. The new upstream window changes
+  six files, +307/-36. No conflicts or orphaned references to the removed gate remained.
+  Both existing fork fixes remain intact. All 38 symlink placeholders were protected
+  during the merges, and all temporary index flags were cleared immediately afterward.
+  Origin reconciliation required workflow templates 0.11.55 to 0.11.57; the requirements
+  dry run and install changed only template packages. Torch and the GPU-only ONNX Runtime
+  remained unchanged. Baseline and post-merge checks passed: 829 tracked Python files
+  byte-compiled, Ruff passed, core startup passed with isolated temporary state and custom
+  and API nodes disabled, and real ONNX CUDA inference passed on both host installations.
+  Nine changed modules imported. Local checks covered 3D saved outputs, legacy preview
+  output, OpenRouter registration, image decoding and provider errors, and all 111 blueprint
+  JSON files. Pytest and Pylint were unavailable; no test dependencies were installed in
+  the portable runtime. The delivery scrub replaced an old absolute home path in the
+  Hunyuan DiT tokenizer config with a relative path; local tokenization was unchanged.
+  The upstream path remains in existing history, with no credential rotation or rewrite
+  needed. Other scan matches were legitimate model content, CI checks, or test fixtures.
 
 - 2026-09-09 (tenth sync): Adopted one upstream commit, `6f3895ed` ("main: bump the AMD
   Windows VA quota to 4TB", #16199): raises `main.py`'s ROCm `OCL_SET_SVM_SIZE` env var from
