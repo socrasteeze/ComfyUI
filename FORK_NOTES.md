@@ -169,6 +169,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-10 (thirteenth sync): Adopted one upstream commit, `a7b1d39d` ("Update instructions
+  for manual install on windows AMD.", #16217): a README.md-only documentation update (25
+  lines changed), no source touched. Zero conflicts; none of the three existing fork
+  touchpoints (`folder_paths.py`'s `m2v` MIME entry, the Hunyuan DiT tokenizer config,
+  `tests-unit/utils/extra_config_test.py`) were touched by this window, and `README.md` is
+  not itself a current fork touchpoint (a prior fork commit once modified it but that
+  divergence is no longer present at HEAD). `requirements.txt` unchanged, no reinstall.
+  Validation: this session has no GPU and no installed dependencies (no torch), consistent
+  with every other dependency-less-session entry in this log — a full-tree `python -m
+  py_compile` over all 829 tracked `.py` files is clean (0 errors) both before and after the
+  merge, and `ruff check .` reports "All checks passed!" both times. Merge commit `7074e07a`;
+  pre-merge fork HEAD was `94c307c7`. **This sync ran under an operator constraint scoping
+  all work to session branch `claude/tender-noether-sohytr`, not `origin/main`** — the merge
+  was made and pushed there instead of to `main` per this repo's normal sync contract above;
+  `main` still needs this commit fast-forwarded or merged in on a future sync/session that
+  has authority to publish there.
 - 2026-09-10 (twelfth sync): Adopted one upstream commit, `7ea14e59`: added a "Gemini 3.8
   Flash" option to the Gemini text node's model `DynamicCombo` (`comfy_api_nodes/nodes_gemini.py`,
   +41/-24), refactoring the shared per-model input builder to make the temperature/top_p
