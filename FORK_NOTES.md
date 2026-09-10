@@ -169,6 +169,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-10 (thirteenth sync): Adopted two upstream commits. `6eba895f` migrates the Tripo
+  partner nodes to Tripo's v3 API, adds the Smart Segment node, and retires the dead widgets
+  on the old Text to Model / Image to Model / Texture Model nodes in favor of their V2
+  replacements (`comfy_api_nodes/apis/tripo.py` +/-150, `comfy_api_nodes/nodes_tripo.py`
+  +921/-697 combined). `a7b1d39d` is a `README.md`-only update to the manual Windows AMD
+  install instructions. Zero conflicts; neither commit touches any of the three existing
+  fork touchpoints (`folder_paths.py`, the Hunyuan DiT tokenizer config,
+  `tests-unit/utils/extra_config_test.py`), which were verified intact and unmodified by this
+  window. This sync ran in the same disposable Linux container as the twelfth sync: no
+  symlinked `input`/`models`/`output` so the symlink trap did not apply, and no GPU, ComfyUI
+  custom node ecosystem, or `requirements.txt` change to reinstall in this window. There is no
+  `tests-unit` coverage for the Tripo nodes. The container has no `pydantic` (or the rest of
+  the runtime dependency stack), so a real import of `comfy_api_nodes.apis.tripo` was not
+  possible; verified instead with `python -m py_compile` on both changed files, an `ast.parse`
+  of each, and a full-tree `python -m compileall` (all clean). Author/committer scan on the
+  merge range showed only `socrasteeze <socradeez@gmail.com>` (merge) and the two upstream
+  authors, preserved. **Not covered:** no live Tripo API smoke test (needs a key and network
+  this container doesn't have), no real ONNX/CUDA inference, no host-install verification —
+  those still need a pass on the actual machines per the standing procedure.
 - 2026-09-10 (twelfth sync): Adopted one upstream commit, `7ea14e59`: added a "Gemini 3.8
   Flash" option to the Gemini text node's model `DynamicCombo` (`comfy_api_nodes/nodes_gemini.py`,
   +41/-24), refactoring the shared per-model input builder to make the temperature/top_p
