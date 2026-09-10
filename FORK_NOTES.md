@@ -169,6 +169,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-10 (twelfth sync): Adopted one upstream commit, `7ea14e59`: added a "Gemini 3.8
+  Flash" option to the Gemini text node's model `DynamicCombo` (`comfy_api_nodes/nodes_gemini.py`,
+  +41/-24), refactoring the shared per-model input builder to make the temperature/top_p
+  sampling inputs optional (the new model omits them) rather than adding a parallel code
+  path. Zero conflicts; `nodes_gemini.py` is not a fork touchpoint and none of the three
+  existing fork touchpoints (`folder_paths.py`, the Hunyuan DiT tokenizer config,
+  `tests-unit/utils/extra_config_test.py`) were touched by this window. This sync ran in a
+  disposable Linux container rather than either host install: no symlinked `input`/`models`/
+  `output` here so the symlink trap did not apply, and there is no GPU, no ComfyUI custom
+  node ecosystem, and no `requirements.txt` changes to reinstall in this window regardless.
+  The changed file byte-compiled cleanly; author/committer scan on the merge range showed
+  only `socrasteeze <socradeez@gmail.com>` (merge) and the upstream author, preserved.
+  **Not covered:** no live Gemini API smoke test (needs a key and network this container
+  doesn't have), no real ONNX/CUDA inference, no host-install verification — those still need
+  a pass on the actual machines per the standing procedure.
 - 2026-09-09 (eleventh sync): Reconciled the local checkout with the three already-published
   syncs through `edb5e321`, then adopted `4989cdd9` and `be923968` as-is: OpenRouter
   MAI-Image-2.6 image nodes and provider-error details, a string-validation message fix,
