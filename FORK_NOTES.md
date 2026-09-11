@@ -179,6 +179,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-11 (fifteenth sync): Adopted one upstream commit. `1d48d9cf` adds a `linear` option to
+  the `ImageColorSpace` node's source/destination combos (`comfy_extras/nodes_images.py` +7/-3):
+  linear input skips the sRGB EOTF before the Rec.709->Rec.2020 primary conversion, and linear
+  output skips the SDR tone-map/gamut-compress after converting back, both anchored to the same
+  203-nit reference white as sRGB. Zero conflicts; not a fork touchpoint (file untouched by the
+  fork relative to the merge base). Merge is `f2a9b729`; merge base `6338e4bd`, the tip of the
+  fourteenth sync, so the window was exactly this one commit. Gates: `python3 -m py_compile`
+  clean on the changed file; no fork symbol references `ImageColorSpace` so no sweep needed.
 - 2026-09-10 (fourteenth sync): Adopted three upstream commits. `5774ab9c` adds auto aspect ratio to
   the OpenRouter MAI image partner node (`comfy_api_nodes/nodes_openrouter.py` +17/-6). `6338e4bd`
   fixes the H3 fun ControlNet under the comfy compiler (`comfy_extras/nodes_minimax_h3.py` +8/-3).
