@@ -150,6 +150,16 @@ paths; the untracked host notes name it.
 - Use a relative special-token map path in the Hunyuan DiT tokenizer config.
   Keep the upstream developer's home path out of published configuration.
 
+## Fork tooling
+
+`fork_tools/` is fork-only and never exists upstream, so it cannot conflict on a
+sync. `fork_tools/prompt_guides/` holds per-image-model prompt-writer system
+prompts, a `profiles-noninteractive/` variant for unattended use inside a
+workflow, a harness that dry-runs them against `VALIDATION_CASES.md` on any
+OpenAI-compatible or Ollama server, and the graded results. The harness reads
+the server from `PROMPT_GUIDES_OLLAMA` and defaults to loopback; no host
+details are stored in the tree.
+
 ## Verification
 
 Use the repository's CI commands. Portable Python can hard-code the live

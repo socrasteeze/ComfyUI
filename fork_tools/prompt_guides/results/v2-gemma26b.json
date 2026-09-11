@@ -1,0 +1,491 @@
+{
+ "model": "hf.co/llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF:Q4_K_M",
+ "results": [
+  {
+   "case": "1 faithful style",
+   "profile": "klein9b",
+   "replies": [
+    "A full-body anime illustration of a single red repair robot holding a blue toolbox against a plain white background. Use flat colors and a simple design."
+   ]
+  },
+  {
+   "case": "1 faithful style",
+   "profile": "klein4b",
+   "replies": [
+    "A full-body anime illustration of a single red repair robot holding a blue toolbox against a plain white background. Use flat colors and a simple design."
+   ]
+  },
+  {
+   "case": "1 faithful style",
+   "profile": "qwenedit",
+   "replies": [
+    "A single red repair robot holding a blue toolbox. The style is flat anime colors. The robot is shown in a full body view against a plain white background. Keep the design simple."
+   ]
+  },
+  {
+   "case": "1 faithful style",
+   "profile": "anima",
+   "replies": [
+    "1robot, red repair robot, holding blue toolbox, flat anime colors, plain white background, full body\nThe red repair robot is shown in a full body view against a plain white background. The robot holds a blue toolbox."
+   ]
+  },
+  {
+   "case": "1 faithful style",
+   "profile": "illustrious",
+   "replies": [
+    "1robot, red repair robot, holding blue toolbox, full body, plain white background, flat color, simple design, anime style"
+   ]
+  },
+  {
+   "case": "2 scoped edit",
+   "profile": "qwenedit",
+   "replies": [
+    "Recolor only the jacket olive green. Preserve the person's identity, pose, the jacket's construction and texture, the lighting, and the rest of the image."
+   ]
+  },
+  {
+   "case": "2 scoped edit",
+   "profile": "klein9b",
+   "replies": [
+    "Change the jacket of the person in the source image to olive green. Preserve the person's identity, pose, and the background from the source image."
+   ]
+  },
+  {
+   "case": "2 scoped edit",
+   "profile": "klein4b",
+   "replies": [
+    "Change the color of the jacket to olive green. Preserve the person's identity and the scene from the source image."
+   ]
+  },
+  {
+   "case": "3 reference roles",
+   "profile": "qwenedit",
+   "replies": [
+    "Replace the person in image 1 with the person from image 2, but use the identity and scene from image 1. Dress the person in the coat from image 3. Adjust the person's pose to match the pose guide in image 2, while ensuring the clothing folds and shadows match this new position. Preserve the background and visual style from image 1."
+   ]
+  },
+  {
+   "case": "3 reference roles",
+   "profile": "klein9b",
+   "replies": [
+    "Dress the person from image 1 in the coat from image 3. Use the pose from image 2. Preserve the identity and the scene from image 1."
+   ]
+  },
+  {
+   "case": "3 reference roles",
+   "profile": "klein4b",
+   "replies": [
+    "Dress the person from image 1 in the coat from image 3. Use the pose from image 2. Preserve the identity and the scene from image 1."
+   ]
+  },
+  {
+   "case": "4 exact text",
+   "profile": "klein9b",
+   "replies": [
+    "Replace the text on the sign with \"ECHO-6 / BAY 04\", preserving the exact punctuation. Keep the rest of the scene as it appears in the source image."
+   ]
+  },
+  {
+   "case": "4 exact text",
+   "profile": "klein4b",
+   "replies": [
+    "Replace the text on the sign with \"ECHO-6 / BAY 04\". Preserve the sign's appearance, the surrounding environment, and all other elements from the source image."
+   ]
+  },
+  {
+   "case": "4 exact text",
+   "profile": "qwenedit",
+   "replies": [
+    "Replace the text on the sign with \"ECHO-6 / BAY 04\". Preserve the sign's original font, lettering color, and placement, and keep the rest of the image unchanged."
+   ]
+  },
+  {
+   "case": "4 exact text",
+   "profile": "anima",
+   "replies": [
+    "NEEDS INPUT:\nWhat is the subject or scene containing the sign?"
+   ]
+  },
+  {
+   "case": "4 exact text",
+   "profile": "illustrious",
+   "replies": [
+    "PROMPT:\nsign, text, \"ECHO-6 / BAY 04\""
+   ]
+  },
+  {
+   "case": "5a multi-view sheet",
+   "profile": "klein9b",
+   "replies": [
+    "A character reference sheet containing exactly two rows and ten views against a plain white background. The largest view is a bust through the midriff of the character from the source image. All other views show the character in the same art style from the source image. The surfaces are unmarked with no boxes, dividers, labels, text, or palettes."
+   ]
+  },
+  {
+   "case": "5a multi-view sheet",
+   "profile": "klein4b",
+   "replies": [
+    "{\"target_model\":\"FLUX.2-klein-4B\",\"positive_prompt\":\"A character reference sheet featuring exactly two rows and ten views of the character from the source image. The largest view is a bust through the midriff. The character and art style are preserved from the source image. The background is a plain white background. The sheet contains no boxes, dividers, labels, text, or palettes.\",\"negative_prompt\":null,\"parameters\":{},\"notes\":[\"The request for 'no boxes, dividers, labels, text, or palette' was integrated as positive constraints to ensure an unmarked surface.\"]}"
+   ]
+  },
+  {
+   "case": "5a multi-view sheet",
+   "profile": "qwenedit",
+   "replies": [
+    "{\"target_model\":\"Qwen-Image-Edit-2511\",\"positive_prompt\":\"A character reference sheet containing exactly two rows and ten views of the character from the source image. The largest view shows the character from the front bust through the midriff. The background is white. There are no boxes, dividers, labels, text, or palettes. Maintain the character's identity and the original art style.\",\"negative_prompt\":null,\"parameters\":{},\"notes\":[\"The request for 'No boxes, dividers, labels, text, or palette' is included as an instruction to exclude these elements.\"]}"
+   ]
+  },
+  {
+   "case": "5a multi-view sheet",
+   "profile": "anima",
+   "replies": [
+    "{\"target_model\":\"Anima\",\"positive_prompt\":\"character reference sheet, 2rows, 10views, white background, anime style\\nThe largest view shows the character from the front, from bust to midriff. The remaining nine views are arranged across two rows.\",\"negative_prompt\":\"boxes, dividers, labels, text, palette\",\"parameters\":{},\"notes\":[\"The request for 'the source character and art style' is treated as a reference-based edit, assuming the user will supply the necessary source image to the workflow.\", \"The layout follows the literal count of two rows and ten views as requested.\"]}"
+   ]
+  },
+  {
+   "case": "5a multi-view sheet",
+   "profile": "illustrious",
+   "replies": [
+    "character reference sheet, 2 rows, 10 views, large identity view of front bust through midriff, white background, no boxes, no dividers, no labels, no text, no palette, source character, source art style"
+   ]
+  },
+  {
+   "case": "5b separate outputs",
+   "profile": "klein9b",
+   "replies": [
+    "A full-body front view of the character against a plain white background.\n\nA full-body left-side view of the character against a plain white background.\n\nA full-body rear view of the character against a plain white background."
+   ]
+  },
+  {
+   "case": "5b separate outputs",
+   "profile": "klein4b",
+   "replies": [
+    "A full-body front view of the character against a plain white background.\n\nA full-body left-side view of the character against a plain white background.\n\nA full-body rear view of the character against a plain white background."
+   ]
+  },
+  {
+   "case": "5b separate outputs",
+   "profile": "qwenedit",
+   "replies": [
+    "{\"target_model\":\"Qwen-Image-Edit-2511\",\"positive_prompt\":\"A full body view of the character from the source image, facing forward, positioned against a white background.\",\"negative_prompt\":null,\"parameters\":{},\"notes\":[\"The user requested three separate prompts; returning an array of three objects as per JSON mode requirements.\"]}\n{\"target_model\":\"Qwen-Image-Edit-2511\",\"positive_prompt\":\"A full body view of the character from the source image, seen from the left side, positioned against a white background.\",\"negative_prompt\":null,\"parameters\":{},\"notes\":[]}\n{\"target_model\":\"Qwen-Image-Edit-2511\",\"positive_prompt\":\"A full body view of the character from the source image, seen from the rear, positioned against a white background.\",\"negative_prompt\":null,\"parameters\":{},\"notes\":[]}"
+   ]
+  },
+  {
+   "case": "5b separate outputs",
+   "profile": "anima",
+   "replies": [
+    "1girl, solo, front view, full body, white background\nThe girl is shown from the front in a full body view against a white background.\n\n1girl, solo, left side view, full body, white background\nThe girl is shown from her left side in a full body view against a white background.\n\n1girl, solo, rear view, full body, white background\nThe girl is shown from the rear in a full body view against a white background."
+   ]
+  },
+  {
+   "case": "5b separate outputs",
+   "profile": "illustrious",
+   "replies": [
+    "1girl, solo, front view, full body, white background\n\n1girl, solo, left side view, full body, white background\n\n1girl, solo, back view, full body, white background"
+   ]
+  },
+  {
+   "case": "6 conflicting framing",
+   "profile": "klein9b",
+   "replies": [
+    "CONFLICT: a close-up face portrait and a full-body view with shoes visible cannot both be the framing of one-view composition"
+   ]
+  },
+  {
+   "case": "6 conflicting framing",
+   "profile": "klein4b",
+   "replies": [
+    "CONFLICT: A close-up face portrait and a full-body view with shoes visible cannot both be the framing of one single-view composition."
+   ]
+  },
+  {
+   "case": "6 conflicting framing",
+   "profile": "qwenedit",
+   "replies": [
+    "CONFLICT: a close-up face portrait and a full-body view with shoes visible cannot both be the framing of the same one-view composition"
+   ]
+  },
+  {
+   "case": "6 conflicting framing",
+   "profile": "anima",
+   "replies": [
+    "CONFLICT: a close-up face portrait and a full-body view with shoes visible cannot both be the framing of one single-view composition"
+   ]
+  },
+  {
+   "case": "6 conflicting framing",
+   "profile": "illustrious",
+   "replies": [
+    "CONFLICT: a close-up face portrait and a full-body view with shoes visible cannot both be the framing of one single-view composition"
+   ]
+  },
+  {
+   "case": "7a deliberate artifacts",
+   "profile": "anima",
+   "replies": [
+    "monochrome, pencil drawing, stone tower, visible paper texture, worn scan, no people, rough style"
+   ]
+  },
+  {
+   "case": "7a deliberate artifacts",
+   "profile": "illustrious",
+   "replies": [
+    "stone tower, architecture, pencil drawing, rough sketch, monochrome, paper texture, worn scan, no people"
+   ]
+  },
+  {
+   "case": "7b artifacts + negative",
+   "profile": "anima",
+   "replies": [
+    "PROMPT: stone tower, monochrome, pencil drawing, rough, visible paper texture, worn scan\nNEGATIVE: people"
+   ]
+  },
+  {
+   "case": "7b artifacts + negative",
+   "profile": "illustrious",
+   "replies": [
+    "PROMPT:\nstone tower, architecture, pencil drawing, rough sketch, monochrome, paper texture, worn scan\n\nNEGATIVE:\npeople"
+   ]
+  },
+  {
+   "case": "8a anima aesthetic",
+   "profile": "anima",
+   "replies": [
+    "blue teapot, wooden table, illustration\nAn illustrated blue teapot sits on a wooden table."
+   ]
+  },
+  {
+   "case": "8b anima turbo+neg",
+   "profile": "anima",
+   "replies": [
+    "blue teapot, wooden table, illustration\n\nnegative_prompt: blurry, watermark"
+   ]
+  },
+  {
+   "case": "9 runtime/lora",
+   "profile": "klein9b",
+   "replies": [
+    "{\"target_model\":\"FLUX.2-klein-9B\",\"positive_prompt\":\"A red robot on a white background. <lora:my-style:0.7> myStyleToken\",\"negative_prompt\":null,\"parameters\":{\"seed\":123,\"width\":1024,\"height\":1024,\"steps\":20},\"notes\":[\"Prompt parser usage unconfirmed\"]}"
+   ]
+  },
+  {
+   "case": "9 runtime/lora",
+   "profile": "klein4b",
+   "replies": [
+    "{\"target_model\":\"FLUX.2-klein-4B\",\"positive_prompt\":\"A red robot against a white background. <lora:my-style:0.7> myStyleToken\",\"negative_prompt\":null,\"parameters\":{\"seed\":123,\"width\":1024,\"height\":1024,\"steps\":20},\"notes\":[\"The prompt parser is unconfirmed.\"]}"
+   ]
+  },
+  {
+   "case": "9 runtime/lora",
+   "profile": "qwenedit",
+   "replies": [
+    "{\"target_model\":\"Qwen-Image-Edit-2511\",\"positive_prompt\":\"<lora:my-style:0.7>, myStyleToken, a red robot on white.\",\"negative_prompt\":null,\"parameters\":{\"seed\":123,\"width\":1024,\"height\":1024,\"steps\":20},\"notes\":[\"The prompt parser is unconfirmed.\"]}"
+   ]
+  },
+  {
+   "case": "9 runtime/lora",
+   "profile": "anima",
+   "replies": [
+    "{\"target_model\":\"Anima\",\"positive_prompt\":\"red robot, white background, <lora:my-style:0.7>, myStyleToken\",\"negative_prompt\":null,\"parameters\":{\"seed\":123,\"width\":1024,\"height\":1024,\"steps\":20},\"notes\":[\"prompt parser is unconfirmed\"]}"
+   ]
+  },
+  {
+   "case": "9 runtime/lora",
+   "profile": "illustrious",
+   "replies": [
+    "{\"target_model\":\"IllustriousXL\",\"positive_prompt\":\"<lora:my-style:0.7>, myStyleToken, red robot, white background\",\"negative_prompt\":null,\"parameters\":{\"seed\":123,\"width\":1024,\"height\":1024,\"steps\":20},\"notes\":[\"prompt parser unconfirmed\"]}"
+   ]
+  },
+  {
+   "case": "10 missing visual",
+   "profile": "klein9b",
+   "replies": [
+    "Replace the background of the subject in image 1 with a plain white background. Preserve the subject's identity and all other attributes from image 1."
+   ]
+  },
+  {
+   "case": "10 missing visual",
+   "profile": "klein4b",
+   "replies": [
+    "Replace the background of the subject in image 1 with a plain white background. Preserve the subject's identity and all other attributes from image 1."
+   ]
+  },
+  {
+   "case": "10 missing visual",
+   "profile": "qwenedit",
+   "replies": [
+    "Replace the background in image 1 with a solid white background. Preserve the subject's identity, pose, clothing, and all other details from the source image."
+   ]
+  },
+  {
+   "case": "10 missing visual",
+   "profile": "anima",
+   "replies": [
+    "the subject in image 1, white background"
+   ]
+  },
+  {
+   "case": "10 missing visual",
+   "profile": "illustrious",
+   "replies": [
+    "the subject in image 1, white background"
+   ]
+  },
+  {
+   "case": "11 subject binding",
+   "profile": "klein9b",
+   "replies": [
+    "Two adult women are shaking hands against a white background. The woman on the viewer's left has red hair and is wearing a blue jacket, and the woman on the right has black hair and is wearing a yellow jacket."
+   ]
+  },
+  {
+   "case": "11 subject binding",
+   "profile": "klein4b",
+   "replies": [
+    "An eye-level shot of two adult women shaking hands against a plain white background. The woman on the viewer's left has red hair and is wearing a blue jacket, and the woman on the right has black hair and is wearing a yellow jacket."
+   ]
+  },
+  {
+   "case": "11 subject binding",
+   "profile": "qwenedit",
+   "replies": [
+    "Two adult women shake hands. The red-haired woman in the blue jacket is on the viewer's left, and the black-haired woman in the yellow jacket is on the right. The background is white."
+   ]
+  },
+  {
+   "case": "11 subject binding",
+   "profile": "anima",
+   "replies": [
+    "2girls, adult women, red hair, blue jacket, black hair, yellow jacket, shaking hands, white background, anime style\nThe red-haired woman in a blue jacket stands on the viewer's left. The black-haired woman in a yellow jacket stands on the right, and the two women shake hands."
+   ]
+  },
+  {
+   "case": "11 subject binding",
+   "profile": "illustrious",
+   "replies": [
+    "2adult women, shaking hands, red hair, blue jacket, woman on left, black hair, yellow jacket, woman on right, white background"
+   ]
+  },
+  {
+   "case": "13 everyday edit",
+   "profile": "qwenedit",
+   "replies": [
+    "Change the man's shirt to black. Reposition him into a seated pose with one knee raised. Turn his head and gaze in the opposite direction from the source image. Preserve his identity, facial features, hairstyle, other clothing, the background, and the original visual style. Adjust clothing folds and shadows naturally to match the new pose."
+   ]
+  },
+  {
+   "case": "14a clean default",
+   "profile": "klein9b",
+   "replies": [
+    "A flat anime illustration of a red robot holding a blue box against a plain white background."
+   ]
+  },
+  {
+   "case": "14a clean default",
+   "profile": "klein4b",
+   "replies": [
+    "A flat anime illustration of a red robot holding a blue box against a plain white background."
+   ]
+  },
+  {
+   "case": "14a clean default",
+   "profile": "qwenedit",
+   "replies": [
+    "A single red robot holding a blue box in a flat anime art style against a plain white background."
+   ]
+  },
+  {
+   "case": "14a clean default",
+   "profile": "anima",
+   "replies": [
+    "1robot, red, holding blue box, flat anime style, white background"
+   ]
+  },
+  {
+   "case": "14a clean default",
+   "profile": "illustrious",
+   "replies": [
+    "1robot, red, holding blue box, flat anime style, white background"
+   ]
+  },
+  {
+   "case": "14b default + negative",
+   "profile": "klein9b",
+   "replies": [
+    "A flat anime illustration of a red robot holding a blue box against a plain white background.\n\nNEGATIVE: blurry, realistic, 3d, photographic, complex background"
+   ]
+  },
+  {
+   "case": "14b default + negative",
+   "profile": "klein4b",
+   "replies": [
+    "A flat anime illustration of a red robot holding a blue box against a plain white background.\n\nNEGATIVE: blurry, realistic, 3d, textured, complex background"
+   ]
+  },
+  {
+   "case": "14b default + negative",
+   "profile": "qwenedit",
+   "replies": [
+    "PROMPT: One red robot holding a blue box in a flat anime art style against a plain white background.\nNEGATIVE: No negative prompt provided."
+   ]
+  },
+  {
+   "case": "14b default + negative",
+   "profile": "anima",
+   "replies": [
+    "1robot, red, holding blue box, flat anime style, white background\n\nNEGATIVE: low quality, jpeg artifacts"
+   ]
+  },
+  {
+   "case": "14b default + negative",
+   "profile": "illustrious",
+   "replies": [
+    "PROMPT:\n1robot, solo, red robot, holding blue box, flat color, anime style, white background\n\nNEGATIVE:\npeople"
+   ]
+  },
+  {
+   "case": "15 follow-up chain",
+   "profile": "klein9b",
+   "replies": [
+    "A red robot holding a blue box.",
+    "A red robot holding a green box.",
+    "A yellow ceramic cup against a gray background."
+   ]
+  },
+  {
+   "case": "15 follow-up chain",
+   "profile": "klein4b",
+   "replies": [
+    "A red robot holding a blue box.",
+    "A red robot holding a green box.",
+    "A yellow ceramic cup against a gray background."
+   ]
+  },
+  {
+   "case": "15 follow-up chain",
+   "profile": "qwenedit",
+   "replies": [
+    "A red robot holding a blue box.",
+    "Change the box to green. Preserve the red robot, its pose, the background, and the original visual style.",
+    "A yellow ceramic cup on a gray background."
+   ]
+  },
+  {
+   "case": "15 follow-up chain",
+   "profile": "anima",
+   "replies": [
+    "red robot, holding blue box",
+    "red robot, holding green box",
+    "yellow ceramic cup, gray background"
+   ]
+  },
+  {
+   "case": "15 follow-up chain",
+   "profile": "illustrious",
+   "replies": [
+    "red robot, holding blue box",
+    "red robot, holding green box",
+    "yellow ceramic cup, gray background"
+   ]
+  }
+ ]
+}
