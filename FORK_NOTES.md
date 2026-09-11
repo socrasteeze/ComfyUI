@@ -169,6 +169,16 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-10 (fourteenth sync): Adopted three upstream commits. `5774ab9c` adds auto aspect ratio to
+  the OpenRouter MAI image partner node (`comfy_api_nodes/nodes_openrouter.py` +17/-6). `6338e4bd`
+  fixes the H3 fun ControlNet under the comfy compiler (`comfy_extras/nodes_minimax_h3.py` +8/-3).
+  `1f641fd9` bumps `comfyui-workflow-templates` 0.11.57 -> 0.11.59. Zero conflicts; none of the three
+  touches a fork touchpoint. Merged with the skip-worktree sequence over the 38 placeholder deletions,
+  flags cleared afterwards, baseline back at 38 with nothing else modified. The pin moved, so
+  `requirements.txt` was reinstalled into `python_embeded` (dry-run first: only the templates package and
+  its three sub-packages, no torch or torchvision). Gates: `onnxruntime-gpu` owns the binaries,
+  torch 2.9.1+cu130 sees the RTX 5090, and `check-gpu-accel.bat` reports ALL INSTALLS OK. Note the
+  `python` on PATH is a system Python 3.12, not this install: a dry-run against it wanted 40+ packages.
 - 2026-09-10 (thirteenth sync): Adopted two upstream commits. `6eba895f` migrates the Tripo
   partner nodes to Tripo's v3 API, adds the Smart Segment node, and retires the dead widgets
   on the old Text to Model / Image to Model / Texture Model nodes in favor of their V2
