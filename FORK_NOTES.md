@@ -179,13 +179,15 @@ and cause.
 
 ## Sync Log
 
-- 2026-09-12 (eighteenth sync): Adopted three upstream commits, `9113c08c` through
+- 2026-09-12 (eighteenth sync): Adopted four upstream commits, `9113c08c` through
   `7ba217d6`. `9113c08c` consumes server estimated-duration headers for partner-node
   progress, removes the inert synchronous-operation estimate parameter, and hardens polling
   against interrupts and extractor failures. `7dac1d25` raises Yue2's advertised maximum
   song duration from 360 to 900 seconds while limiting generation to the remaining model
   context. `7ba217d6` keeps the alpha channel unchanged in Image Add Noise and adds five unit
-  tests. All three were adopted as-is. Nothing matches a rejected-feature pattern. The merge
+  tests. A final pre-push refresh found `a20738f1`, which makes `linear_input_act` honor the
+  `_full_precision_mm` fallback for tensor-wise INT8 weights and adds a focused regression
+  test. All four were adopted as-is. Nothing matches a rejected-feature pattern. Both merges
   used `ort` with zero conflicts. All three fork touchpoints remained intact: the `.m2v` MIME
   entry, the Windows absolute temporary-home fixture, and the Hunyuan DiT tokenizer's relative
   `special_tokens_map_file` path. Local `main` first fast-forwarded four commits to current
@@ -195,8 +197,9 @@ and cause.
   `skip-worktree`; all flags were cleared and the 38-deletion/zero-other-change baseline was
   restored. `requirements.txt` did not change in this upstream window. Gates: all 841 tracked
   Python files byte-compiled before and after the merge; Ruff reported the same eight
-  pre-existing fork-harness `T201` findings, while all eight changed Python files passed Ruff;
-  seven changed modules imported; the five new alpha tests passed through direct invocation;
+  pre-existing fork-harness `T201` findings, while all ten changed Python files passed Ruff;
+  eight changed modules imported; the five new alpha tests and the focused mixed-precision
+  regression test passed through direct invocation;
   and the isolated CPU quick-start passed with an in-memory database, custom nodes disabled,
   and API nodes disabled. Both host installations still use `onnxruntime-gpu`, and real Conv
   inference passed on `CUDAExecutionProvider`. Pytest and Pylint remain unavailable in the
