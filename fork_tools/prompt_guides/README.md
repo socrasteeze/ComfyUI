@@ -1,6 +1,6 @@
 # Local image prompt guides
 
-Version 1.1.0 | Research checked 2026-09-09
+Version 1.2.0 | Research checked 2026-09-11
 
 Use one profile as the system prompt for your local Qwen chat in LM Studio. Send the image idea as the user message. The profile tells Qwen how to rewrite the idea for one image model.
 
@@ -19,11 +19,12 @@ Your request -> local Qwen + one profile -> finished prompt -> your image workfl
 | `profiles/flux2-klein-9b.system.md` | FLUX.2 [klein] 9B generation and editing. |
 | `profiles/anima.system.md` | CircleStone Labs Anima, with checkpoint-aware handling. |
 | `profiles/illustriousxl.system.md` | IllustriousXL, with conservative derivative-aware defaults. |
+| `profiles/krea-2.system.md` | Krea AI Krea 2, with Raw/Turbo checkpoint-aware handling. |
 | `RESEARCH_NOTES.md` | Evidence, scope, uncertainty, and source links. |
 | `VALIDATION_CASES.md` | Manual tests for the prompt writer. |
 | `output.schema.json` | Optional validation schema for the writer's JSON output. |
 
-Every system profile contains its own complete operating rules. No shared file needs to be loaded beside it. Do not paste all five profiles into one system prompt.
+Every system profile contains its own complete operating rules. No shared file needs to be loaded beside it. Do not paste all six profiles into one system prompt.
 
 ## Set up in LM Studio
 
@@ -38,7 +39,7 @@ LM Studio documents Presets as reusable bundles of a system prompt and inference
 
 Leave the model's chat/prompt template on its normal automatic configuration unless there is a separate template problem. The model template formats roles and messages. It is not the field for these image-writing instructions. [L2]
 
-Separate chats and Presets provide the requested separation. You do not need five different sets of writing-model weights for these guides. The same Qwen model can use a different profile per conversation. API use should likewise supply the selected profile as the system message for each conversation.
+Separate chats and Presets provide the requested separation. You do not need six different sets of writing-model weights for these guides. The same Qwen model can use a different profile per conversation. API use should likewise supply the selected profile as the system message for each conversation.
 
 Do not rely only on attaching the guide as a searchable document. This pack is designed to be loaded as the system instructions, not retrieved as occasional reference passages.
 
@@ -57,7 +58,7 @@ Only claim behavior that you have confirmed. A UI field's existence does not est
 
 The Klein profiles cover the user's "Klein2 Flux 4B" and "Flux 9B" as FLUX.2 [klein] 4B and 9B. Their core language rules are deliberately shared. Do not use them for FLUX.1 or a different FLUX.2 family member. See the exact model cards in the research notes.
 
-For Anima, configure the variant once when known. For IllustriousXL, configure the full checkpoint name when known because derivative-specific instructions should take priority over generic defaults. When unspecified, use the conservative defaults in the profile without interrupting routine requests.
+For Anima, configure the variant once when known. For IllustriousXL, configure the full checkpoint name when known because derivative-specific instructions should take priority over generic defaults. For Krea 2, configure `Turbo`, `Raw`, or the exact checkpoint filename (such as `krea2_raw_bf16`) once known, and declare in `Workflow:` whether the identity-edit LoRA and its node pack are loaded before expecting reference-grounded edits. When unspecified, use the conservative defaults in the profile without interrupting routine requests.
 
 ## Daily use
 
@@ -138,7 +139,7 @@ These controls belong to this pack. They are not native commands for the image m
 
 ## Output handling
 
-All five profiles return only the finished positive prompt for an ordinary request. The target profile still controls its structure: editing instructions, scene prose, tags, or mixed text. This is a workflow preference, not a claim that every model uses the same conditioning method.
+All six profiles return only the finished positive prompt for an ordinary request. The target profile still controls its structure: editing instructions, scene prose, tags, or mixed text. This is a workflow preference, not a claim that every model uses the same conditioning method.
 
 Separate negative fields are returned only when explicitly requested or supplied, and only according to the target's workflow rules. `/full` requests the full supported layout. The writer never silently combines negative-field content with the positive text.
 

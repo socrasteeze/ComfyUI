@@ -23,6 +23,7 @@ PROFILES = {
     "qwenedit": "qwen-image-edit-2511.system.md",
     "anima": "anima.system.md",
     "illustrious": "illustriousxl.system.md",
+    "krea2": "krea-2.system.md",
 }
 ALL = list(PROFILES)
 EDITS = ["qwenedit", "klein9b", "klein4b"]
