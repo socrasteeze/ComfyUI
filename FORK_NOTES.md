@@ -179,6 +179,28 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-12 (eighteenth sync): Adopted three upstream commits, `9113c08c` through
+  `7ba217d6`. `9113c08c` consumes server estimated-duration headers for partner-node
+  progress, removes the inert synchronous-operation estimate parameter, and hardens polling
+  against interrupts and extractor failures. `7dac1d25` raises Yue2's advertised maximum
+  song duration from 360 to 900 seconds while limiting generation to the remaining model
+  context. `7ba217d6` keeps the alpha channel unchanged in Image Add Noise and adds five unit
+  tests. All three were adopted as-is. Nothing matches a rejected-feature pattern. The merge
+  used `ort` with zero conflicts. All three fork touchpoints remained intact: the `.m2v` MIME
+  entry, the Windows absolute temporary-home fixture, and the Hunyuan DiT tokenizer's relative
+  `special_tokens_map_file` path. Local `main` first fast-forwarded four commits to current
+  `origin/main` (`f30cdc9b`), including the seventeenth sync. The host then installed the pending
+  `comfyui-frontend-package` 1.52.7 pin after a dry-run showed no Torch or torchvision change.
+  The upstream merge protected exactly 38 symlink placeholder deletions with direct-argument
+  `skip-worktree`; all flags were cleared and the 38-deletion/zero-other-change baseline was
+  restored. `requirements.txt` did not change in this upstream window. Gates: all 841 tracked
+  Python files byte-compiled before and after the merge; Ruff reported the same eight
+  pre-existing fork-harness `T201` findings, while all eight changed Python files passed Ruff;
+  seven changed modules imported; the five new alpha tests passed through direct invocation;
+  and the isolated CPU quick-start passed with an in-memory database, custom nodes disabled,
+  and API nodes disabled. Both host installations still use `onnxruntime-gpu`, and real Conv
+  inference passed on `CUDAExecutionProvider`. Pytest and Pylint remain unavailable in the
+  portable runtime and were not installed. Merge base `c75d8c96`.
 - 2026-09-12 (seventeenth sync): Adopted two upstream commits, `c75d8c96` and `7193f562`.
   `c75d8c96` adds Bria partner-node image-edit nodes and a Video Eraser node: a new
   `comfy_api_nodes/apis/bria.py` (145 lines) plus a large extension of
