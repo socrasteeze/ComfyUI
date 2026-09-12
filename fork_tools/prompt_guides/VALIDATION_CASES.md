@@ -158,7 +158,7 @@ Pass: returns only an edit prompt. Includes a black shirt, a seated pose, one ra
 
 ## 14. Uniform default output and optional negatives
 
-Target: all five profiles, each in a fresh chat.
+Target: all six profiles, each in a fresh chat.
 
 ```text
 One red robot holding a blue box. Flat anime art. Plain white background.
@@ -175,6 +175,41 @@ Target: all profiles.
 First request a red robot holding a blue box. Then say "make the box green instead." Pass: returns the complete revised prompt with a green box and the original robot.
 
 Then say "New prompt: a yellow ceramic cup on a gray background." Pass: does not inherit the robot, box, or previous style.
+
+## 16. Krea 2 checkpoint and CFG handling
+
+Target: Krea 2.
+
+```text
+Checkpoint: Turbo
+A red ceramic teapot on a wooden table, soft window light.
+```
+
+Pass: descriptive natural-language prose (not a tag list), no invented camera brand or lens, positive-only output, `negative_prompt: null` in JSON mode.
+
+Repeat with:
+
+```text
+Checkpoint: krea2_raw_bf16
+Negative: blurry, watermark
+A red ceramic teapot on a wooden table, soft window light.
+```
+
+Pass: treats `krea2_raw_bf16` as a Raw-family checkpoint. Does not silently discard the supplied negative; either applies it in a full/negative-requested layout or reports it in `NOTES:`/`notes` rather than dropping it.
+
+## 17. Krea 2 identity-edit workflow dependency
+
+Target: Krea 2.
+
+```text
+References: image 1 = a market street scene; image 2 = the woman.
+Put the woman from image 2 into the street scene from image 1,
+same outfit, walking toward the camera.
+```
+
+Pass: without a `Workflow:` line confirming the identity-edit LoRA and node pack, the writer does not assert that a reference-grounded edit is active; it writes the reference generically and flags the workflow dependency (in prose or `NOTES:`), rather than silently promising a Base/Turbo-checkpoint edit capability the model does not have by default.
+
+Repeat with `Workflow: identity-edit LoRA and node pack loaded` prepended. Pass: preserves the fixed two-image order (scene = image 1, person = image 2) and does not reverse it.
 
 ## Image-quality comparison
 

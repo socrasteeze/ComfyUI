@@ -1,6 +1,10 @@
 # Research notes and source map
 
-Checked: 2026-09-09 | Pack version: 1.1.0
+Checked: 2026-09-11 | Pack version: 1.2.0
+
+## Revision 1.2.0
+
+Added one profile: Krea 2, a Krea AI text-to-image model. This revision was researched against the model's own Hugging Face cards, the official Diffusers pipeline docs, the identity-edit LoRA's project page, and the fork owner's own SwarmUI notes (`Model Support.md`, `T2IModelClassSorter.cs`) for fork-specific facts (checkpoint count, the `krea2_raw_bf16` variant name, text-encoder/VAE wiring). No local-model execution informed the researched content; the dry-run harness checks the writer's mechanical behavior separately.
 
 ## Revision 1.1.0
 
@@ -50,6 +54,18 @@ Tag-first is therefore a practical default for local Illustrious workflows, not 
 
 The suggested tag order and minimal artifact negatives are compiler policies. For a named derivative, use that developer's instructions when they conflict with a generic policy.
 
+## Krea 2
+
+Krea 2 is a 12B flow-matching text-to-image diffusion transformer from Krea AI, released as an undistilled `Raw` checkpoint and an 8-step-distilled `Turbo` checkpoint, with an official Raw-to-Turbo LoRA. [K1, K2, K5] Both cards are the developer's own model cards; the Diffusers pipeline page documents the architecture (single-stream MMDiT, Qwen3-VL text conditioning fused into the transformer). [K3]
+
+**Documented behavior:** the checkpoint split (Raw vs. Turbo) and their respective step/CFG defaults, the Qwen3-VL text encoder and Qwen-Image VAE family, the absence of a tag-based prompting convention (both cards demonstrate descriptive prose and warn that "prompt style, specificity, language, and phrasing" affect adherence), and the model's internal NSFW text-refiner. [K1, K2, K3]
+
+**Compiler policy:** the natural-language-only default (no tag/prose hybrid, unlike Anima or IllustriousXL), the CFG-1-implies-positive-only default carried over from this pack's Klein/Anima-Turbo precedent, and the decision to treat the identity-edit LoRA's fixed image order as a declared-workflow exception rather than default behavior are original policies for this pack, not claims from the model cards.
+
+**Workflow dependency:** whether reference images reach the core transformer (they do not, by default — only the text encoder sees them) is documented on the model card itself, but whether an *edit* actually happens depends entirely on the fork's own unofficial identity-edit LoRA and its dedicated ComfyUI node pack. [K1, K4] That LoRA's fixed two-image order (scene = image 1, person = image 2) and its CFG guidance for edits vs. removals are documented on the LoRA's own project page, not on Krea 2's model card. [K4] The fork's checkpoint count (11) and the `krea2_raw_bf16` variant name are fork-internal facts from the maintainer's own SwarmUI notes, not from Krea AI. [S1]
+
+Confidence: the base-model facts above are solidly sourced to the developer's own cards. The identity-edit workflow facts are sourced to a third-party (non-Krea-AI) LoRA project page describing an unofficial extension — treat that layer as workflow-dependent, not as Krea 2's own documented behavior, exactly as the profile's Target rules section says.
+
 ## Decisions that are not official benchmark findings
 
 The pack's faithful-rewrite default, output controls, target lock, JSON wrapper, exact-string protection, parameter separation, and test cases are original workflow design.
@@ -91,6 +107,15 @@ When a checkpoint or workflow changes, inspect its developer's model card and it
 - **I1:** [Early-release model card and series update](https://huggingface.co/OnomaAIResearch/Illustrious-xl-early-release-v0)
 - **I2:** [Illustrious XL v1.0 model card](https://huggingface.co/OnomaAIResearch/Illustrious-XL-v1.0)
 - **I3:** [Illustrious XL v2.0-STABLE model card](https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0)
+
+### Krea 2
+
+- **K1:** [Krea 2 Turbo model card](https://huggingface.co/krea/Krea-2-Turbo)
+- **K2:** [Krea 2 Raw model card](https://huggingface.co/krea/Krea-2-Raw)
+- **K3:** [Diffusers Krea 2 pipeline docs](https://huggingface.co/docs/diffusers/api/pipelines/krea2)
+- **K4:** [Krea 2 identity-edit LoRA project page](https://huggingface.co/conradlocke/krea2-identity-edit). Unofficial, third-party; not a Krea AI source.
+- **K5:** [Krea 2 open-source announcement](https://www.krea.ai/krea-2-open-source)
+- **S1:** The fork's own `E:\SwarmUI\docs\Model Support.md` and `src/Text2Image/T2IModelClassSorter.cs`. Fork-internal maintainer notes, not a public URL; used only for fork-specific facts (checkpoint count, `krea2_raw_bf16` naming, text-encoder/VAE wiring), not for claims about Krea AI's own documentation.
 
 ### LM Studio
 

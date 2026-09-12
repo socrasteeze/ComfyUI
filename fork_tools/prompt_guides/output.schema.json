@@ -21,7 +21,8 @@
             "FLUX.2-klein-4B",
             "FLUX.2-klein-9B",
             "Anima",
-            "IllustriousXL"
+            "IllustriousXL",
+            "Krea-2"
           ]
         },
         "positive_prompt": {
