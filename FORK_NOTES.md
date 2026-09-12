@@ -179,6 +179,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-12 (seventeenth sync): Adopted two upstream commits, `c75d8c96` and `7193f562`.
+  `c75d8c96` adds Bria partner-node image-edit nodes and a Video Eraser node: a new
+  `comfy_api_nodes/apis/bria.py` (145 lines) plus a large extension of
+  `comfy_api_nodes/nodes_bria.py` (+766/-8). `7193f562` bumps `requirements.txt`'s
+  `comfyui-frontend-package` pin from `1.51.10` to `1.52.7`. Both adopted as-is; nothing in
+  this window matches a rejected-feature pattern. Zero conflicts (merge strategy `ort`); none
+  of the three existing fork touchpoints (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture, the Hunyuan DiT
+  tokenizer config's relative `special_tokens_map_file` path) is in this window, and all three
+  were verified intact and untouched afterward. This sync ran in a disposable Linux container:
+  `input`/`models`/`output` are plain directories, not symlinks, so the symlink-trap workaround
+  did not apply. `requirements.txt` changed (frontend package version only, no torch/runtime
+  pin touched), consistent with prior dependency-less-session entries this reinstall could not
+  be exercised. Gates: a full-tree byte-compile of all tracked `.py` files via `py_compile`
+  (individually) is clean, 0 errors; the two new/changed Bria files compile individually too.
+  `ruff check .` reports the same 8 pre-existing `T201` (bare `print`) findings as the sixteenth
+  sync, all in `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py`, none touched
+  by this window. Author/committer scan on the merge range showed only
+  `socrasteeze <socradeez@gmail.com>` (merge) and the two upstream authors, preserved. Local
+  `main` was already level with `origin/main` (identical tip, `6378dd91`) at session start, so
+  the incoming window was exactly these two commits. Merge commit `eb34a17f`; merge base
+  `b058ec65` (the tip of the sixteenth sync). **Not covered:** no live GPU/CUDA inference, no
+  ONNX Runtime check, no pytest run (no test dependencies installed in this container), no
+  actual `pip install -r requirements.txt` for the frontend-package bump — those still need a
+  pass on an actual installation per the standing procedure.
 - 2026-09-12 (sixteenth sync): Adopted four upstream commits, `d537de93` through `b058ec65`:
   `d537de93` implements a Video Concatenate node (`comfy_extras/nodes_video.py`) plus a large
   extension of `comfy_api/latest/_input_impl/video_types.py` to support accumulating multiple
