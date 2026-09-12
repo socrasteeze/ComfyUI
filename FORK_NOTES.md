@@ -179,6 +179,49 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-12 (sixteenth sync): Adopted four upstream commits, `d537de93` through `b058ec65`:
+  `d537de93` implements a Video Concatenate node (`comfy_extras/nodes_video.py`) plus a large
+  extension of `comfy_api/latest/_input_impl/video_types.py` to support accumulating multiple
+  video inputs, with a new `tests-unit/comfy_api_test/video_accumulation_test.py` (288 lines).
+  `c40c94e1` immediately fixes that new test file (+5/-3). `1d91a82d` adds Marigold v2 support
+  (CORE-431): a new `comfy_extras/nodes_marigold.py` post-process node (depth/normals/albedo
+  from a decoded prediction), a `model_sampling.py` addition, and new conditioning helpers in
+  `nodes_cond.py`, registered via `nodes.py`'s extra-node list. `b058ec65` adds the Yue2 music
+  model: two new audio encoders (`comfy/audio_encoders/mert2.py`, `sheetsage2.py` +
+  `sheetsage2_abc.py`), a new `comfy/ldm/yue2/model.py` and `comfy/text_encoders/yue2.py`,
+  `supported_models.py`/`model_detection.py`/`latent_formats.py`/`sd.py` entries, and a `yue2`
+  option added to `CLIPLoader`'s `type` combo in `nodes.py`. 24 files changed, +3085/-32 (two
+  files, `nodes.py` and `tests-unit/comfy_api_test/video_accumulation_test.py`, are touched by
+  more than one commit in the window, which is why the file count is lower than the sum of the
+  four commits' individual stats). All four adopted as-is; nothing in this window matches a
+  rejected-feature pattern. Zero conflicts; none of the three existing fork touchpoints
+  (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture, the Hunyuan DiT tokenizer config's relative `special_tokens_map_file`
+  path) is in this window, and all three were verified intact and untouched afterward. This
+  sync ran in a disposable Linux container: `input`/`models`/`output` are plain directories, not
+  symlinks, so the symlink-trap workaround did not apply (`git status --porcelain | grep '^ D '`
+  found zero placeholders, before and after). `requirements.txt` did not change, so no
+  reinstall. Gates: a full-tree byte-compile of all 840 tracked `.py` files via `py_compile`
+  (individually, not just `compileall`) is clean, 0 errors; the eight new/changed files from
+  this window compile individually too. `ruff check .` reports 8 pre-existing `T201` (bare
+  `print`) findings, all in `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py`
+  — fork-only CLI harness scripts whose job is to print progress/results to a terminal; none of
+  those three files is touched by this window's diff (confirmed via `git diff --name-only` over
+  the merge range) or by any prior sync, so this is a standing condition to note, not a
+  regression to chase down here. This container has no GPU and no installed dependencies (no
+  torch), consistent with every other dependency-less-session entry in this log, so the
+  GPU acceleration check and a real import of the new torch-dependent modules
+  (`comfy_extras.nodes_yue2`, `nodes_marigold`, `comfy.audio_encoders.*`) could not run — noted
+  rather than skipped silently. Author/committer scan on the merge range showed only
+  `socrasteeze <socradeez@gmail.com>` (merge) and the four upstream authors, preserved. Local
+  `main` was 43 commits behind `origin/main` at session start (all already-published prior
+  syncs, none of them a divergence this session needed to redo) and was fast-forwarded to
+  `origin/main`'s tip (`36ca99e2`) before fetching upstream; from there the incoming window was
+  exactly these four commits. Merge commit `103f34ab`; merge base `1d48d9cf` (the tip of the
+  fifteenth sync, confirming the fork was level with its own last sync before this one began).
+  **Not covered:** no live GPU/CUDA inference, no ONNX Runtime check, no pytest run (no test
+  dependencies installed in this container) — those still need a pass on an actual installation
+  per the standing procedure.
 - 2026-09-11 (fifteenth sync): Adopted one upstream commit. `1d48d9cf` adds a `linear` option to
   the `ImageColorSpace` node's source/destination combos (`comfy_extras/nodes_images.py` +7/-3):
   linear input skips the sRGB EOTF before the Rec.709->Rec.2020 primary conversion, and linear
