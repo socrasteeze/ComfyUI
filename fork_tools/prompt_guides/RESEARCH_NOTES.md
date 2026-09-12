@@ -115,7 +115,7 @@ When a checkpoint or workflow changes, inspect its developer's model card and it
 - **K3:** [Diffusers Krea 2 pipeline docs](https://huggingface.co/docs/diffusers/api/pipelines/krea2)
 - **K4:** [Krea 2 identity-edit LoRA project page](https://huggingface.co/conradlocke/krea2-identity-edit). Unofficial, third-party; not a Krea AI source.
 - **K5:** [Krea 2 open-source announcement](https://www.krea.ai/krea-2-open-source)
-- **S1:** The fork's own `E:\SwarmUI\docs\Model Support.md` and `src/Text2Image/T2IModelClassSorter.cs`. Fork-internal maintainer notes, not a public URL; used only for fork-specific facts (checkpoint count, `krea2_raw_bf16` naming, text-encoder/VAE wiring), not for claims about Krea AI's own documentation.
+- **S1:** The SwarmUI fork's own `docs/Model Support.md` and `src/Text2Image/T2IModelClassSorter.cs`. Fork-internal maintainer notes, not a public URL; used only for fork-specific facts (checkpoint count, `krea2_raw_bf16` naming, text-encoder/VAE wiring), not for claims about Krea AI's own documentation.
 
 ### LM Studio
 
