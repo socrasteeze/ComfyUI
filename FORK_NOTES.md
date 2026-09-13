@@ -179,6 +179,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-13 (twentieth sync): Adopted one upstream commit, `02d39c8c` ("[Partner Nodes] feat(BFL):
+  add the Flux Video Edit node", #16259): a new `FluxVideoEditNode` partner node in
+  `comfy_api_nodes/nodes_bfl.py` (+109 lines) plus a matching `BFLFluxVideoEditRequest` pydantic
+  model in `comfy_api_nodes/apis/bfl.py` (+8 lines). The node edits an uploaded clip from a text
+  instruction via BFL's `flux-tools/video-edit-v1` endpoint, following the same pattern as the
+  existing `FluxVideoUpscaleNode` right above it in the same file. Adopted as-is; nothing in this
+  window matches a rejected-feature pattern. 2 files, +117/-0. Clean merge, zero conflict markers;
+  neither changed file is a fork touchpoint. All three existing fork touchpoints
+  (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home
+  fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file` path) verified intact and
+  untouched. `requirements.txt` did not change, so no reinstall. This sync ran in a dependency-less
+  container (no torch, no pydantic): `python -m py_compile` on both changed files and a full-tree
+  `python -m compileall` (841 tracked `.py` files, excluding the `fork_tools` harness scripts) are
+  both clean, 0 errors; `ruff check .` on the two changed files passes clean, and the full-tree run
+  reports the same 8 pre-existing fork-harness `T201` (bare `print`) findings in
+  `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` as every prior sync — a
+  standing condition, not a regression, and none of those files is touched by this window. Author/
+  committer scan on the merge range showed only `socrasteeze <socradeez@gmail.com>` (merge) and the
+  upstream author, preserved. Merge commit `3eba18dc`; pre-merge fork HEAD was `6092a80c`. **Not
+  covered:** no live BFL API smoke test (needs a key and network this container doesn't have), no
+  real ONNX/CUDA inference, no host-install verification, no pytest run (no test dependencies
+  installed in this container) — those still need a pass on an actual installation per the standing
+  procedure. This sync ran unattended (scheduled, no human watching live).
 - 2026-09-12 (nineteenth sync): Adopted two upstream commits, `98c7334e` and `d43a5fa2`, both
   as-is. `98c7334e` fixes YuE2 on AMD and widens the Generate ABC node's controls. The AMD
   fix is a CUDA-graph address-stability correction: where the decode path previously did
