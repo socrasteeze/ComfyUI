@@ -179,6 +179,48 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-12 (nineteenth sync): Adopted two upstream commits, `98c7334e` and `d43a5fa2`, both
+  as-is. `98c7334e` fixes YuE2 on AMD and widens the Generate ABC node's controls. The AMD
+  fix is a CUDA-graph address-stability correction: where the decode path previously did
+  `x = x.clone()` before a captured replay, it now copies into a caller-owned buffer so the
+  captured layers see the same input address on every replay. That buffer is threaded through
+  `SheetSage2.decode`/`Decoder.forward` as `decode_buffer` and through `Llama2_.forward` as
+  `decode_buffers` (hidden state plus pre-computed rotary tensors), allocated in
+  `YuE2TEModel._generate` and `SheetSage2.generate_tokens` only when the KV cache is `FixedKV`.
+  All new parameters default to `None`, so the non-graph path is unchanged. The node half
+  promotes `temperature`, `top_p`, `top_k` and `repetition_penalty` from hard-coded call-site
+  literals to advanced inputs at their former values (0.7 / 0.9 / 30 / 1.005) and adds a new
+  `penalty_window` input (default 100, the former literal) plumbed through `YuE2Tokenizer`.
+  Every added input carries a default in both the schema and the `execute` signature, so
+  existing saved workflows still load. `d43a5fa2` adds a `_log_scan_error` helper to the typed
+  asset scanner that emits one `logging.warning` per filesystem failure tagged with a phase
+  (`reference_stat`, `discovery_stat`, `enrichment_stat`, `hashing`) and an error type
+  (`permission_denied` or `os_error`), and splits `FileNotFoundError` out of the two broad
+  `except OSError` arms in `build_asset_specs` and `enrich_asset` so a missing file stays a
+  silent skip while a real OS error is now logged. Worth noting on this host: the scanner
+  walks the `models`, `input` and `output` symlink targets, so genuine permission or I/O
+  problems out on those volumes will now surface as warnings at scan time rather than
+  disappearing. Nothing matches a rejected-feature pattern. The merge used `ort` with zero
+  conflicts. All three fork touchpoints remained intact: `folder_paths.py`'s `m2v` MIME entry,
+  the `tmp_path`-based absolute home fixture in `extra_config_test.py`, and the Hunyuan DiT
+  tokenizer's relative `special_tokens_map_file` path. Local `main` was 6 ahead of and 0 behind
+  `origin/main` at the start, so nothing was pulled; the eighteenth sync's four commits and its
+  merges were still unpushed and go out with this one. A full dated snapshot of the host
+  installation was taken before the merge with the host's own backup script (29.45 GB,
+  76,938 files, zero robocopy failures); the three symlink targets are excluded from it by
+  design, as that script documents. The merge protected exactly 38 symlink placeholder
+  deletions with `skip-worktree`; all flags were cleared afterwards and the
+  38-deletion/zero-other-change baseline was restored. `requirements.txt` and `pyproject.toml`
+  did not change in this upstream
+  window, so no reinstall. Gates: all 841 tracked Python files byte-compiled with zero failures;
+  Ruff passed clean on all six changed files; the five changed modules imported, with
+  `nodes_yue2`'s `NODE_CLASS_MAPPINGS` empty by design because registration goes through the
+  `comfy_entrypoint` extension API; and the isolated CPU quick-start exited 0 with exactly the
+  one baseline LayerStyle `guidedFilter` warning and no `IMPORT FAILED` or traceback. Both host
+  installations still use `onnxruntime-gpu` and real Conv inference passed on
+  `CUDAExecutionProvider`. Pytest and Pylint remain unavailable in the portable runtime and were
+  not installed, so the new `test_bulk_ingest.py` cases were not executed. Merge commit
+  `92420b75`; pre-merge fork HEAD was `70bff0cc`.
 - 2026-09-12 (eighteenth sync): Adopted four upstream commits, `9113c08c` through
   `7ba217d6`. `9113c08c` consumes server estimated-duration headers for partner-node
   progress, removes the inert synchronous-operation estimate parameter, and hardens polling
