@@ -179,6 +179,51 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-14 (twenty-second sync): Started on `claude/tender-noether-1wndty`, which held the
+  twenty-first sync's merge plus 73 more commits (all prior syncs back through the 2026-09-08
+  sixth sync) that had never been fast-forwarded onto `origin/main` — local `main` and
+  `origin/main` were both still sitting at `b1db5cd`, the fifth sync's tip. `origin/main` was a
+  strict ancestor of this branch's HEAD with zero divergence, so this was pure reconciliation,
+  the same stranded-branch pattern as the 2026-09-08 and eleventh-sync entries above, not a
+  merge to redo. `git fetch upstream` then found two more commits past what the twenty-first
+  sync had already merged (`19e1058f`): `f42b24ef` ("feat: structured event log lines for the
+  assets system", #16306) adds a closed-vocabulary, logfmt-style structured event logger for
+  the asset pipeline (`app/assets/event_log.py`, new), wires emit-once calls into the scanner's
+  and seeder's failure/lifecycle paths (`app/assets/scanner.py`, `app/assets/seeder.py`), and
+  emits one `assets.enabled` event from `server.py` when the asset manager is on; `eecbfb40`
+  ("test(assets): keep test typing 3.10-compatible", #16305) is a small typing-only follow-up
+  fix to two of the twenty-first sync's own new test files. Both stay inside the same
+  asset-system area as the last sync and adopt as-is; nothing in this window matches a
+  rejected-feature pattern. 12 files changed, +1920/-87 (7 of them new test/fixture files).
+  Clean merge (`ort` strategy), zero conflict markers; neither commit intersects any of the
+  fork's three touchpoints (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture, the Hunyuan DiT
+  tokenizer's relative `special_tokens_map_file` path in
+  `comfy/text_encoders/hydit_clip_tokenizer/tokenizer_config.json`), all three re-verified
+  present and untouched before and after the merge. No directory-symlink trap this session
+  (`input`/`models`/`output` are plain dirs, `input` and `output` each carrying their one
+  tracked placeholder, `models` its 36). `requirements.txt` did not change, so no reinstall.
+  This session's container has no project dependency stack installed at all (no torch, no
+  `requests` — a `pytest` run against the new event-log tests failed immediately in
+  `conftest.py` on `ModuleNotFoundError: No module named 'requests'`, confirming the gap rather
+  than silently skipping it), so validation fell back to the established dependency-less
+  pattern: `python -m py_compile` over all 905 tracked `.py` files is clean, 0 errors, and
+  individually over the 12 changed files too. `ruff check .` on the 11 changed `.py` files
+  passes clean; the full-tree run reports exactly the same 8 pre-existing fork-harness `T201`
+  (bare `print`) findings in `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py`
+  as every prior sync, at the same line numbers, none of those files touched by this window — a
+  standing condition, not a regression. Author/committer scan on the merge range: only
+  `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own authors (Christian Byrne,
+  Simon Pinfold), preserved. Reviewed `server.py`'s 3-line addition directly (a guarded
+  `emit("assets.enabled", ...)` call alongside the existing `asset_manager.enabled` check) and
+  found no orphaned imports or broken references introduced by the merge. Merge commit
+  `60d73af4`; premerge branch tip (twenty-first sync's own commit) was `fb2f0bc2`. After the
+  merge, local `main` was fast-forwarded to this branch's tip and pushed to `origin/main` as a
+  single fast-forward (no divergence, no rebase). **Not covered:** no GPU in this container,
+  so no model load/inference ran; no pytest run (no test dependencies installed, as noted
+  above) — those and the ONNX Runtime GPU-only / cuDNN-pin checks under "Environment
+  Constraints" remain installation-specific and need a pass on an actual host. This sync ran
+  unattended (scheduled, no human watching live).
 - 2026-09-14 (twenty-first sync): Adopted two upstream commits, `19e1058f` ("feat(assets): split
   asset records from content", #16295) and `798fa9aa` ("Add that Yue 2 is supported to readme.",
   #16303). The first is a large asset-service refactor (133 files, +16389/-13584) that splits the
