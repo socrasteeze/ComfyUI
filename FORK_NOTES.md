@@ -179,6 +179,36 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-14 (twenty-first sync): Adopted two upstream commits, `19e1058f` ("feat(assets): split
+  asset records from content", #16295) and `798fa9aa` ("Add that Yue 2 is supported to readme.",
+  #16303). The first is a large asset-service refactor (133 files, +16389/-13584) that splits the
+  asset database's content rows from its record rows (deduplicated storage, hash-based content
+  identity, a rewritten ingest/seed/scan/recovery pipeline under `app/assets/`), rewrites most of
+  `tests-unit/assets_test/` and `tests-unit/seeder_test/`, and adds `tests-unit/execution_test/
+  test_execute_reentry.py` and `test_inmemory_assets.py`. The second is a one-line README edit.
+  Both adopted as-is; nothing in this window matches a rejected-feature pattern. Clean merge
+  (`ort` strategy), zero conflict markers — none of the 133 incoming files intersects the fork's
+  three touchpoints (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file` path),
+  all three re-verified present and untouched after the merge by direct diff against
+  `upstream/master`. No directory-symlink trap this session (`input`/`models`/`output` are plain
+  dirs here). `requirements.txt` did not change, so no reinstall was required by the sync itself —
+  this session's container started with none of it installed, so the non-torch dependency set plus
+  torch/torchaudio/torchsde/transformers/`comfy-aimdo`==0.5.3/`comfy-kitchen`==0.2.33 were installed
+  fresh to actually exercise the new asset pipeline rather than falling back to `py_compile`-only.
+  `python -m py_compile` on all 130 incoming/changed `.py` files that still exist post-merge
+  (3 were removed by the refactor's own "tests-removed" layer): 0 errors. Full pytest run:
+  `tests-unit/assets_test` **530 passed / 1 skipped**, `tests-unit` (everything else)
+  **1268 passed / 2 skipped**, `tests/execution` **326 passed / 7 skipped**, `tests-unit/
+  seeder_test` + `tests/test_asset_seeder.py` **24 passed**, `tests-unit/utils/extra_config_test.py`
+  (the fork's own local-fix test) **5 passed** — zero failures across all four suites, only
+  environment-optional skips (asset hashing marker, GLSL node needing the separately-licensed
+  `comfy_angle`, which is not part of `requirements.txt`'s essential set). Author/committer scan on
+  the merge range: only `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own authors,
+  preserved. **Not covered:** no GPU in this container, so no actual model load/inference ran; the
+  ONNX Runtime GPU-only constraint and the cuDNN/`.pth` PATH notes under "Environment Constraints"
+  are installation-specific and don't apply to this disposable validation container. This sync ran
+  unattended (scheduled, no human watching live).
 - 2026-09-13 (twentieth sync): Adopted one upstream commit, `02d39c8c` ("[Partner Nodes] feat(BFL):
   add the Flux Video Edit node", #16259): a new `FluxVideoEditNode` partner node in
   `comfy_api_nodes/nodes_bfl.py` (+109 lines) plus a matching `BFLFluxVideoEditRequest` pydantic
