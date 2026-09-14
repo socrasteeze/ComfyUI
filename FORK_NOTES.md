@@ -179,6 +179,43 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-14 (twenty-third sync): Started on `claude/tender-noether-dsmwew`, which held the
+  twenty-second sync's merge plus 77 more prior-sync commits, all already unpushed but
+  correctly authored as `socrasteeze <socradeez@gmail.com>` — local `main`/`origin/main` were
+  0 behind and this branch was 78 ahead, so no divergence to reconcile. `git fetch upstream
+  master` found exactly one new commit past the twenty-second sync's `f42b24ef`: `b0058496`
+  ("[Partner Nodes] feat(Gemini-LLM): add GeminiNodeV3, deprecate V2", #16287). It adds a new
+  `GeminiNodeV3` class to `comfy_api_nodes/nodes_gemini.py` and one supporting field to
+  `comfy_api_nodes/apis/gemini.py`, while keeping the existing `GeminiNodeV2` class in place
+  with `is_deprecated=True` set on its schema rather than removing it — so a saved workflow
+  still referencing V2 keeps loading, matching the same non-destructive deprecation pattern
+  the ninth and twelfth syncs' partner-node commits used. 2 files changed, +306/-126. Adopted
+  as-is; nothing in this window matches a rejected-feature pattern. `input`/`models`/`output`
+  are plain directories in this container (not symlinks), so the skip-worktree procedure did
+  not apply. Clean merge (`ort` strategy), zero conflict markers; neither changed file
+  intersects any of the fork's three touchpoints (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture, the Hunyuan DiT
+  tokenizer's relative `special_tokens_map_file` path in
+  `comfy/text_encoders/hydit_clip_tokenizer/tokenizer_config.json`), all three re-verified
+  present and byte-identical before and after the merge. `requirements.txt` did not change, so
+  no reinstall. This session's container has neither `torch` nor `pytest` installed at all
+  (`python3 -m pytest ...` fails immediately with `No module named pytest`, confirming the gap
+  rather than silently skipping it), consistent with the established dependency-less pattern:
+  `python -m py_compile` over all 905 tracked `.py` files is clean, 0 errors, and individually
+  over the 2 changed files too. `ruff check .` on the 2 changed files passes clean; the
+  full-tree run reports exactly the same 8 pre-existing fork-harness `T201` (bare `print`)
+  findings in `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` as every
+  prior sync, at the same line numbers, none of those files touched by this window — a
+  standing condition, not a regression. Author/committer scan on the merge range: only
+  `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own author (Alexander Piskun, via
+  the GitHub merge-button committer), preserved. Merge commit `9df35791`; pre-merge branch tip
+  (twenty-second sync's own commit) was `9edc02a3`. After the merge, local `main` was
+  fast-forwarded to this branch's tip and pushed to `origin/main` as a single fast-forward (no
+  divergence, no rebase). **Not covered:** no GPU in this container, so no model load/inference
+  ran; no live Gemini API smoke test (needs a key and network this container doesn't have); no
+  pytest run (no test dependencies installed, as noted above) — those and the ONNX Runtime
+  GPU-only / cuDNN-pin checks under "Environment Constraints" remain installation-specific and
+  need a pass on an actual host. This sync ran unattended (scheduled, no human watching live).
 - 2026-09-14 (twenty-second sync): Started on `claude/tender-noether-1wndty`, which held the
   twenty-first sync's merge plus 73 more commits (all prior syncs back through the 2026-09-08
   sixth sync) that had never been fast-forwarded onto `origin/main` — local `main` and
