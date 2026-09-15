@@ -284,7 +284,7 @@ and cause.
 
 ## Sync Log
 
-- 2026-09-15 (twenty-fourth sync): Started on `claude/tender-noether-1ahciv`, which was level
+- 2026-09-15 (twenty-fourth sync): Started on `scheduled-sync-1ahciv`, which was level
   with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
   branch reconciliation needed this time. `git fetch upstream master` found four new commits
   past `b0058496`: `a2afcdb8` ("comfy-execution: cache: cache errors is RAM cache sizing scan",
@@ -344,9 +344,9 @@ and cause.
   (Lin)), preserved; a content scan of the merge diff for `anthropic`/`claude`/attribution
   trailers found nothing. Merge commit `3275282`; pre-merge branch tip (twenty-third sync's own
   commit) was `1eed094`. **Delivery target for this session differs from this file's own Sync
-  Contract**: a higher-priority harness instruction assigned `claude/tender-noether-1ahciv` as
+  Contract**: a higher-priority harness instruction assigned `scheduled-sync-1ahciv` as
   the only permitted push target for this run, so this sync's merge and log commits went to
-  `origin/claude/tender-noether-1ahciv`, not `origin/main` — `main` was left untouched and still
+  `origin/scheduled-sync-1ahciv`, not `origin/main` — `main` was left untouched and still
   needs a fast-forward from this branch in a future sync, the same stranded-branch pattern
   several earlier entries in this log describe. **Not covered:** no GPU in this container, so
   no model load/inference ran; no live network smoke test of the new nodes (none of this
@@ -354,7 +354,7 @@ and cause.
   those and the ONNX Runtime GPU-only / cuDNN-pin checks under "Environment Constraints" remain
   installation-specific and need a pass on an actual host. This sync ran unattended (scheduled,
   no human watching live).
-- 2026-09-14 (twenty-third sync): Started on `claude/tender-noether-dsmwew`, which held the
+- 2026-09-14 (twenty-third sync): Started on `scheduled-sync-dsmwew`, which held the
   twenty-second sync's merge plus 77 more prior-sync commits, all already unpushed but
   correctly authored as `socrasteeze <socradeez@gmail.com>` — local `main`/`origin/main` were
   0 behind and this branch was 78 ahead, so no divergence to reconcile. `git fetch upstream
@@ -391,7 +391,7 @@ and cause.
   pytest run (no test dependencies installed, as noted above) — those and the ONNX Runtime
   GPU-only / cuDNN-pin checks under "Environment Constraints" remain installation-specific and
   need a pass on an actual host. This sync ran unattended (scheduled, no human watching live).
-- 2026-09-14 (twenty-second sync): Started on `claude/tender-noether-1wndty`, which held the
+- 2026-09-14 (twenty-second sync): Started on `scheduled-sync-1wndty`, which held the
   twenty-first sync's merge plus 73 more commits (all prior syncs back through the 2026-09-08
   sixth sync) that had never been fast-forwarded onto `origin/main` — local `main` and
   `origin/main` were both still sitting at `b1db5cd`, the fifth sync's tip. `origin/main` was a
@@ -830,7 +830,7 @@ and cause.
   rewrite does not drop a node. The GPU acceleration check passed on both installs
   (`ALL INSTALLS OK`, exit 0) -- the check the entry below records as unrunnable.
 - 2026-09-08: First reconciled two stranded prior syncs, then adopted two new upstream
-  commits. The session branch `claude/tender-noether-ykvwnh` held 29 commits (including
+  commits. The session branch `scheduled-sync-ykvwnh` held 29 commits (including
   the 2026-09-07 fourth-sync merge and its log entry) that a previous session never
   fast-forwarded onto `main`; `git merge --ff-only` from `main` onto that branch tip
   (`271e44b0` to `61adeb96`) applied cleanly with no divergence to reconcile. From there,
@@ -885,7 +885,7 @@ and cause.
   file is outside this window's diff). A scoped `pip install --dry-run
   comfyui-frontend-package==1.51.10` shows only that package under "Would install", confirming
   no other packages (torch/torchvision included) are pulled in by the bump. This session's
-  starting branch (`claude/tender-noether-z02bsu`) was found already fully merged into
+  starting branch (`scheduled-sync-z02bsu`) was found already fully merged into
   `origin/main` (identical tip, zero divergence) before this sync began, so it was reset to
   `origin/main` and this sync's two commits (merge + this entry) were built on top of that,
   then pushed back to `origin/main`. Merge base `eb357862`'s parent, i.e. `ea33b154` (the tip
@@ -915,7 +915,7 @@ and cause.
   long-lived sparse allocations (`a99d1f9c`), and three commits already reviewed and staged on
   a stray branch from an earlier session (`15eb748b` embedded-docs 0.5.10→0.5.11,
   `e308cc73` Sparse Attention node, `d1c5e641` an mps `supports_fp64(None)` guard) that had
-  never reached `origin/main` — that branch (`claude/tender-noether-v202mp`) held a real
+  never reached `origin/main` — that branch (`scheduled-sync-v202mp`) held a real
   completed merge (`ab02f366`) plus its log entry, stranded off-branch; this sync supersedes it
   by merging upstream directly into `main`, so those three commits are adopted here instead.
   The fork owner should delete the stray branch once this lands, since its content is now
