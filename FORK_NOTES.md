@@ -179,6 +179,76 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-15 (twenty-fourth sync): Started on `claude/tender-noether-1ahciv`, which was level
+  with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
+  branch reconciliation needed this time. `git fetch upstream master` found four new commits
+  past `b0058496`: `a2afcdb8` ("comfy-execution: cache: cache errors is RAM cache sizing scan",
+  #16314) wraps `RAMPressureCache`'s per-entry RAM-usage scan in a `try`/`except`, logging a
+  warning and forcing the entry to evict first (`oom_ram_usage = 1e30`) instead of letting a
+  custom node's broken iterable crash cache sizing for an unrelated later workflow; `50ab50c1`
+  ("Implement Generic Loops (Candidate III - implemented)", CORE-14, #16227) is the bulk of the
+  window — a new `comfy_extras/nodes_loop.py` (loop-start/loop-end control nodes with
+  `LOOP_BOUNDARY` markers), a new `comfy_execution/validation.py` (`validate_loops`,
+  `LoopValidationError`) wired into `execution.py`'s `validate_prompt`, `DynamicPrompt` gaining
+  a `node_overrides` map and `override_node()` so a loop iteration can substitute a node without
+  mutating the submitted prompt, `TopologicalSort`/`ExecutionList` gaining
+  `externalBlockResults`/`release_external_block`/`get_external_block_result`/`inhibit_nodes`/
+  `is_staged_node_blocked`, a new `EXECUTION_LIST` hidden input threaded through `_io.py` and
+  `execution.py`'s `get_input_data`, and `nodes_toolkit.py`'s `CreateList` switching from
+  `io.MatchType`/`Template` to plain `io.AnyType` while adding a new `GetItemFromList` node;
+  `db70adbd` bumps `requirements.txt`'s `comfyui-workflow-templates` pin 0.11.59 -> 0.11.60
+  (frontend/embedded-docs pins untouched); `683421b6` adds five new blueprint JSON workflows
+  (three Marigold V2 estimation blueprints, two YuE2 music blueprints). 19 files changed,
+  +8567/-13 against the merge base. All four adopted as-is; nothing in this window matches a
+  rejected-feature pattern (this fork's sync log has never recorded a standing rejection list —
+  every entry through the twenty-third sync adopted its window in full). `input`/`models`/
+  `output` are plain directories in this container, not symlinks, so the skip-worktree
+  procedure did not apply. Clean merge (`ort` strategy), zero conflict markers
+  (`git diff --name-only --diff-filter=U` empty); none of the four commits touches any of the
+  fork's three touchpoints (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture, the Hunyuan DiT
+  tokenizer's relative `special_tokens_map_file` path), all three re-verified present and
+  byte-identical against `upstream/master` before and after the merge
+  (`git diff $(git merge-base HEAD upstream/master)..HEAD --name-status | grep -v '^A'` still
+  lists exactly those three files). Swept `comfy_extras/nodes_toolkit.py`'s `MatchType` ->
+  `AnyType` switch for orphaned references elsewhere in the tree: `io.MatchType` is still
+  defined in `_io.py` and still used by `nodes_loop.py`, `nodes_post_processing.py`, and
+  `nodes_logic.py`, so this was a self-contained node-level change, not a removed symbol.
+  `requirements.txt` moved one pin (workflow templates only), so flagging for reinstall on the
+  next real installation; this session's container has no installed dependency stack to
+  reinstall against. Gates: `python -m py_compile` over all 911 tracked `.py` files (up from
+  905; the merge added 6 new `.py` files) is clean, 0 errors; `ruff check .` on the full tree
+  reports the same 8 pre-existing fork-harness `T201` (bare `print`) findings in
+  `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` at the same line numbers,
+  before and after the merge — a standing condition, not a regression — modulo one nondeterministic
+  extra warning line (`Invalid # noqa directive on comfy/ldm/sam3/detector.py:12`) that appeared
+  in the baseline run but not the post-merge run despite the file being untouched by this
+  window; re-running ruff shows this line is intermittent regardless of the merge, not a
+  merge-caused change. `ast.parse` on all five new test files
+  (`nodes_loop_test.py`, `nodes_toolkit_test.py`, `loop_validation_test.py`,
+  `test_execution_list.py`, `test_nested_loop_execution.py`) and the five new blueprint JSON
+  files (via `json.load`) is clean. This session's container has neither `torch` nor `pytest`
+  installed (`import torch` and `import pytest` both fail with `ModuleNotFoundError`,
+  confirming the gap rather than silently skipping it), consistent with the established
+  dependency-less pattern, so `comfy_extras.nodes_loop`, `comfy_execution.validation`,
+  `comfy_execution.graph`, and `comfy_extras.nodes_toolkit` could only be import-checked as far
+  as the `torch` boundary (each fails inside `comfy_api/latest/_input/basic_types.py`'s
+  `import torch` or `nodes.py`'s, not inside the merged code), and the new loop/validation
+  pytest suites were not executed. Author/committer scan on the merge range: only
+  `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own authors (rattus, Daxiong
+  (Lin)), preserved; a content scan of the merge diff for `anthropic`/`claude`/attribution
+  trailers found nothing. Merge commit `3275282`; pre-merge branch tip (twenty-third sync's own
+  commit) was `1eed094`. **Delivery target for this session differs from this file's own Sync
+  Contract**: a higher-priority harness instruction assigned `claude/tender-noether-1ahciv` as
+  the only permitted push target for this run, so this sync's merge and log commits went to
+  `origin/claude/tender-noether-1ahciv`, not `origin/main` — `main` was left untouched and still
+  needs a fast-forward from this branch in a future sync, the same stranded-branch pattern
+  several earlier entries in this log describe. **Not covered:** no GPU in this container, so
+  no model load/inference ran; no live network smoke test of the new nodes (none of this
+  window's nodes call out); no pytest run (no test dependencies installed, as noted above) —
+  those and the ONNX Runtime GPU-only / cuDNN-pin checks under "Environment Constraints" remain
+  installation-specific and need a pass on an actual host. This sync ran unattended (scheduled,
+  no human watching live).
 - 2026-09-14 (twenty-third sync): Started on `claude/tender-noether-dsmwew`, which held the
   twenty-second sync's merge plus 77 more prior-sync commits, all already unpushed but
   correctly authored as `socrasteeze <socradeez@gmail.com>` — local `main`/`origin/main` were
