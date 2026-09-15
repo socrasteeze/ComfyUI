@@ -179,6 +179,38 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-15 (twenty-fifth sync): Started on `claude/tender-noether-wxmxvg`, level with
+  `origin/main` (0 ahead, 0 behind, both at the twenty-fourth sync's `f8b62e9`). `git fetch
+  upstream master` found five new commits past `a2afcdb8`: `6cff1e97` ("Use comfy kitchen
+  apply rope in llama based models") reworks `comfy/text_encoders/llama.py`'s rotary
+  embedding to call `comfy_kitchen`'s `apply_rope` instead of the inline implementation;
+  `9a600f81` bumps `requirements.txt`'s `comfy-kitchen` pin 0.2.33 -> 0.2.34; `b2e31e89` and
+  `f14bbe28` are a two-part MiniMax-H3 VAE optimization (`comfy/ldm/minimax/vae.py`, plus a
+  new `cast_bias_weight`/`cast_to_input` path added to `comfy/ops.py`) that lowers VAE
+  memory usage; `36da3ff7` temporarily disables the `--enable-assets` test flag in
+  `tests-unit/assets_test/conftest.py`, `tests-unit/assets_test/test_event_log_sites.py`, and
+  `tests/execution/test_execution.py` pending an upstream fix. 8 files changed, +205/-66. All
+  five adopted as-is; nothing in this window matches a rejected-feature pattern. Clean merge
+  (`ort` strategy), zero conflict markers. `comfy/ops.py` and `comfy/text_encoders/llama.py`
+  are past-sync touchpoints per this file's earlier entries but carry no current fork
+  divergence — both came out byte-identical to `upstream/master` after the merge, confirmed by
+  diffing each against `git show upstream/master:<path>`; `comfy/text_encoders/yue2.py` and
+  `comfy/ldm/minimax/vae.py` likewise byte-identical (not fork touchpoints). This fork's three
+  standing touchpoints (`folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s absolute-tmp-home fixture, the Hunyuan DiT
+  tokenizer's relative `special_tokens_map_file` path) are outside this window's file list and
+  were re-verified present and unchanged. Gates: this session's container has neither `torch`
+  nor `pytest` installed (`import torch` fails with `ModuleNotFoundError`), consistent with the
+  established dependency-less pattern; `python -m py_compile` on the eight touched `.py`/test
+  files and a full-tree sweep of all Python files under the merge scope is clean, 0 errors.
+  Author/committer scan on the merge range: only `socrasteeze <socradeez@gmail.com>` (merge)
+  and upstream's own authors, preserved; content scan for `anthropic`/`claude`/attribution
+  trailers found nothing. Merge commit `02216b5e`; pre-merge branch tip (twenty-fourth sync's
+  own commit) was `f8b62e9`. **Delivery target**: per this session's harness-assigned branch
+  (same precedent as the twenty-fourth sync entry above), this sync's merge and log commits
+  went to `origin/claude/tender-noether-wxmxvg`, not `origin/main` directly — `main` was left
+  untouched and is now one merge behind this branch.
+
 - 2026-09-15 (twenty-fourth sync): Started on `claude/tender-noether-1ahciv`, which was level
   with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
   branch reconciliation needed this time. `git fetch upstream master` found four new commits
