@@ -142,6 +142,111 @@ The host keeps a script that performs exactly this check and exits non-zero when
 degraded. It is machine-local and untracked because it hard-codes interpreter
 paths; the untracked host notes name it.
 
+### MiniMax H3 speed nodes and the Comfy compiler
+
+Upstream's Sparse Attention work (`e308cc73`, 2026-09-05) changed the MiniMax H3
+block contract: every `double_block` call now receives an `attention=` keyword.
+Any custom node that replaces the block forward must accept it. `H3-Optimizations`
+does from 0.2.43; anything older fails the first sampler step with
+`forward() got an unexpected keyword argument 'attention'`. Update that pack
+before blaming the merge.
+
+The Comfy compiler (`804eb551`, 2026-09-04) records every CUDA allocation made
+during a sampler step and replays it on the next one. A node that keeps GPU
+tensors alive across steps and frees them outside the recorded scope aborts the
+whole interpreter with `Fatal Python error: Aborted` and no Python traceback.
+`MiniMaxH3-FirstBlockCache` and the `H3-Optimizations` sparse backend both do
+this. Until they pause the compiler themselves, launch with
+`--disable-comfy-compiler` whenever either is in the graph. DynamicVRAM is
+unaffected by the flag.
+
+`ComfyUI-H3-Ref2VA-Accelerator` v0.4.2 ships with one source line swallowed into
+a comment in `decide()`, so the assignment to `first_block_output` never runs and
+every full step ends with `H3 Ref2VA Block Cache full-step state is incomplete`.
+The upstream repo has the same defect; the file literally contains an elided
+`…142 tokens truncated…` marker mid-statement. The fix lives in that pack's own
+checkout on branch `fix/first-block-output`, one commit titled "Restore the
+first_block_output assignment lost to a truncated line in v0.4.2", reconstructed
+from the v0.3 code and the v0.4.2 fast-path logic: Safe CPU stages the tensor on
+CPU, Auto GPU Fast Path keeps it on the device when `_gpu_headroom_ok()` allows.
+That branch, not `main`, must stay checked out. A plain `git pull` or a Manager
+update there silently restores the broken v0.4.2 line, and the only symptom is
+the full-step error above.
+
+Only one step-skipping accelerator belongs in an H3 model chain. The Ref2VA
+author forbids stacking it with Spectrum or FirstBlockCache, and measured runs
+agree: under Spectrum, Ref2VA caches zero steps and the audio picks up glitches.
+Memory Optimization and Sparse Attention are safe beside any one of them.
+
+### MiniMax H3 audio breaks before video does
+
+H3's audio and video streams run on different sigma schedules (the SigmaShift
+node sets them apart on purpose). Any step-cache that decides which steps to skip
+from the video stream and replays the cached residual onto audio carries the
+wrong scale, so the audio degrades while the picture stays clean — ComfyUI
+#15326 measured half amplitude and missing bass at video SSIM 0.95. A clean
+frame is therefore no evidence that the chain is safe; judge the audio on its
+own, and read the run's real configuration back from the output file's embedded
+`prompt` tag rather than from the widgets.
+
+Two conditions had to hold at once for clean audio on the reference-to-video
+path, over eighteen runs on 2026-09-13:
+
+- **At most 294 frames.** 362, the top of the node's stated trained range,
+  broke the audio on every run, including one with nothing but Memory
+  Optimization in the chain. Faults landed 46–80 % of the way through and
+  moved with the clip length, never at a fixed second.
+- **A reference clip whose soundtrack matches the generation.** The reference
+  video is capped to the generation's frame count and snapped down to the
+  17k+5 grid, but `_encode_ref_audio` encodes the whole soundtrack, so a longer
+  clip leaves an audio overhang the model has to reconcile. Trim the clip so
+  the audio equals the post-snap frame count at 24 fps. Cutting with `-t` alone
+  can land a frame or two short, which drops a whole grid step; overshoot the
+  video with `-frames:v` and let the node cap it. The paired
+  `ref_video_audio_N` socket is fine once the clip matches.
+
+With both met, the chain that produced clean audio and video was: Turbo 8-step
+LoRA, `euler` / `simple` / 8 steps, sigma shift 8/5, Memory Optimization, and
+nothing else. Ref2VA caches zero steps under the Turbo LoRA, so its mode is
+irrelevant there. Without the LoRA, the shipped template's `res_multistep` /
+`simple` / 20 steps is the base.
+
+What did not survive: FirstBlockCache and Spectrum broke the audio at 294 even
+where the video was good. Sparse Attention at 0.5 was 8.6 % slower per step than
+off at 1216×672, and broke audio at 243 frames; it does not pay at this size.
+Prompt edits (`partially_copy` → `fully_copy`), moving the soundtrack to the
+standalone `ref_audio_N` socket, and resolution changes all made no difference.
+
+H3 re-synthesizes speech rather than copying it, so a `fully_copy` retention
+line is a hint, not a guarantee: outputs come back at the audio VAE's 32 kHz even
+when the prompt says copy. When the deliverable reuses the source track, mux the
+original back afterwards. Whether to feed the source audio in at all is open.
+MiniMax-H3 discussion #91 reports identity collapsing with reference audio, but
+it is one user's measurement, disputed in the same thread, with no maintainer
+reply; lip-sync replacement packs such as ComfyUI-MiniMax-H3-LongMedia feed the
+source song in as the timing driver. Test both on the clip at hand.
+
+### A backup copy of a node pack still loads
+
+`init_external_custom_nodes` skips exactly one suffix, `.disabled`. Everything
+else in `custom_nodes/` is imported, including a folder renamed to `.bak`,
+`.old`, or `.orig`. Registration is last-writer-wins, and the `ignore` set only
+protects built-in node names, not another pack's. So a stale backup sitting
+beside its own pack re-registers every node id it shares and, if it happens to
+load second, wins.
+
+The failure does not look like a duplicate. The node keeps its name and its
+sockets, and only its behaviour reverts to the backup's. A stale copy calling a
+core node positionally against a signature whose argument order has since
+changed surfaces as a type error deep inside core code — for example a string
+prompt arriving where a width was expected, and a `TypeError: unsupported
+operand type(s) for //` from the latent allocator, with nothing in the trace
+naming the backup.
+
+Two tells in the startup log: the pack's banner prints twice, and both copies
+appear in the custom-node import times. Rename a backup to `.disabled` or move
+it out of `custom_nodes/` entirely; do not park it in place.
+
 ## Local Fixes
 
 - Classify `.m2v` as video explicitly; it is absent from some system MIME tables.
@@ -361,6 +466,15 @@ and cause.
   ONNX Runtime GPU-only constraint and the cuDNN/`.pth` PATH notes under "Environment Constraints"
   are installation-specific and don't apply to this disposable validation container. This sync ran
   unattended (scheduled, no human watching live).
+- 2026-09-13 (custom-node fallout, no upstream change): After the twentieth sync the H3 workflows
+  failed on the first sampler step because `H3-Optimizations` 0.2.40 predated upstream's
+  `attention=` block keyword; fast-forwarded that pack to 0.2.43, which required stopping ComfyUI
+  first since the running process held its native DLL. Found and reconstructed a corrupted line in
+  `ComfyUI-H3-Ref2VA-Accelerator` v0.4.2 (upstream ships it broken). Traced a silent process abort
+  to the Comfy compiler freeing FirstBlockCache's step-persistent GPU tensors; the launcher now
+  carries `--disable-comfy-compiler`. All three are recorded above under Environment Constraints.
+  Fork tree unchanged: 38 placeholder deletions, 0 modified, 0 untracked; GPU acceleration check
+  not re-run because no pip operation occurred.
 - 2026-09-13 (twentieth sync): Adopted one upstream commit, `02d39c8c` ("[Partner Nodes] feat(BFL):
   add the Flux Video Edit node", #16259): a new `FluxVideoEditNode` partner node in
   `comfy_api_nodes/nodes_bfl.py` (+109 lines) plus a matching `BFLFluxVideoEditRequest` pydantic
