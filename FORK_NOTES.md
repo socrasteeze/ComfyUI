@@ -284,6 +284,62 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-15 (twenty-fifth sync): Started on `claude/tender-noether-95aoc1`, which this
+  session found already at `f6e0dd2` — identical to both `origin/main` and
+  `origin/claude/tender-noether-95aoc1`, i.e. already carrying a merge (`1eb0f02`, upstream
+  `6cff1e9`..`36da3ff`: "Use comfy kitchen apply rope in llama based models" #16326, "Update
+  comfy-kitchen version to 0.2.34" #16329, "MiniMax-H3 VAE optimizations" #16187, "Lower
+  minimax VAE usage by a bit" #16332, "Temporarily disable testing with `--enable-assets`"
+  #16334) plus two follow-up docs commits, all with correct `socrasteeze` identity and no
+  attribution trailers, and already fast-forwarded onto `origin/main` by a prior session.
+  That merge never got its own dated entry in this log — noting the gap here for the record,
+  since the environment notes it produced (MiniMax H3 speed-node/Comfy-compiler interaction,
+  the H3 audio-vs-video degradation thresholds, and the stale-backup-node-pack failure mode,
+  all under "Environment Constraints" above) are otherwise the only trace of that window.
+  `git fetch upstream master` from there found exactly one new commit past `36da3ff`:
+  `e09be59f` ("[Partner Nodes] feat(Pruna): add text-to-video and image-to-video nodes with
+  P-Video-2", #16315), adding `comfy_api_nodes/apis/pruna.py` (33 lines) and
+  `comfy_api_nodes/nodes_pruna.py` (309 lines) — a new partner-node integration, the same
+  non-destructive addition pattern as the ninth, twelfth, and twenty-third syncs' partner-node
+  commits (Ideogram, Gemini). 2 files changed, +342/-0. Adopted as-is; nothing in this window
+  matches a rejected-feature pattern. `input`/`models`/`output` are plain directories in this
+  container, not symlinks, so the skip-worktree procedure did not apply. Clean merge (`ort`
+  strategy), zero conflict markers. Neither new file touches any of the fork's three
+  touchpoints (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  path); all three re-verified present and byte-identical against `upstream/master` before and
+  after this commit. `requirements.txt` was not touched by this window's commit (the one pin
+  bump present in the tree — `comfy-kitchen` to 0.2.34 — came from the earlier, already-merged
+  `9a600f8`, not from today's new commit), so no reinstall is flagged by this sync; this
+  session's container has no installed dependency stack regardless. Gates: `python -m
+  py_compile` over all 913 tracked `.py` files (up from 911; two new files) is clean, 0
+  errors, including the two new files individually. `ruff check .` on the full tree reports
+  the same 8 pre-existing fork-harness `T201` (bare `print`) findings in
+  `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` at the same line
+  numbers as every prior sync, and passes clean on the two new files; the one intermittent
+  `Invalid # noqa directive on comfy/ldm/sam3/detector.py:12` warning the twenty-fourth sync
+  flagged as nondeterministic reproduced that same way here (present in the baseline run,
+  absent from the post-merge run, on a file this window never touched) — confirming it is
+  flaky regardless of merge activity, not a regression. This session's container has neither
+  `torch` nor `pytest` installed; `import comfy_api_nodes.nodes_pruna` fails at the
+  `typing_extensions` import inside that module itself (`ModuleNotFoundError`), one layer
+  before the usual `torch` boundary, but still outside any merged logic, so the new module
+  could not be import-verified past its first line, and no pytest run was possible. Author/
+  committer scan on the merge range (`0031d67`'s second parent back to `36da3ff`): only
+  Alexander Piskun (upstream author, via GitHub) and `socrasteeze <socradeez@gmail.com>`
+  (merge), no attribution trailers found in the diff. Merge commit `0031d67e`; pre-merge
+  branch tip was `f6e0dd2`. **Delivery target for this session differs from this file's own
+  Sync Contract**, same as the twenty-fourth sync: a higher-priority harness instruction
+  assigned `claude/tender-noether-95aoc1` as the only permitted push target for this run, so
+  this sync's merge and log commits went to `origin/claude/tender-noether-95aoc1`, not
+  `origin/main` — `main` is now two commits behind this branch (this merge plus this log
+  entry) and needs a future fast-forward, the same stranded-branch pattern several earlier
+  entries in this log describe. **Not covered:** no GPU in this container, so no model
+  load/inference ran; no live network smoke test of the new Pruna nodes (they call an
+  external API this container cannot reach); no pytest run (no test dependencies installed,
+  as noted above) — those and the ONNX Runtime GPU-only / cuDNN-pin checks under "Environment
+  Constraints" remain installation-specific and need a pass on an actual host. This sync ran
+  unattended (scheduled, no human watching live).
 - 2026-09-15 (twenty-fourth sync): Started on `scheduled-sync-1ahciv`, which was level
   with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
   branch reconciliation needed this time. `git fetch upstream master` found four new commits
