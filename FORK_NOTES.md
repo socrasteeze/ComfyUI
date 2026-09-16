@@ -284,6 +284,33 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-16 (twenty-sixth sync): Ran on local `main`, level with `origin/main` (0 ahead,
+  0 behind) before the merge. `git fetch upstream` found a single new commit past `7a0b5eed`:
+  `8ad078bb` ("Add transparent background option for GPT Image 2", #16366), one file,
+  `comfy_api_nodes/nodes_openai.py`, +2/-5. It drops the guard that rejected
+  `background="transparent"` on `gpt-image-2`, folds that model into the plain unknown-model
+  check, and adds `"transparent"` to the option tuple the v2 node builds for it. No
+  `requirements.txt` movement and no version stamp in the window, so no pip step was needed.
+  All 38 symlink placeholders were protected with `skip-worktree` for the merge and the flags
+  were cleared immediately afterward; the merge was clean, touched no fork file, left no
+  orphaned references, and the baseline came back at exactly 38 deleted / 0 modified /
+  0 untracked. The changed file byte-compiled clean. The GPU acceleration gate passed on both
+  host installations. Startup was checked with custom nodes enabled this pass and exited 0
+  with the documented 1-warning baseline and nothing else: `LayerStyle -> Cannot import name
+  'guidedFilter' from 'cv2.ximgproc'` was the only match for `IMPORT FAILED|Cannot import|
+  Traceback|ImportError|ModuleNotFound`. Author/committer scan over the merge range: only
+  `socrasteeze <socradeez@gmail.com>` on the merge commit and upstream's Alexander Piskun,
+  both preserved. Premerge tip was `7a0b5eed`, upstream tip `8ad078bb`. Custom nodes were
+  swept in the same pass: of the 34 git-backed trees under `custom_nodes/`, three were behind
+  their own origin and were fast-forwarded — `ComfyUI-Continuity` (38 commits),
+  `ComfyUI-DaSiWa-Nodes` (8), and `comfyui-manager` (1, a database refresh). `RES4LYF` is 2
+  commits ahead of its origin with local work and was left alone. DaSiWa raised its `av` pin
+  from `>=12.0` to `>=18.0` and dropped `huggingface_hub` and `imageio-ffmpeg`; the installed
+  `av` is 18.1.0, which already satisfies the new floor, and core `requirements.txt` asks for
+  `av>=17.0.0`, so nothing was reinstalled. **Not covered:** Pytest and Ruff are not installed
+  in the portable runtime, so DaSiWa's new `.tests/` cases did not run; the startup check ran
+  with `--cpu`, so no model load or real inference was exercised, and the OpenAI GPT Image 2
+  path itself is an API node that was not called.
 - 2026-09-15 (twenty-fifth sync): Ran on local `main`, which was level with `origin/main`
   (0 ahead, 0 behind) — no branch reconciliation needed. `git fetch upstream` found eight new
   commits past `f6e0dd2b`, and the window includes the `v0.36.0` release tag. The bulk is
