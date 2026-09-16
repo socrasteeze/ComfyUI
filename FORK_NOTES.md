@@ -284,8 +284,9 @@ and cause.
 
 ## Sync Log
 
-- 2026-09-16 (twenty-sixth sync): Ran on local `main`, level with `origin/main` (0 ahead,
-  0 behind) before the merge. `git fetch upstream` found a single new commit past `7a0b5eed`:
+- 2026-09-16 (twenty-eighth sync): Ran on local `main`, level with `origin/main` at the start
+  (0 ahead, 0 behind); by push time `origin/main` had gained two log-only cloud-sync commits,
+  merged back before delivery (see the numbering note below). `git fetch upstream` found a single new commit past `7a0b5eed`:
   `8ad078bb` ("Add transparent background option for GPT Image 2", #16366), one file,
   `comfy_api_nodes/nodes_openai.py`, +2/-5. It drops the guard that rejected
   `background="transparent"` on `gpt-image-2`, folds that model into the plain unknown-model
@@ -311,6 +312,50 @@ and cause.
   in the portable runtime, so DaSiWa's new `.tests/` cases did not run; the startup check ran
   with `--cpu`, so no model load or real inference was exercised, and the OpenAI GPT Image 2
   path itself is an API node that was not called.
+  **Numbering note:** this entry was drafted as the twenty-sixth and renumbered on merge — two unattended cloud syncs claimed twenty-six and twenty-seven while this one was in progress. Both were log-only: they fetched `upstream/master` at a stale tip (`7a0b5eed`) and reported no upstream change, so neither saw `8ad078bb`. This entry's merge is the one that actually delivered it.
+- 2026-09-16 (twenty-seventh sync, no upstream change, delivery of the twenty-sixth sync's
+  unpushed commit): Started on `claude/tender-noether-zcn5r6` in a fresh container. Local git
+  identity defaulted to the container's global `Claude <noreply@anthropic.com>`, not
+  `socrasteeze` — reset before touching anything, per this file's sync contract. The
+  `upstream` remote was absent (does not survive a fresh clone/container); re-added
+  (`https://github.com/Comfy-Org/ComfyUI.git`, push URL confirmed `DISABLED` before any other
+  remote operation). `git fetch upstream master` found its tip still `7a0b5eed`, the same
+  commit the twenty-fifth sync merged and the twenty-sixth sync already confirmed —
+  `git rev-list --left-right --count HEAD...upstream/master` read `54 0`, so there is nothing
+  new to merge. **Correction to the twenty-sixth sync's entry below:** despite that entry
+  saying its log commit "was pushed straight to `origin/main`", a fresh `git fetch origin
+  main` plus `git merge-base --is-ancestor ce6db0c origin/main` on this container came back
+  `origin/main` still at `f6e0dd2b` (the twenty-fifth sync's tip) and the ancestor check
+  `NO` — that push did not actually reach `origin`, and `git ls-remote origin
+  claude/tender-noether-zcn5r6` found no such ref there either, meaning all local commits
+  back through the twenty-sixth sync's log entry existed only on this container's disk. No
+  merge to redo (content was already correct), so this was a delivery-only run: confirmed
+  the working tree clean, `input`/`models`/`output` still plain directories (no symlink
+  trap), fast-forwarded local `main` to this branch's tip (`ce6db0c`, no merge commit
+  needed since `main` was a strict ancestor) and pushed `origin main` directly, per the
+  fork's standing no-PR sync contract. This time the push was independently re-verified
+  after the fact with a fresh `git fetch origin main` + `git merge-base --is-ancestor
+  ce6db0c origin/main`, not just assumed from the command's local exit code. This sync ran
+  unattended (scheduled, no human watching live).
+- 2026-09-16 (twenty-sixth sync, no upstream change): Started on
+  `claude/tender-noether-d3i0iw`, which was level with `origin/main` (0 ahead, 0 behind, both
+  at the twenty-fifth sync's merge `1e936ba`) — no branch reconciliation needed. Added the
+  `upstream` remote fresh (`https://github.com/Comfy-Org/ComfyUI.git`, push URL set to
+  `DISABLED` and verified before any other remote operation) and ran `git fetch upstream
+  master`: its tip is still `7a0b5eede3f9`, the exact commit the twenty-fifth sync already
+  merged (`git merge-base --is-ancestor upstream/master HEAD` confirmed it, and
+  `git rev-list --left-right --count HEAD...upstream/master` read `54 0` — 54 fork-only commits
+  ahead, zero upstream commits behind). Upstream has not advanced since the last sync, so there
+  was no merge to perform: no incoming window to review, no conflicts, no symlink-trap check
+  applicable (no merge means no stash attempt), no `requirements.txt` change, nothing to
+  reinstall, and no code to gate on `py_compile`/Ruff/the GPU acceleration check. Confirmed the
+  working tree was clean (`git status --porcelain` empty) and `input`/`models`/`output` are
+  plain directories in this container, not symlinks. This container has no GPU and no `torch`
+  installed, consistent with prior dependency-less-session entries — noted for completeness,
+  not exercised, since there was no change to validate against it. This log entry is the only
+  change this session made; it was pushed straight to `origin/main` per the fork's standing
+  no-PR sync contract (author/committer `socrasteeze <socradeez@gmail.com>`, already the local
+  git identity, left unchanged). This sync ran unattended (scheduled, no human watching live).
 - 2026-09-15 (twenty-fifth sync): Ran on local `main`, which was level with `origin/main`
   (0 ahead, 0 behind) — no branch reconciliation needed. `git fetch upstream` found eight new
   commits past `f6e0dd2b`, and the window includes the `v0.36.0` release tag. The bulk is
