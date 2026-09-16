@@ -179,6 +179,46 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-16 (twenty-first sync): Adopted 23 upstream commits through `8ad078bb`, spanning the
+  v0.36.0 release tag. Headline changes: Generic Loops (CORE-14, #16227) with loop boundaries
+  declared in the node schema and heterogeneous lists carried through a loop; the assets system
+  split into separate record and content stores (#16295) with structured event-log lines (#16306);
+  MiniMax-H3 VAE optimizations (#16187, #16332); `comfy-kitchen` apply-rope used in llama-based
+  models with fast kernels on more models (#16326, #16351); auto-detected `--fast-disk` (CORE-440);
+  Tripo P2, Pruna P-Video-2 and GeminiNodeV3 partner nodes; a transparent-background option for
+  GPT Image 2 (#16366). 178 files, +28301/-13890. Clean merge, zero conflicts and zero conflict
+  markers; no changed file is a fork touchpoint. All three fork touchpoints verified intact:
+  `folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s tmp-path home
+  fixture, and the Hunyuan DiT tokenizer's relative `special_tokens_map_file`. `requirements.txt`
+  moved four pins (workflow-templates 0.11.59 to 0.11.62, comfy-kitchen 0.2.33 to 0.2.34,
+  comfy-aimdo 0.5.3 to 0.5.5) and was reinstalled after a dry run confirmed torch, torchvision and
+  onnxruntime were absent from the plan. Validation on this installation: all 163 surviving changed
+  modules byte-compile clean; the unit suite run per directory is green everywhere except one new
+  upstream test, and a real GPU quick-test boot exits 0 with zero `IMPORT FAILED` across all 26 git
+  node packs. `ruff` is not installed here, so the lint pass was skipped rather than reported
+  clean. Merge commit `1567e26b`; pre-merge fork HEAD was `cc1aeb25`.
+
+  Two standing installation conditions, neither introduced by this window:
+
+  - `tests-unit/assets_test/test_event_log_sites.py::test_noassets_emits_no_enabled_event` fails
+    here. The test spawns `main.py --cpu`; on this box the `sageattention` import inside
+    `comfy/ldm/modules/attention.py` still calls `torch.cuda.get_device_capability`, and CUDA init
+    aborts with `Allocator backend parsed at runtime != allocator backend parsed at load time,
+    cudaMallocAsync != native`. It is a `--cpu`-only path. The normal GPU boot is unaffected.
+  - This installation has plain `onnxruntime` 1.28.0 and no `onnxruntime-gpu`, so ONNX providers
+    enumerate as `['AzureExecutionProvider', 'CPUExecutionProvider']`. Every ONNX node here runs on
+    CPU. See "ONNX Runtime must stay GPU-only" above; repairing it means installing
+    `onnxruntime-gpu` and removing plain `onnxruntime`, which is a deliberate change, not a sync
+    step.
+
+  Node packs on this installation were fast-forwarded in the same pass. Ten of the 26 git-managed
+  packs were behind and none held local commits, so every one was a clean `--ff-only`:
+  `comfyui-manager` (103), `ComfyUI-Continuity` (69), `ComfyUI-Easy-Use` (12), `ComfyUI_LayerStyle`
+  (9), `ComfyUI-subject-eraser` (9), `RES4LYF` (7), `rgthree-comfy` (7), `ComfyUI_MiniMaxH3_Director`
+  (6), `ComfyUI-VideoHelperSuite` (4), `DazzleNodes` (1). No pack moved its `requirements.txt` in
+  the adopted range, so no node-pack pip work was needed and the `onnxruntime` pin was never at
+  risk.
+
 - 2026-09-13 (twentieth sync): Adopted one upstream commit, `02d39c8c` ("[Partner Nodes] feat(BFL):
   add the Flux Video Edit node", #16259): a new `FluxVideoEditNode` partner node in
   `comfy_api_nodes/nodes_bfl.py` (+109 lines) plus a matching `BFLFluxVideoEditRequest` pydantic
