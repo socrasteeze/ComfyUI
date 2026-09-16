@@ -284,6 +284,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-16 (twenty-seventh sync, no upstream change, delivery of the twenty-sixth sync's
+  unpushed commit): Started on `claude/tender-noether-zcn5r6` in a fresh container. Local git
+  identity defaulted to the container's global `Claude <noreply@anthropic.com>`, not
+  `socrasteeze` — reset before touching anything, per this file's sync contract. The
+  `upstream` remote was absent (does not survive a fresh clone/container); re-added
+  (`https://github.com/Comfy-Org/ComfyUI.git`, push URL confirmed `DISABLED` before any other
+  remote operation). `git fetch upstream master` found its tip still `7a0b5eed`, the same
+  commit the twenty-fifth sync merged and the twenty-sixth sync already confirmed —
+  `git rev-list --left-right --count HEAD...upstream/master` read `54 0`, so there is nothing
+  new to merge. **Correction to the twenty-sixth sync's entry below:** despite that entry
+  saying its log commit "was pushed straight to `origin/main`", a fresh `git fetch origin
+  main` plus `git merge-base --is-ancestor ce6db0c origin/main` on this container came back
+  `origin/main` still at `f6e0dd2b` (the twenty-fifth sync's tip) and the ancestor check
+  `NO` — that push did not actually reach `origin`, and `git ls-remote origin
+  claude/tender-noether-zcn5r6` found no such ref there either, meaning all local commits
+  back through the twenty-sixth sync's log entry existed only on this container's disk. No
+  merge to redo (content was already correct), so this was a delivery-only run: confirmed
+  the working tree clean, `input`/`models`/`output` still plain directories (no symlink
+  trap), fast-forwarded local `main` to this branch's tip (`ce6db0c`, no merge commit
+  needed since `main` was a strict ancestor) and pushed `origin main` directly, per the
+  fork's standing no-PR sync contract. This time the push was independently re-verified
+  after the fact with a fresh `git fetch origin main` + `git merge-base --is-ancestor
+  ce6db0c origin/main`, not just assumed from the command's local exit code. This sync ran
+  unattended (scheduled, no human watching live).
 - 2026-09-16 (twenty-sixth sync, no upstream change): Started on
   `claude/tender-noether-d3i0iw`, which was level with `origin/main` (0 ahead, 0 behind, both
   at the twenty-fifth sync's merge `1e936ba`) — no branch reconciliation needed. Added the
