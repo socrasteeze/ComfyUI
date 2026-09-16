@@ -284,6 +284,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-16 (twenty-sixth sync, no upstream change): Started on
+  `claude/tender-noether-d3i0iw`, which was level with `origin/main` (0 ahead, 0 behind, both
+  at the twenty-fifth sync's merge `1e936ba`) — no branch reconciliation needed. Added the
+  `upstream` remote fresh (`https://github.com/Comfy-Org/ComfyUI.git`, push URL set to
+  `DISABLED` and verified before any other remote operation) and ran `git fetch upstream
+  master`: its tip is still `7a0b5eede3f9`, the exact commit the twenty-fifth sync already
+  merged (`git merge-base --is-ancestor upstream/master HEAD` confirmed it, and
+  `git rev-list --left-right --count HEAD...upstream/master` read `54 0` — 54 fork-only commits
+  ahead, zero upstream commits behind). Upstream has not advanced since the last sync, so there
+  was no merge to perform: no incoming window to review, no conflicts, no symlink-trap check
+  applicable (no merge means no stash attempt), no `requirements.txt` change, nothing to
+  reinstall, and no code to gate on `py_compile`/Ruff/the GPU acceleration check. Confirmed the
+  working tree was clean (`git status --porcelain` empty) and `input`/`models`/`output` are
+  plain directories in this container, not symlinks. This container has no GPU and no `torch`
+  installed, consistent with prior dependency-less-session entries — noted for completeness,
+  not exercised, since there was no change to validate against it. This log entry is the only
+  change this session made; it was pushed straight to `origin/main` per the fork's standing
+  no-PR sync contract (author/committer `socrasteeze <socradeez@gmail.com>`, already the local
+  git identity, left unchanged). This sync ran unattended (scheduled, no human watching live).
 - 2026-09-15 (twenty-fifth sync): Ran on local `main`, which was level with `origin/main`
   (0 ahead, 0 behind) — no branch reconciliation needed. `git fetch upstream` found eight new
   commits past `f6e0dd2b`, and the window includes the `v0.36.0` release tag. The bulk is
