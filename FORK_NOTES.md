@@ -284,6 +284,45 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-15 (twenty-fifth sync): Ran on local `main`, which was level with `origin/main`
+  (0 ahead, 0 behind) — no branch reconciliation needed. `git fetch upstream` found eight new
+  commits past `f6e0dd2b`, and the window includes the `v0.36.0` release tag. The bulk is
+  `7a0b5eed` ("Aimdo 0.5.5 + Auto-detect and enable --fast-disk when the disk is fast",
+  CORE-440, #16333): a new `comfy/storage.py` probes whether the backing device is an NVMe/SSD
+  (Linux sysfs rotational flag, with platform fallbacks) and auto-enables `--fast-disk`, with
+  `model_management.py`, `model_patcher.py`, `ops.py`, `pinned_memory.py`, `sd.py`, and
+  `utils.py` adjusted to read the detected value instead of the flag alone. `b2da2b42`
+  ("Declare loop boundaries in node schema", #16347) and `a84f954b` ("Carry every item of a
+  heterogeneous list through a loop", #16345) continue the generic-loops work landed last
+  window, moving `LOOP_BOUNDARY` into the node schema and fixing per-item typing through a
+  loop. `9b572343` widens the fast rope kernel path in `text_encoders/llama.py` to more models.
+  `1a14b82e` and `e09be59f` add partner API nodes (Tripo P2 text/image/multiview-to-model;
+  Pruna P-Video-2 text-to-video and image-to-video) as new self-contained files under
+  `comfy_api_nodes/`. `a78a22e7` and `ee71d5c4` are the workflow-templates bump and the version
+  stamp. Twenty-two files, +953/-50. No conflicts; no fork file was touched and no orphaned
+  references appeared. All 38 symlink placeholders were protected with `skip-worktree` for the
+  merge and the flags were cleared immediately afterward; the baseline came back exactly at 38
+  deleted / 0 modified / 0 untracked. `requirements.txt` moved, so it was reinstalled: the
+  dry run listed only `comfy-aimdo` 0.5.3 to 0.5.5 and the workflow-template packages 0.11.60
+  to 0.11.62, with torch and torchvision absent from the "Would install" line, and the real
+  install matched. The GPU acceleration gate passed on both host installations — main ComfyUI
+  (torch 2.9.1+cu130, onnxruntime-gpu 1.23.2) and the SwarmUI backend (torch 2.9.0+cu130,
+  onnxruntime-gpu 1.23.2) each ran real Conv inference on `CUDAExecutionProvider`. All 915
+  tracked Python files byte-compiled clean, as did the 20 changed files individually. Core
+  startup passed (exit 0) with an isolated user and temp directory and custom and API nodes
+  disabled: no `IMPORT FAILED`, no `Cannot import name`, no traceback, and the new package
+  versions (`comfy-aimdo` 0.5.5, `comfyui-workflow-templates` 0.11.62) logged as installed.
+  That run renamed the live `user/comfyui.db` to `.bak` as a legacy-database migration step
+  and copied it into the throwaway user directory; the live file was renamed straight back,
+  same size and mtime, before the sync finished. Author/committer scan over the merge range:
+  only `socrasteeze <socradeez@gmail.com>` on the merge commit and upstream's own authors
+  (comfyanonymous, Alexander Piskun, Daxiong (Lin), Lukas Buck, rattus), all preserved. Merge
+  commit `6e6d80b2`; premerge tip was `f6e0dd2b`, upstream tip `7a0b5eed`. **Not covered:**
+  Pytest and Ruff are not installed in the portable runtime, so the new `storage_test.py`,
+  `nodes_loop_test.py`, and `test_nested_loop_execution.py` cases did not run; the startup
+  check ran with `--cpu` and with custom nodes disabled, so neither the documented 1-warning
+  custom-node import baseline (`LayerStyle -> Cannot import name 'guidedFilter'`) nor any
+  model load or real inference was exercised this pass.
 - 2026-09-15 (twenty-fourth sync): Started on `scheduled-sync-1ahciv`, which was level
   with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
   branch reconciliation needed this time. `git fetch upstream master` found four new commits
