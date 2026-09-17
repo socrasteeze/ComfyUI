@@ -284,6 +284,56 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-17 (thirtieth sync): Ran on local `main`, level with `origin/main` at the start (0
+  ahead, 0 behind). This container's clone was shallow (`.git/shallow` present, one commit
+  deep) — `git fetch upstream` initially reported an implausible `1 5964` ahead/behind split
+  because a shallow clone shares no history with `upstream/master` at all, so every upstream
+  commit back to its root counted as "behind." `git fetch --unshallow origin` fixed this
+  (6,058 commits pulled in, `merge-base HEAD upstream/master` resolved to `d39cdfdb`, exactly
+  the twenty-ninth sync's recorded upstream tip); the corrected count was `95 1` — 95 fork-only
+  commits ahead, one real upstream commit behind. This is a new failure mode for this log: a
+  fresh `add_repo`-style clone in an agent sandbox can be shallow even when the working tree
+  looks otherwise normal, and it silently poisons the ahead/behind math rather than erroring —
+  worth an unshallow check at Phase 0 of any future sync run from an unfamiliar container.
+  The one real incoming commit was `387f98aa` ("[Partner Nodes] fix(Tripo): refuse a P2 run
+  whose linked GLB or FBX output would be empty", #16369): a new `validate_output_unlinked`/
+  `get_output_consumers` pair in `comfy_api_nodes/util/_helpers.py` (walks the live prompt
+  graph via the node's hidden `dynprompt` to list what's connected to a given output index),
+  exported through `comfy_api_nodes/util/__init__.py`, and called from all three Tripo P2
+  nodes' `execute()` (text/image/multiview-to-model) to raise a clear error when the node's
+  `quad` setting means its GLB or FBX output is empty but something is still wired to it —
+  each node's `hidden` list also gained `IO.Hidden.dynprompt` so the check has graph access.
+  3 files, +43/-4. Adopted as-is; nothing in this window matches a rejected-feature pattern.
+  No `requirements.txt` or version-stamp movement, so no pip step was needed. `input`/`models`/
+  `output` are plain directories in this container, not symlinks, so the skip-worktree
+  procedure did not apply. Clean merge (`ort` strategy), zero conflict markers; none of the
+  three changed files is a fork touchpoint, and all three fork touchpoints
+  (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-tmp-home fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  path) were re-verified present and untouched by `git diff $(git merge-base HEAD
+  upstream/master)..HEAD --name-status | grep -v '^A'` before and after. All 915 tracked
+  Python files byte-compiled clean via `py_compile`, both before and after the merge, as did
+  the three changed files individually; `comfy_execution.graph_utils.is_link` (the one new
+  import in `_helpers.py`) already existed pre-merge, so no missing symbol. `ruff check .`
+  reports the same 8 pre-existing fork-harness `T201` (bare `print`) findings in
+  `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` as every prior sync, at
+  the same line numbers, none of those files touched by this window; the three changed files
+  pass Ruff clean on their own. Swept for other references to the new
+  `validate_output_unlinked`/`get_output_consumers`/`TripoPSeries*` symbols outside
+  `comfy_api_nodes/`: none found, so this is a self-contained node-level change with no
+  orphaned caller. This session's container has neither `torch` nor `pytest` installed
+  (`ModuleNotFoundError` for both, confirming the gap rather than silently skipping it),
+  consistent with the established dependency-less pattern, so the GPU acceleration gate and a
+  real import of `comfy_api_nodes.nodes_tripo` could not run. Author/committer scan over the
+  merge range: only `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own author
+  (Alexander Piskun, via the GitHub merge-button committer), preserved; no AI/vendor
+  attribution trailer in the merged diff or this session's own commits. Merge commit
+  `0d1f7d83`; premerge tip was `85a93f83`, upstream tip `387f98aa`. Pushed `main` to `origin`
+  only. **Not covered:** no GPU in this container, so no model load/inference ran and the
+  ONNX Runtime GPU-only/cuDNN-pin checks under "Environment Constraints" were not exercised;
+  no live Tripo API smoke test (needs a key and network this container doesn't have); no
+  pytest run (no test dependencies installed) — those remain installation-specific and need a
+  pass on an actual host. This sync ran unattended (scheduled, no human watching live).
 - 2026-09-16 (twenty-ninth sync): Ran on local `main`, level with `origin/main` at the start
   (0 ahead, 0 behind). `git fetch upstream` found two new commits past `8ad078bb`: `4e779e56`
   ("Add CFG control to YuE2 Generate Music node", #16373), `comfy_extras/nodes_yue2.py`, +5/-2,
