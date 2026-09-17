@@ -284,6 +284,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-16 (twenty-ninth sync): Ran on local `main`, level with `origin/main` at the start
+  (0 ahead, 0 behind). `git fetch upstream` found two new commits past `8ad078bb`: `4e779e56`
+  ("Add CFG control to YuE2 Generate Music node", #16373), `comfy_extras/nodes_yue2.py`, +5/-2,
+  adding a `cfg` float input threaded into the sampler call; and `d39cdfdb` ("Always put text
+  encoder on GPU when dynamic vram on", #16374), `comfy/model_management.py`, +3/-1, which makes
+  the text-encoder device selection ignore the CPU fallback when dynamic VRAM is enabled. No
+  `requirements.txt` movement and no version stamp in the window, so no pip step was needed. All
+  38 symlink placeholders were protected with `skip-worktree` for the merge and the flags were
+  cleared immediately afterward; the merge was clean (`d3aab51b`), touched no fork file, and the
+  baseline came back at exactly 38 deleted / 0 modified / 0 untracked. Both changed files
+  byte-compiled clean. The GPU acceleration gate passed on both host installations (`ALL
+  INSTALLS OK`, exit 0). Premerge tip was `b63bebcc`, upstream tip `d39cdfdb`. Pushed `main` to
+  `origin` only.
+
 - 2026-09-16 (twenty-eighth sync): Ran on local `main`, level with `origin/main` at the start
   (0 ahead, 0 behind); by push time `origin/main` had gained two log-only cloud-sync commits,
   merged back before delivery (see the numbering note below). `git fetch upstream` found a single new commit past `7a0b5eed`:
