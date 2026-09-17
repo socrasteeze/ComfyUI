@@ -107,6 +107,27 @@ Any pip operation can cause this, including a custom node's own
 `requirements.txt`. ComfyUI-RMBG lists both packages; the CPU line is commented
 out locally and must stay commented after any node update.
 
+### Where the CUDA libraries come from
+
+Two arrangements satisfy `onnxruntime-gpu`, and an installation uses one or the other. Check which
+before touching anything.
+
+- **nvidia wheels plus a `PATH` `.pth`.** `nvidia-cuda-runtime`, `nvidia-cublas`, `nvidia-cudnn-*`
+  and friends are installed as packages, and a `.pth` in site-packages puts their `bin` directories
+  on `PATH` at interpreter start. The cuDNN pin and the `.pth` described below both belong to this
+  arrangement.
+- **Torch's bundled libraries.** A Windows `+cuXXX` torch wheel ships `cudart64_*.dll`,
+  `cublas64_*.dll` and `cudnn64_9.dll` inside `site-packages/torch/lib`, and importing torch before
+  onnxruntime loads them into the process, so ORT's plain `LoadLibrary` resolves them by basename.
+  No nvidia wheels and no `.pth` are needed. Every ComfyUI entry point imports torch first, so the
+  ordering holds in practice.
+
+Under the second arrangement, install `onnxruntime-gpu` with **no extras**. `[cuda,cudnn]` would
+pull a second, independent copy of CUDA and cuDNN alongside torch's, which is the version drift the
+cuDNN pin below exists to prevent. Match the ORT build to torch's CUDA major instead: read the
+wheel's `Requires-Dist` for the `cuda` extra and confirm it names the same major as
+`torch.version.cuda`.
+
 Confirm which distribution owns the binaries:
 
     python -c "import onnxruntime.capi.build_and_package_info as i; print(i.package_name)"
@@ -205,11 +226,16 @@ and cause.
     `comfy/ldm/modules/attention.py` still calls `torch.cuda.get_device_capability`, and CUDA init
     aborts with `Allocator backend parsed at runtime != allocator backend parsed at load time,
     cudaMallocAsync != native`. It is a `--cpu`-only path. The normal GPU boot is unaffected.
-  - This installation has plain `onnxruntime` 1.28.0 and no `onnxruntime-gpu`, so ONNX providers
-    enumerate as `['AzureExecutionProvider', 'CPUExecutionProvider']`. Every ONNX node here runs on
-    CPU. See "ONNX Runtime must stay GPU-only" above; repairing it means installing
-    `onnxruntime-gpu` and removing plain `onnxruntime`, which is a deliberate change, not a sync
-    step.
+  - This installation was found running plain `onnxruntime` 1.28.0 with no `onnxruntime-gpu`, so
+    providers enumerated as `['AzureExecutionProvider', 'CPUExecutionProvider']` and every ONNX node
+    ran on CPU. Repaired in the same session: plain `onnxruntime` uninstalled first, then
+    `onnxruntime-gpu==1.28.0` installed with no extras. See "ONNX Runtime must stay GPU-only" below
+    for why the extras were skipped. Providers now read
+    `['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']`, and a real
+    `InferenceSession` over an exported Conv+ReLU model keeps `CUDAExecutionProvider` in
+    `get_providers()` and returns finite output. `ComfyUI-Easy-Use/requirements.txt` line 5 listed
+    bare `onnxruntime` and was commented out locally, the same treatment ComfyUI-RMBG's CPU line
+    gets; it must stay commented after any update to that pack.
 
   Node packs on this installation were fast-forwarded in the same pass. Ten of the 26 git-managed
   packs were behind and none held local commits, so every one was a clean `--ff-only`:
