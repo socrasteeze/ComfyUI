@@ -107,6 +107,17 @@ Any pip operation can cause this, including a custom node's own
 `requirements.txt`. ComfyUI-RMBG lists both packages; the CPU line is commented
 out locally and must stay commented after any node update.
 
+Check this in **every** installation, not just the one you are working in. On
+2026-09-17 the SwarmUI backend's copy of ComfyUI-RMBG was found still carrying a
+live `onnxruntime>=1.15.0`, having never received the guard, in the install that
+actually runs DWPose and WD14 tagging. Nothing had triggered it yet, so the gate
+was green and the defect was invisible; ComfyUI-Manager's "install missing
+requirements" path would have been enough to fire it. When you comment the line,
+copy the explanatory comment with it — an install that carries the guard but not
+the reason is one node update away from losing both. Note also that a backend's
+`requirements.txt` may be CRLF: rewrite it in binary mode, or a three-line edit
+silently reflows the whole file.
+
 Confirm which distribution owns the binaries:
 
     python -c "import onnxruntime.capi.build_and_package_info as i; print(i.package_name)"
@@ -283,6 +294,83 @@ verification checkout's published changes. Record baseline failures by test name
 and cause.
 
 ## Sync Log
+
+- 2026-09-17 (thirty-first sync, SwarmUI backend appendix): Same-session follow-up to the entry
+  below, covering the **second** installation (`E:\SwarmUI\dlbackend\comfy\ComfyUI`). That tree
+  is **not a fork**: its `origin` is `comfyanonymous/ComfyUI` directly, it tracks
+  `origin/master`, and it carries no `FORK_NOTES`/`CLAUDE`/`HANDOFF` of its own, so the work
+  there is a plain fast-forward pull with nothing to push anywhere. It also has **no symlinks**
+  (`input`/`models`/`output` are plain directories), so the skip-worktree trap does not apply
+  and its healthy baseline is **1 deleted** (`input/example.png`) / 0 modified / 0 untracked —
+  not 38. Core fast-forwarded `d39cdfdb0` → `7de99222f` (the same four upstream commits the fork
+  took, plus `387f98aa`). `requirements.txt` moved, so it was reinstalled against SwarmUI's
+  own `python_embeded`; the mandatory `--dry-run` showed `comfy-kitchen-0.2.35` and
+  `comfyui_frontend_package-1.52.7` only, with torch and torchvision absent, and torch
+  2.9.0+cu130 was confirmed intact afterward. Of 15 git-backed trees under its `custom_nodes/`,
+  six were behind, clean, and fast-forwarded: `ComfyUI-KJNodes` (476 commits behind),
+  `comfyui-manager` (811), `ComfyUI-QwenVL` (76), `ComfyUI-RMBG` (33), `RES4LYF` (4) and
+  `rgthree-comfy` (2). Every "dirty" worktree flagged by the sweep turned out to be
+  `__pycache__` only — no real local edits anywhere in that install. The GPU gate passed on both
+  installations after the work (`ALL INSTALLS OK`, exit 0, real Conv inference on
+  `CUDAExecutionProvider`, `package=onnxruntime-gpu` on each) and its startup exited 0 with
+  **zero** import failures (this install has no LayerStyle, so unlike the fork its clean
+  baseline is a completely silent one — a single `IMPORT FAILED` there is a real regression, not
+  an expected warning).
+
+  Two pre-existing defects specific to that install were found and fixed in the same pass, both
+  reviewed with the operator first. Neither node is used on SwarmUI, which is what made the
+  cheap fixes the right ones:
+
+  **1. `ComfyUI-RMBG` was missing the CPU-onnxruntime guard.** Its `requirements.txt` carried a
+  live `onnxruntime>=1.15.0` on the line directly above `onnxruntime-gpu>=1.15.0`, where the
+  fork's copy has had that line commented out for some time. This is the exact silent-failure
+  mode described under "ONNX Runtime must stay GPU-only": both distributions write the same
+  `capi/onnxruntime_pybind11_state.pyd`, last install wins, and a CPU build overwriting the GPU
+  one raises no error — it just empties the provider list. The install that had the unguarded
+  copy is the one running DWPose and WD14 tagging, ComfyUI-Manager is present there (its
+  "install missing requirements" path runs that file), and RMBG had just moved 33 commits, so
+  the line was live ordnance rather than a theoretical concern. Only `py/AILab_BodySegment.py`
+  imports ORT, and it does so as a bare `import onnxruntime`, which `onnxruntime-gpu` satisfies
+  identically — commenting the CPU line removes no functionality. The fork's three-line LOCAL
+  comment block was copied over verbatim so both installs now carry the same guard *and* the
+  same explanation of why it exists. Note for whoever edits these files next: the backend's
+  `requirements.txt` is CRLF throughout, and a naive text-mode rewrite silently reflows the
+  whole file (a 25/22-line diffstat for a 3-line change). The edit was redone in binary mode to
+  keep the diff to the intended `-1/+4` hunk. Expect this guard to conflict on some future RMBG
+  update; re-apply it rather than accepting theirs.
+
+  **2. `comfyui-sam3` was stranded on an abandoned pre-rewrite history.** The sweep reported it
+  as "330 behind / 100 ahead", which looked like local work worth protecting and was not.
+  `git merge-base HEAD origin/main` **exited 1 — no common ancestor at all**: local sat on root
+  `3076547` while `origin/main` was built on root `7e397e5d`. Upstream
+  (`PozzettiAndrea/ComfyUI-SAM3`) force-rewrote its history, and comparing two disjoint
+  histories makes every commit on each side count against the other, so the ahead/behind number
+  was pure artifact. Three independent checks confirmed nothing local was at risk: all 100
+  "ahead" commits were authored by upstream people (Pozzetti, BunnyAI, provos, techidsk and
+  others) with **zero** by the fork owner; the local tip `f8e6cff` existed on no remote branch;
+  and decisively, the *fork's* own copy of this node already sits on origin's root `7e397e5d` at
+  tip `de0ff5d2`, 0 ahead / 0 behind, from the identical remote URL — i.e. the rewritten history
+  is the correct one and is already in service on this machine. The ~57 "local-only" files
+  (`nodes/sam3_lib/**`, `sam3_server.py`, `speedup.py`, `find_cuda.py`) were the old upstream
+  layout the rewrite replaced, not additions. The old tip was tagged
+  `orphaned-pre-rewrite-2026-09-17` (free, and keeps it recoverable in that 534 MB `.git`) and
+  the tree was `reset --hard origin/main`, landing it exactly where the fork's copy sits. Stale
+  `__pycache__` from the old layout was then removed, since those `.pyc` files referenced
+  modules the reset deleted.
+
+  The reset had a consequence worth recording, because it is the general hazard when a node
+  rewrites its history: **the new sam3 layout hard-requires `comfy_env` with no guard**, so the
+  node went from silently-stale to a loud `PRESTARTUP FAILED` + `IMPORT FAILED` pair, breaking
+  that install's zero-failure baseline even though startup still exited 0. Installing the new
+  pins was rejected: `pip install --dry-run comfy-env==0.3.89 comfy-3d-viewers==0.2.44` wanted
+  **ten** packages including `pre_commit`, `virtualenv` and `nodeenv` — a large amount of new
+  surface in an interpreter whose entire value is a fragile torch/ORT pin set, for a node not
+  used in that install. It was disabled instead by renaming the directory to
+  `comfyui-sam3.disabled`, which is the convention ComfyUI-Manager itself honors
+  (`manager_core.py` skips any path ending `.disabled`) and which already had local precedent in
+  `ComfyUI-nunchaku.disabled` beside it. The git repository inside is intact, at `de0ff5d`, with
+  a clean worktree — re-enabling it is a rename back plus that `pip install`. Final state: both
+  installs' gates green, backend startup back to exit 0 with zero import failures.
 
 - 2026-09-17 (thirty-first sync): Ran on local `main`, which started **3 behind `origin/main`
   and 0 ahead**: the thirtieth sync ran in a cloud container and pushed its merge (`0d1f7d83`)
