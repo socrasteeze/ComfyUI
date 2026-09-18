@@ -284,6 +284,48 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-17 (thirty-first sync): Ran on local `main`, which started **3 behind `origin/main`
+  and 0 ahead**: the thirtieth sync ran in a cloud container and pushed its merge (`0d1f7d83`)
+  plus log entry (`dfe27614`) without this host ever seeing them. Local was fast-forwarded to
+  `origin/main` first (`git merge-base --is-ancestor` confirmed a strict ancestor, so no merge
+  commit and no risk of re-merging `387f98aa`), and only then was upstream merged. Doing it in
+  that order matters on this fork: merging upstream from the stale local tip would have
+  produced a second, redundant merge of a commit `origin` already carried.
+  `git fetch upstream` brought four new commits past `387f98aa`: `7de99222` (node names and
+  categories, #16274), `fd88b3c4` (EmptyLatentImage default width/height, #16384), `cf5cc2b6`
+  (comfy-kitchen 0.2.35, #16385) and `a2f455c9` (MoGe 3 support, CORE-443, #16381). 15 files,
+  +316/-40, concentrated in `comfy/ldm/moge/{model,modules}.py` for the MoGe 3 architecture
+  plus one-line category/name touch-ups across `comfy_extras/nodes_*.py` and `nodes.py`.
+  All 38 symlink placeholders were protected with `skip-worktree` for the merge and the flags
+  were cleared immediately afterward (`git ls-files -v | grep -c '^S'` back to 0); the merge
+  was clean via the `ort` strategy, touched no fork file (`FORK_NOTES`/`CLAUDE`/`HANDOFF`/
+  `AGENTS` all absent from the merge diffstat), and the baseline came back at exactly 38
+  deleted / 0 modified / 0 untracked. All 14 changed `.py` files byte-compiled clean.
+  `requirements.txt` moved (`comfy-kitchen` 0.2.34 → 0.2.35), so it was reinstalled; the
+  mandatory `pip install --dry-run` first confirmed `Would install comfy-kitchen-0.2.35` as the
+  only line, with torch and torchvision absent. The GPU acceleration gate passed on both host
+  installations (`ALL INSTALLS OK`, exit 0, real Conv inference on `CUDAExecutionProvider`,
+  `package=onnxruntime-gpu` on each). Startup ran with custom nodes enabled and exited 0 with
+  the documented 1-warning baseline and nothing else: `LayerStyle -> Cannot import name
+  'guidedFilter' from 'cv2.ximgproc'` was the only match for `IMPORT FAILED|Cannot import|
+  Traceback|ImportError|ModuleNotFound`. Author scan over the merge range showed only upstream's
+  Alexis Rolland, Jukka Seppänen and comfyanonymous plus `socrasteeze <socradeez@gmail.com>` on
+  the merge commit, all preserved. Premerge tip was `dfe27614`, upstream tip `7de99222`.
+  Custom nodes were swept in the same pass: of the 35 git-backed trees under `custom_nodes/`,
+  three were behind their own origin, clean, and were fast-forwarded — `ComfyUI-Continuity`
+  (6 commits), `ComfyUI-LTXVideo` (2) and `ComfyUI-UtilsCollection` (11). `RES4LYF` is 2
+  commits *ahead* of its origin (local work, left untouched, same as the twenty-eighth sync).
+  `ComfyUI-RMBG` is the one tree with a dirty worktree, and it must stay that way: the
+  commented-out CPU `onnxruntime>=1.15.0` line in its `requirements.txt` is the documented
+  intentional divergence, so it was deliberately not reset or fast-forwarded past.
+  One item left for the operator rather than actioned here: LTXVideo's fast-forward added two
+  new pins for its new HDR nodes, `colour-science>=0.4.4` and `openimageio`. `colour` is
+  already present but **`OpenImageIO` is not installed**, and it was not installed by this sync
+  because pulling unrequested packages into this interpreter is exactly how the ONNX/torch
+  pins get broken. Startup is unaffected (the HDR nodes guard the import — exit 0, baseline
+  warning count unchanged), so the only consequence is that LTXVideo's new HDR EXR read/write
+  nodes are inert until `openimageio` is installed deliberately, with a `--dry-run` check first.
+
 - 2026-09-17 (thirtieth sync): Ran on local `main`, level with `origin/main` at the start (0
   ahead, 0 behind). This container's clone was shallow (`.git/shallow` present, one commit
   deep) — `git fetch upstream` initially reported an implausible `1 5964` ahead/behind split
