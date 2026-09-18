@@ -307,6 +307,42 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-18 (thirty-third sync, unattended): Same-day follow-up to the thirty-second sync
+  below, run by the same unattended sync-multiple-forks routine on a fresh container. Local
+  git identity again defaulted to global `Claude <noreply@anthropic.com>`; corrected locally
+  to `socrasteeze <socradeez@gmail.com>` before any commit. `upstream` remote did not exist
+  yet either (fresh clone) — added fresh, push URL set to `DISABLED` and verified before any
+  other remote operation. Session started on branch `noble/focused-mayer-0lom1z`, level with
+  `origin/main` at the container's `main` ref (`git rev-list --left-right --count
+  main...HEAD` measured 73/78 before the merge — HEAD carried unrelated same-day doc commits
+  ahead of `main`, not sync drift). `git fetch upstream` found four new commits past the
+  thirty-second sync's `9a77c1db` tip: `0d901722` (bump `comfyui-frontend-package` to 1.53.6,
+  #16386), `a8686f2b` (Partner Nodes idempotency-key + asset-URL client work, #16220),
+  `944386c2` (lower SheetSage2 pos-embed precision to match upstream, #16395), and `4d7e61b7`
+  (fix for the qwen speedup PR, #16389). `input`/`models`/`output` are plain directories in
+  this container, not symlinks, so the skip-worktree trap did not apply. Clean merge via
+  `git merge upstream/master --no-edit` (merge commit `9fd96b2d`), zero conflict markers
+  anywhere in the tree. Touchpoint surface after the merge is exactly the expected **3**
+  files (`git diff upstream/master --name-status | grep -v '^A' | wc -l` = 3); all three
+  fork-local fixes (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  absolute-base-path test, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  path) re-verified present and untouched by the incoming hunks, none of which landed in
+  those three files. `requirements.txt` changed (the frontend-package bump above) but this
+  session has no installed dependencies to reinstall against (no torch, no numpy, no pytest,
+  consistent with every other dependency-less-session entry in this log). Validation: no GPU
+  and nothing importable, so a full-tree `python -m py_compile` over all tracked `.py` files
+  (excluding gitignored `custom_nodes/`) is clean, and a standalone `ruff` binary reported
+  `All checks passed!` on the four upstream-changed non-JSON files. Author scan over the
+  merge range found only the four upstream authors above plus the fork's own prior commits;
+  merge commit author/committer both `socrasteeze <socradeez@gmail.com>`, no AI-attribution
+  trailer. **Not covered:** no GPU or model-load/inference check (none available in this
+  container); the custom_nodes review this routine also asked for is a real-installation
+  concern (host paths like the SwarmUI backend's `dlbackend/comfy/ComfyUI/custom_nodes/`
+  seen in the 2026-09-17 entry below) — this container only holds the bare source checkout
+  (`custom_nodes/` is gitignored and empty here), so there was nothing to sweep. Pushed
+  straight to `origin/main` as a fast-forward (no PR); local `main` ref updated in place
+  (`git branch -f main HEAD`, ancestor-checked) rather than checked out, matching this repo's
+  established stranded-branch reconciliation pattern.
 - 2026-09-18 (thirty-second sync, unattended): Ran unattended (scheduled, no human watching
   live) on a fresh container that had never held this repo before, so local git identity
   defaulted to the container's global `Claude <noreply@anthropic.com>`, corrected locally to
