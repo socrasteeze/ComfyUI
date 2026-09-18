@@ -184,6 +184,18 @@ That branch, not `main`, must stay checked out. A plain `git pull` or a Manager
 update there silently restores the broken v0.4.2 line, and the only symptom is
 the full-step error above.
 
+`comfyui-obvpm` is pinned the same way. Its Load Images & Compose node outputs
+only the composed collage upstream; the local branch `local/separate-outputs`
+(one commit, "Compose: add image_1..image_4 per-layer outputs") adds each layer
+on its own, cropped and unscaled, and `None` for missing layers. The character
+sheet workflows feed those outputs to Qwen-Image-Edit's `image1..image3` and to
+one FLUX.2 Klein reference latent per photo. The branch has no upstream, so a
+sweep cannot move it, but a Manager update or a pull onto `main` drops the
+outputs, and the workflows then load with their photo links missing. The same
+change is kept as a patch file inside the character sheet node pack
+(`patches/comfyui-obvpm-separate-outputs.patch`); after any obvpm update, check
+out a branch from the new tip and `git am` that patch.
+
 Only one step-skipping accelerator belongs in an H3 model chain. The Ref2VA
 author forbids stacking it with Spectrum or FirstBlockCache, and measured runs
 agree: under Spectrum, Ref2VA caches zero steps and the audio picks up glitches.
