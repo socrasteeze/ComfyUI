@@ -307,6 +307,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-18 (thirty-fourth sync, desktop): Fast-forwarded local `main` from `ddd32ac5` to the
+  thirty-third sync's `ebcf734d`, then merged one new upstream commit, `3c80da7f` (ACE-Step
+  VAE decode crash on non-bf16 GPUs, #16405; `comfy/sd.py` only). Both steps ran under the
+  skip-worktree procedure above, 38 paths, clean. `requirements.txt` moved by the frontend bump
+  from the thirty-third sync; reinstalled (dry run: only `comfyui_frontend_package` 1.52.7 ->
+  1.53.6, no torch). GPU acceleration check passed on both installs. Restarted: frontend 1.53.6
+  matches the required version, and the only import warning is the baseline LayerStyle one.
 - 2026-09-18 (thirty-third sync, unattended): Same-day follow-up to the thirty-second sync
   below, run by the same unattended sync-multiple-forks routine on a fresh container. Local
   git identity again defaulted to global `Claude <noreply@anthropic.com>`; corrected locally
