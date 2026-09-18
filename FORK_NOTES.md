@@ -315,7 +315,7 @@ and cause.
   `DISABLED` and verified before any other remote operation). The checkout started on session
   branch `claude/tender-noether-1zv6cj`, 29 commits ahead of both local `main` and
   `origin/main` and a strict descendant of both — the thirty-first sync's merge (`0c31c2e0`)
-  and log entry (`057af3a4`) had been done on this branch but never reached `origin/main`, the
+  and log entry (`76884e75`) had been done on this branch but never reached `origin/main`, the
   same stranded-branch pattern several earlier entries in this log describe. Sandbox policy
   refused a `git checkout main` in this session (classified as a shared-resource modification),
   so the reconciliation used `git branch -f main HEAD` instead — a ref-only fast-forward that
@@ -345,8 +345,8 @@ and cause.
   trailer. **Not covered:** no GPU in this container, so no model load/inference ran and the
   GPU acceleration check and the ONNX Runtime GPU-only/cuDNN-pin checks under "Environment
   Constraints" were not exercised; no pytest run (no test dependencies installed). Merge
-  commit `f9cf00c2`; pre-merge (post-reconciliation) branch tip was `057af3a4`; upstream tip
-  `9a77c1db`. `main` (ref-updated, not checked out) fast-forwarded to `f9cf00c2` and pushed to
+  commit `b5c405c2`; pre-merge (post-reconciliation) branch tip was `76884e75`; upstream tip
+  `9a77c1db`. `main` (ref-updated, not checked out) fast-forwarded to `b5c405c2` and pushed to
   `origin/main` as a fast-forward (no divergence, no rebase, no PR).
 - 2026-09-17 (thirty-first sync, SwarmUI backend appendix): Same-session follow-up to the entry
   below, covering the **second** installation (`E:\SwarmUI\dlbackend\comfy\ComfyUI`). That tree
@@ -426,8 +426,8 @@ and cause.
   installs' gates green, backend startup back to exit 0 with zero import failures.
 
 - 2026-09-17 (thirty-first sync): Ran on local `main`, which started **3 behind `origin/main`
-  and 0 ahead**: the thirtieth sync ran in a cloud container and pushed its merge (`0d1f7d83`)
-  plus log entry (`dfe27614`) without this host ever seeing them. Local was fast-forwarded to
+  and 0 ahead**: the thirtieth sync ran in a cloud container and pushed its merge (`2ea2e9e8`)
+  plus log entry (`a4f705ba`) without this host ever seeing them. Local was fast-forwarded to
   `origin/main` first (`git merge-base --is-ancestor` confirmed a strict ancestor, so no merge
   commit and no risk of re-merging `387f98aa`), and only then was upstream merged. Doing it in
   that order matters on this fork: merging upstream from the stale local tip would have
@@ -451,7 +451,7 @@ and cause.
   'guidedFilter' from 'cv2.ximgproc'` was the only match for `IMPORT FAILED|Cannot import|
   Traceback|ImportError|ModuleNotFound`. Author scan over the merge range showed only upstream's
   Alexis Rolland, Jukka Seppänen and comfyanonymous plus `socrasteeze <socradeez@gmail.com>` on
-  the merge commit, all preserved. Premerge tip was `dfe27614`, upstream tip `7de99222`.
+  the merge commit, all preserved. Premerge tip was `a4f705ba`, upstream tip `7de99222`.
   Custom nodes were swept in the same pass: of the 35 git-backed trees under `custom_nodes/`,
   three were behind their own origin, clean, and were fast-forwarded — `ComfyUI-Continuity`
   (6 commits), `ComfyUI-LTXVideo` (2) and `ComfyUI-UtilsCollection` (11). `RES4LYF` is 2
@@ -511,7 +511,7 @@ and cause.
   merge range: only `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own author
   (Alexander Piskun, via the GitHub merge-button committer), preserved; no AI/vendor
   attribution trailer in the merged diff or this session's own commits. Merge commit
-  `0d1f7d83`; premerge tip was `85a93f83`, upstream tip `387f98aa`. Pushed `main` to `origin`
+  `2ea2e9e8`; premerge tip was `7a66dfcc`, upstream tip `387f98aa`. Pushed `main` to `origin`
   only. **Not covered:** no GPU in this container, so no model load/inference ran and the
   ONNX Runtime GPU-only/cuDNN-pin checks under "Environment Constraints" were not exercised;
   no live Tripo API smoke test (needs a key and network this container doesn't have); no
@@ -525,10 +525,10 @@ and cause.
   the text-encoder device selection ignore the CPU fallback when dynamic VRAM is enabled. No
   `requirements.txt` movement and no version stamp in the window, so no pip step was needed. All
   38 symlink placeholders were protected with `skip-worktree` for the merge and the flags were
-  cleared immediately afterward; the merge was clean (`d3aab51b`), touched no fork file, and the
+  cleared immediately afterward; the merge was clean (`c976c751`), touched no fork file, and the
   baseline came back at exactly 38 deleted / 0 modified / 0 untracked. Both changed files
   byte-compiled clean. The GPU acceleration gate passed on both host installations (`ALL
-  INSTALLS OK`, exit 0). Premerge tip was `b63bebcc`, upstream tip `d39cdfdb`. Pushed `main` to
+  INSTALLS OK`, exit 0). Premerge tip was `a65cbd10`, upstream tip `d39cdfdb`. Pushed `main` to
   `origin` only.
 
 - 2026-09-16 (twenty-eighth sync): Ran on local `main`, level with `origin/main` at the start
@@ -571,22 +571,22 @@ and cause.
   `git rev-list --left-right --count HEAD...upstream/master` read `54 0`, so there is nothing
   new to merge. **Correction to the twenty-sixth sync's entry below:** despite that entry
   saying its log commit "was pushed straight to `origin/main`", a fresh `git fetch origin
-  main` plus `git merge-base --is-ancestor ce6db0c origin/main` on this container came back
-  `origin/main` still at `f6e0dd2b` (the twenty-fifth sync's tip) and the ancestor check
+  main` plus `git merge-base --is-ancestor bae9c39 origin/main` on this container came back
+  `origin/main` still at `f9e84a30` (the twenty-fifth sync's tip) and the ancestor check
   `NO` — that push did not actually reach `origin`, and `git ls-remote origin
   claude/tender-noether-zcn5r6` found no such ref there either, meaning all local commits
   back through the twenty-sixth sync's log entry existed only on this container's disk. No
   merge to redo (content was already correct), so this was a delivery-only run: confirmed
   the working tree clean, `input`/`models`/`output` still plain directories (no symlink
-  trap), fast-forwarded local `main` to this branch's tip (`ce6db0c`, no merge commit
+  trap), fast-forwarded local `main` to this branch's tip (`bae9c39`, no merge commit
   needed since `main` was a strict ancestor) and pushed `origin main` directly, per the
   fork's standing no-PR sync contract. This time the push was independently re-verified
   after the fact with a fresh `git fetch origin main` + `git merge-base --is-ancestor
-  ce6db0c origin/main`, not just assumed from the command's local exit code. This sync ran
+  bae9c39 origin/main`, not just assumed from the command's local exit code. This sync ran
   unattended (scheduled, no human watching live).
 - 2026-09-16 (twenty-sixth sync, no upstream change): Started on
   `claude/tender-noether-d3i0iw`, which was level with `origin/main` (0 ahead, 0 behind, both
-  at the twenty-fifth sync's merge `1e936ba`) — no branch reconciliation needed. Added the
+  at the twenty-fifth sync's merge `186e205`) — no branch reconciliation needed. Added the
   `upstream` remote fresh (`https://github.com/Comfy-Org/ComfyUI.git`, push URL set to
   `DISABLED` and verified before any other remote operation) and ran `git fetch upstream
   master`: its tip is still `7a0b5eede3f9`, the exact commit the twenty-fifth sync already
@@ -605,7 +605,7 @@ and cause.
   git identity, left unchanged). This sync ran unattended (scheduled, no human watching live).
 - 2026-09-15 (twenty-fifth sync): Ran on local `main`, which was level with `origin/main`
   (0 ahead, 0 behind) — no branch reconciliation needed. `git fetch upstream` found eight new
-  commits past `f6e0dd2b`, and the window includes the `v0.36.0` release tag. The bulk is
+  commits past `f9e84a30`, and the window includes the `v0.36.0` release tag. The bulk is
   `7a0b5eed` ("Aimdo 0.5.5 + Auto-detect and enable --fast-disk when the disk is fast",
   CORE-440, #16333): a new `comfy/storage.py` probes whether the backing device is an NVMe/SSD
   (Linux sysfs rotational flag, with platform fallbacks) and auto-enables `--fast-disk`, with
@@ -636,14 +636,14 @@ and cause.
   same size and mtime, before the sync finished. Author/committer scan over the merge range:
   only `socrasteeze <socradeez@gmail.com>` on the merge commit and upstream's own authors
   (comfyanonymous, Alexander Piskun, Daxiong (Lin), Lukas Buck, rattus), all preserved. Merge
-  commit `6e6d80b2`; premerge tip was `f6e0dd2b`, upstream tip `7a0b5eed`. **Not covered:**
+  commit `3dbd0f8e`; premerge tip was `f9e84a30`, upstream tip `7a0b5eed`. **Not covered:**
   Pytest and Ruff are not installed in the portable runtime, so the new `storage_test.py`,
   `nodes_loop_test.py`, and `test_nested_loop_execution.py` cases did not run; the startup
   check ran with `--cpu` and with custom nodes disabled, so neither the documented 1-warning
   custom-node import baseline (`LayerStyle -> Cannot import name 'guidedFilter'`) nor any
   model load or real inference was exercised this pass.
 - 2026-09-15 (twenty-fourth sync): Started on `scheduled-sync-1ahciv`, which was level
-  with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `1eed094`) — no
+  with `origin/main` (0 ahead, 0 behind, both at the twenty-third sync's `893fd6b`) — no
   branch reconciliation needed this time. `git fetch upstream master` found four new commits
   past `b0058496`: `a2afcdb8` ("comfy-execution: cache: cache errors is RAM cache sizing scan",
   #16314) wraps `RAMPressureCache`'s per-entry RAM-usage scan in a `try`/`except`, logging a
@@ -700,8 +700,8 @@ and cause.
   pytest suites were not executed. Author/committer scan on the merge range: only
   `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own authors (rattus, Daxiong
   (Lin)), preserved; a content scan of the merge diff for `anthropic`/`claude`/attribution
-  trailers found nothing. Merge commit `3275282`; pre-merge branch tip (twenty-third sync's own
-  commit) was `1eed094`. **Delivery target for this session differs from this file's own Sync
+  trailers found nothing. Merge commit `9c68568`; pre-merge branch tip (twenty-third sync's own
+  commit) was `893fd6b`. **Delivery target for this session differs from this file's own Sync
   Contract**: a higher-priority harness instruction assigned `scheduled-sync-1ahciv` as
   the only permitted push target for this run, so this sync's merge and log commits went to
   `origin/scheduled-sync-1ahciv`, not `origin/main` — `main` was left untouched and still
@@ -741,8 +741,8 @@ and cause.
   prior sync, at the same line numbers, none of those files touched by this window — a
   standing condition, not a regression. Author/committer scan on the merge range: only
   `socrasteeze <socradeez@gmail.com>` (merge) and upstream's own author (Alexander Piskun, via
-  the GitHub merge-button committer), preserved. Merge commit `9df35791`; pre-merge branch tip
-  (twenty-second sync's own commit) was `9edc02a3`. After the merge, local `main` was
+  the GitHub merge-button committer), preserved. Merge commit `0e04b052`; pre-merge branch tip
+  (twenty-second sync's own commit) was `27ab8695`. After the merge, local `main` was
   fast-forwarded to this branch's tip and pushed to `origin/main` as a single fast-forward (no
   divergence, no rebase). **Not covered:** no GPU in this container, so no model load/inference
   ran; no live Gemini API smoke test (needs a key and network this container doesn't have); no
@@ -752,7 +752,7 @@ and cause.
 - 2026-09-14 (twenty-second sync): Started on `scheduled-sync-1wndty`, which held the
   twenty-first sync's merge plus 73 more commits (all prior syncs back through the 2026-09-08
   sixth sync) that had never been fast-forwarded onto `origin/main` — local `main` and
-  `origin/main` were both still sitting at `b1db5cd`, the fifth sync's tip. `origin/main` was a
+  `origin/main` were both still sitting at `2cca7e3`, the fifth sync's tip. `origin/main` was a
   strict ancestor of this branch's HEAD with zero divergence, so this was pure reconciliation,
   the same stranded-branch pattern as the 2026-09-08 and eleventh-sync entries above, not a
   merge to redo. `git fetch upstream` then found two more commits past what the twenty-first
@@ -787,7 +787,7 @@ and cause.
   Simon Pinfold), preserved. Reviewed `server.py`'s 3-line addition directly (a guarded
   `emit("assets.enabled", ...)` call alongside the existing `asset_manager.enabled` check) and
   found no orphaned imports or broken references introduced by the merge. Merge commit
-  `60d73af4`; premerge branch tip (twenty-first sync's own commit) was `fb2f0bc2`. After the
+  `a65b78a9`; premerge branch tip (twenty-first sync's own commit) was `ab09dace`. After the
   merge, local `main` was fast-forwarded to this branch's tip and pushed to `origin/main` as a
   single fast-forward (no divergence, no rebase). **Not covered:** no GPU in this container,
   so no model load/inference ran; no pytest run (no test dependencies installed, as noted
@@ -851,7 +851,7 @@ and cause.
   `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py` as every prior sync — a
   standing condition, not a regression, and none of those files is touched by this window. Author/
   committer scan on the merge range showed only `socrasteeze <socradeez@gmail.com>` (merge) and the
-  upstream author, preserved. Merge commit `3eba18dc`; pre-merge fork HEAD was `6092a80c`. **Not
+  upstream author, preserved. Merge commit `2c166858`; pre-merge fork HEAD was `91b89d12`. **Not
   covered:** no live BFL API smoke test (needs a key and network this container doesn't have), no
   real ONNX/CUDA inference, no host-install verification, no pytest run (no test dependencies
   installed in this container) — those still need a pass on an actual installation per the standing
@@ -897,7 +897,7 @@ and cause.
   installations still use `onnxruntime-gpu` and real Conv inference passed on
   `CUDAExecutionProvider`. Pytest and Pylint remain unavailable in the portable runtime and were
   not installed, so the new `test_bulk_ingest.py` cases were not executed. Merge commit
-  `92420b75`; pre-merge fork HEAD was `70bff0cc`.
+  `707f221b`; pre-merge fork HEAD was `d611c2bf`.
 - 2026-09-12 (eighteenth sync): Adopted four upstream commits, `9113c08c` through
   `7ba217d6`. `9113c08c` consumes server estimated-duration headers for partner-node
   progress, removes the inert synchronous-operation estimate parameter, and hardens polling
@@ -910,7 +910,7 @@ and cause.
   used `ort` with zero conflicts. All three fork touchpoints remained intact: the `.m2v` MIME
   entry, the Windows absolute temporary-home fixture, and the Hunyuan DiT tokenizer's relative
   `special_tokens_map_file` path. Local `main` first fast-forwarded four commits to current
-  `origin/main` (`f30cdc9b`), including the seventeenth sync. The host then installed the pending
+  `origin/main` (`43314748`), including the seventeenth sync. The host then installed the pending
   `comfyui-frontend-package` 1.52.7 pin after a dry-run showed no Torch or torchvision change.
   The upstream merge protected exactly 38 symlink placeholder deletions with direct-argument
   `skip-worktree`; all flags were cleared and the 38-deletion/zero-other-change baseline was
@@ -942,8 +942,8 @@ and cause.
   sync, all in `fork_tools/prompt_guides/harness/{dryrun,grade,patch_profiles}.py`, none touched
   by this window. Author/committer scan on the merge range showed only
   `socrasteeze <socradeez@gmail.com>` (merge) and the two upstream authors, preserved. Local
-  `main` was already level with `origin/main` (identical tip, `6378dd91`) at session start, so
-  the incoming window was exactly these two commits. Merge commit `eb34a17f`; merge base
+  `main` was already level with `origin/main` (identical tip, `d20ef95d`) at session start, so
+  the incoming window was exactly these two commits. Merge commit `30e6408c`; merge base
   `b058ec65` (the tip of the sixteenth sync). **Not covered:** no live GPU/CUDA inference, no
   ONNX Runtime check, no pytest run (no test dependencies installed in this container), no
   actual `pip install -r requirements.txt` for the frontend-package bump — those still need a
@@ -985,8 +985,8 @@ and cause.
   `socrasteeze <socradeez@gmail.com>` (merge) and the four upstream authors, preserved. Local
   `main` was 43 commits behind `origin/main` at session start (all already-published prior
   syncs, none of them a divergence this session needed to redo) and was fast-forwarded to
-  `origin/main`'s tip (`36ca99e2`) before fetching upstream; from there the incoming window was
-  exactly these four commits. Merge commit `103f34ab`; merge base `1d48d9cf` (the tip of the
+  `origin/main`'s tip (`5b1534b8`) before fetching upstream; from there the incoming window was
+  exactly these four commits. Merge commit `a90948f1`; merge base `1d48d9cf` (the tip of the
   fifteenth sync, confirming the fork was level with its own last sync before this one began).
   **Not covered:** no live GPU/CUDA inference, no ONNX Runtime check, no pytest run (no test
   dependencies installed in this container) — those still need a pass on an actual installation
@@ -996,7 +996,7 @@ and cause.
   linear input skips the sRGB EOTF before the Rec.709->Rec.2020 primary conversion, and linear
   output skips the SDR tone-map/gamut-compress after converting back, both anchored to the same
   203-nit reference white as sRGB. Zero conflicts; not a fork touchpoint (file untouched by the
-  fork relative to the merge base). Merge is `f2a9b729`; merge base `6338e4bd`, the tip of the
+  fork relative to the merge base). Merge is `cff8e7dd`; merge base `6338e4bd`, the tip of the
   fourteenth sync, so the window was exactly this one commit. Gates: `python3 -m py_compile`
   clean on the changed file; no fork symbol references `ImageColorSpace` so no sweep needed.
 - 2026-09-10 (fourteenth sync): Adopted three upstream commits. `5774ab9c` adds auto aspect ratio to
@@ -1044,7 +1044,7 @@ and cause.
   doesn't have), no real ONNX/CUDA inference, no host-install verification — those still need
   a pass on the actual machines per the standing procedure.
 - 2026-09-09 (eleventh sync): Reconciled the local checkout with the three already-published
-  syncs through `edb5e321`, then adopted `4989cdd9` and `be923968` as-is: OpenRouter
+  syncs through `a3cf2e52`, then adopted `4989cdd9` and `be923968` as-is: OpenRouter
   MAI-Image-2.6 image nodes and provider-error details, a string-validation message fix,
   and removal of the dead ROCm Triton architecture gate. The new upstream window changes
   six files, +307/-36. No conflicts or orphaned references to the removed gate remained.
@@ -1101,7 +1101,7 @@ and cause.
   `sam3/detector.py:12` `# noqa` warning as prior syncs, on an untouched file outside this
   window's diff). The GPU acceleration check and the new `nodes_load_3d`/`nodes_save_3d`/
   `nodes_openai` import checks could not run (`ModuleNotFoundError` for `torch`/`numpy`) —
-  noted rather than skipped silently, per this log's own standard. Merge commit `5d60520c`.
+  noted rather than skipped silently, per this log's own standard. Merge commit `864a2103`.
 
 - 2026-09-09 (eighth sync): Adopted one upstream commit, `672ba9e5` ("Only lock repo PRs
   after merging if they contain a CLA signature.", #16191): a CLA-bot workflow change to
@@ -1119,7 +1119,7 @@ and cause.
   reports "All checks passed!" (the same pre-existing `sam3/detector.py:12` `# noqa` warning
   as prior syncs, on an untouched file outside this window's diff). The GPU acceleration
   check could not run (no GPU, no `nvidia-smi`, no torch) — noted rather than skipped
-  silently. Merge commit `9787404`; pre-merge fork HEAD was `cfd8be3`.
+  silently. Merge commit `643b91b`; pre-merge fork HEAD was `9eaede4`.
 - 2026-09-08 (seventh sync): Reconciled local `main` with the already-published sixth sync,
   then adopted five upstream commits, `488e8f8a` through `421a1c24`: Pixal3D multiview
   support, two quantized text-encoder matrix-multiply fixes including Gemma4 prefill cache
@@ -1162,14 +1162,14 @@ and cause.
   `ruff check .` reports "All checks passed!" (the same pre-existing `sam3/detector.py:12`
   `# noqa` warning as prior syncs, on an untouched file outside this window's diff). The GPU
   acceleration check could not run at all (no GPU, no `nvidia-smi`, no torch) — noted rather
-  than skipped silently, per this log's own standard. Merge commit `3dc4aaf`; pre-merge fork
-  HEAD was `b1db5cd`.
+  than skipped silently, per this log's own standard. Merge commit `0548b91`; pre-merge fork
+  HEAD was `2cca7e3`.
 - 2026-09-07 (fifth sync): Reconciles with the 2026-09-08 entry below, which was pushed to
   `origin/main` from a dependency-less container while this session's merge was in flight, and
   adds the one upstream commit that entry did not reach. This session merged all three commits
   then new on `upstream/master` -- `f5ed117b`, `5bbdf8a7`, and `efa6c8f8` -- as merge commit
-  `ff02a854` off `61adeb96`; the push was then rejected because that other session had already
-  landed the first two as `71e01d1d`. Merging `origin/main` back in left `efa6c8f8` as the only
+  `89b5af2b` off `1b45ed81`; the push was then rejected because that other session had already
+  landed the first two as `29e51107`. Merging `origin/main` back in left `efa6c8f8` as the only
   net-new content here: it adds the LTXV generated-keyframe nodes plus Freeze Latent as a new
   `comfy_extras/nodes_lt_keyframes.py` (1051 lines) with a 911-line test module, registered by
   one added line in `nodes.py`. The only merge conflict in either direction was this file's log
@@ -1191,7 +1191,7 @@ and cause.
   commits. The session branch `scheduled-sync-ykvwnh` held 29 commits (including
   the 2026-09-07 fourth-sync merge and its log entry) that a previous session never
   fast-forwarded onto `main`; `git merge --ff-only` from `main` onto that branch tip
-  (`271e44b0` to `61adeb96`) applied cleanly with no divergence to reconcile. From there,
+  (`271e44b0` to `1b45ed81`) applied cleanly with no divergence to reconcile. From there,
   `git fetch upstream` (adding the `upstream` remote fresh in this checkout, push URL set
   to `DISABLED` and verified before any other remote operation) found two new upstream
   commits: `5bbdf8a7` ("Harmonize model attention nodes", #16154), which reworks
@@ -1212,7 +1212,7 @@ and cause.
   those modules fail only on the missing `torch`/`comfy_kitchen` dependencies, not on any
   merge defect. The GPU acceleration check could not run at all (no GPU, no `nvidia-smi`,
   no torch) — noted rather than skipped silently, per this log's own standard. Merge commit
-  `71e01d1d`; pre-merge (post-fast-forward) fork HEAD was `61adeb96`.
+  `29e51107`; pre-merge (post-fast-forward) fork HEAD was `1b45ed81`.
 - 2026-09-07 (fourth sync): Adopted three upstream commits through `41db8f4f`:
   `313a76fb` disables int8 weight-only quantization on devices lacking `torch._int_mm`
   (an MPS crash fix; touches `comfy/ops.py`, `comfy/controlnet.py`, `comfy/model_management.py`,
@@ -1226,7 +1226,7 @@ and cause.
   intact. `requirements.txt` unchanged, so no reinstall. Validation on the live install: all
   nine changed files byte-compiled clean, `comfy_extras.nodes_model_patch` imported, and the
   GPU acceleration check passed on both installs (`ALL INSTALLS OK`, exit 0). Merge commit
-  `7b22e580`; pre-merge fork HEAD was `f7f6bfd0`.
+  `368737e3`; pre-merge fork HEAD was `9efc395a`.
 - 2026-09-07 (third sync): Adopted one upstream commit, `eb357862`, a lone
   `comfyui-frontend-package` pin bump from 1.51.9 to 1.51.10 (#16118). No source changed.
   Clean merge, zero conflict markers anywhere in the tree; both fork-local fixes
