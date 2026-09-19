@@ -307,6 +307,52 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-19 (thirty-sixth sync, unattended): Same-day follow-up to the thirty-fifth sync
+  below, run by the scheduled unattended routine on a fresh container. Task brief named the
+  working branch as `noble/focused-mayer-8vl1r0`, described as 78 ahead / 77 behind
+  `origin/main`, and explicitly warned not to try reconciling that divergence. Verified rather
+  than trusted: local identity again defaulted to global `Claude <noreply@anthropic.com>`,
+  corrected locally to `socrasteeze <socradeez@gmail.com>` before any commit; `upstream` did
+  not exist yet either, added fresh (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set
+  to `DISABLED` and verified before any other remote operation. A fresh `git fetch origin`
+  found the claimed divergence already gone: `origin/main` reported a **forced update** to
+  `3b39200f`, and `git rev-list --left-right --count origin/main...HEAD` measured `0 0` —
+  `origin/main`, `origin/noble/focused-mayer-8vl1r0`, and local `HEAD` all point at the exact
+  same commit, which is itself the thirty-fifth sync's own log-entry commit (correct
+  `socrasteeze` author/committer, no AI-attribution trailer). The prior sync's reconciliation
+  and push had already landed; nothing needed fixing here, consistent with the brief's warning
+  not to touch it.
+
+  Upstream window: `git fetch upstream master` found the tip still at `3c80da7f` — unchanged
+  since the thirty-fourth sync merged it, and `git merge-base --is-ancestor upstream/master
+  HEAD` is true. **Zero new upstream commits this run**; nothing to merge, nothing to read
+  commit messages for, no rejected-feature sweep applicable. `input`/`models`/`output` are
+  plain directories in this container, not symlinks, so the skip-worktree trap did not apply.
+  Touchpoint surface reverified at exactly the expected **3** files (`git diff upstream/master
+  --name-status | grep -v '^A'`): `folder_paths.py`'s `m2v` MIME entry (line 109),
+  `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home` fixture, and
+  the Hunyuan DiT tokenizer's relative `special_tokens_map_file` (`./special_tokens_map.json`,
+  `comfy/text_encoders/hydit_clip_tokenizer/tokenizer_config.json`) — all three present and
+  untouched. `custom_nodes/` is gitignored and holds only the two stock example files ComfyUI
+  ships by default (`example_node.py.example`, `websocket_image_save.py`) — no real
+  custom-node installations in this container to review or fast-forward, consistent with every
+  prior bare-container entry in this log.
+
+  Validation: no `torch`/`numpy`/`PIL`/`aiohttp` importable in this container (no GPU either).
+  A full-tree `python -m py_compile` over all 914 tracked `.py` files (excluding gitignored
+  `custom_nodes/`) is clean. `pytest tests-unit -q --continue-on-collection-errors`: 135
+  passed, 87 collection errors on the same missing-dependency modules as the thirty-fifth
+  entry (identical counts). `ruff check .` (project's own `pyproject.toml` config): 8
+  pre-existing `T201` print-usage findings, all in `fork_tools/prompt_guides/harness/*.py`,
+  pre-dating this run and out of scope for a sync with nothing to merge — not fixed here.
+  `requirements.txt` did not change (nothing merged), so no reinstall applied or was needed.
+  **Not covered:** no GPU in this container, so no model load/inference ran and the GPU
+  acceleration / ONNX Runtime GPU-only checks under "Environment Constraints" were not
+  exercised. Nothing was merged from `upstream/master` this run — the only shipped change is
+  this log entry. Per the task brief, pushed to `origin/noble/focused-mayer-8vl1r0` (not
+  `origin/main` — the brief designated this branch as the push target for this run, leaving
+  the already-resolved `main` relationship untouched); no PR, verified `git remote get-url
+  --push upstream` was still `DISABLED` immediately before pushing.
 - 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
   untouched); local git identity defaulted to global `Claude <noreply@anthropic.com>`,
