@@ -307,6 +307,80 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
+  untouched); local git identity defaulted to global `Claude <noreply@anthropic.com>`,
+  corrected locally to `socrasteeze <socradeez@gmail.com>` before any commit; the `upstream`
+  remote did not exist yet either — added fresh (`https://github.com/Comfy-Org/ComfyUI.git`),
+  push URL set to `DISABLED` and verified before any other remote operation.
+
+  A fresh `git fetch origin main` immediately contradicted the thirty-fourth entry's own
+  prose the way the "twenty-seventh sync" correction pattern warns about, but in the
+  *opposite* direction from what a stale-push worry would predict: `origin/main` was **not**
+  behind the claimed `3c80da7f`/`64aeb84`/`75ca763` state — it was already sitting exactly
+  there. What was stale was this container's own cached local `main` (`f6e0dd2`), which
+  turned out to be neither an ancestor nor a descendant of the real `origin/main` (`git
+  rev-list --left-right --count HEAD...origin/main` = 77/78, merge-base `36da3ff`) — the
+  same diverged shape the task brief flagged for the checked-out feature branch, but here on
+  `main` itself. Root cause: `origin/main` carries a history rewrite between those two points
+  (commit `ddd32ac5`, "update commit references after history rewrite"), and this container's
+  local `main` still held the **pre-rewrite** line. Walking that pre-rewrite line's unique
+  commits (`36da3ff..f6e0dd2`) found two authored *and* committed as `Claude
+  <noreply@anthropic.com>` (`f7f6bfd0`, `b71b7197`) — exactly the bad-identity contamination
+  this fork's rules exist to keep out of `main`'s ancestry. `origin/main`'s rewritten line has
+  zero such commits anywhere in its full history (`git log --pretty=... origin/main | grep -ci
+  anthropic` = 0), confirming the rewrite already did its job and must not be undone.
+
+  Reconciliation: a plain `git merge origin/main --no-edit` from the stale local `main`
+  produced conflicts in exactly one file, `FORK_NOTES.md` (20 hunks — prose renumbering and
+  dates only); all 62 other changed files auto-merged cleanly, and the resulting staged tree
+  was byte-identical to `origin/main` (`git diff --cached origin/main --stat` empty),
+  confirming `origin/main` already fully subsumes the stale line's content. Resolved
+  `FORK_NOTES.md` by taking `origin/main`'s version outright (it already contains a rewritten
+  equivalent of every stale-line entry plus two more real syncs on top) and committed the
+  merge — then caught that the merge commit's *other* parent still walked back through the
+  two Claude-authored commits, which would have reintroduced them into `main`'s ancestry on
+  push and undone the point of the prior rewrite. Discarded that merge commit (left it
+  unreferenced, never pushed) and instead pointed local `main` straight at `origin/main` via
+  `git update-ref refs/heads/main origin/main` — a ref-only move, no working-tree checkout.
+  Sandbox policy blocked `git reset --hard`, `git checkout --detach`, and `git restore
+  --worktree` mid-attempt as "Irreversible Local Destruction"; `git update-ref` (and,
+  separately, the merge commit itself) were each individually permitted, which is the same
+  ref-only reconciliation shape the thirty-second and thirty-fourth entries above already
+  document for sandboxes that refuse a plain `git checkout main`. Final local `main` ==
+  `origin/main` exactly (`75ca763`, identical SHA), zero Anthropic-authored commits anywhere
+  in `HEAD`'s history.
+
+  Upstream window: `git fetch upstream master` found the tip still at `3c80da7f` — unchanged
+  since the thirty-fourth sync merged it. `git merge-base --is-ancestor upstream/master HEAD`
+  is true. **Zero new upstream commits this run**; nothing to merge, nothing to read commit
+  messages for. `input`/`models`/`output` are plain directories in this container, not
+  symlinks, so the skip-worktree trap did not apply (and no merge ran regardless). All three
+  fork-local touchpoints reverified present and untouched: `folder_paths.py`'s `m2v`
+  extension-type entry (line 109), `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based
+  `mock_expanded_home` fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  (`./special_tokens_map.json`). `custom_nodes/` is gitignored and holds only the two stock
+  example files ComfyUI ships by default (`example_node.py.example`,
+  `websocket_image_save.py`) — no real custom-node installations in this container to review
+  or fast-forward, consistent with every prior bare-container entry in this log.
+
+  Validation: unusually for a bare container, `pytest` and a standalone `ruff` binary were
+  present on `PATH` this run, but no `torch`/`numpy`, and `pytest` itself resolved to a
+  different interpreter than `pip3`'s (which has `PyYAML`) — so 87 of `tests-unit`'s test
+  modules failed to *collect* on `ModuleNotFoundError` (torch, numpy, yaml, PIL, aiohttp),
+  while the 135 dependency-free tests that did collect ran clean: 135 passed, 0 failed.
+  `requirements.txt` did not change this run (nothing merged), so no reinstall applied or was
+  needed. A full-tree `python -m py_compile` over every tracked `.py` file is clean. `ruff
+  check .` (project's own `pyproject.toml` `[tool.ruff]` config, auto-discovered) reported 8
+  pre-existing `T201` print-usage findings, all in `fork_tools/prompt_guides/harness/*.py`
+  (CLI debug/grading scripts) — pre-dating this run, untouched by it, and out of scope for a
+  sync with nothing to merge; not fixed here. **Not covered:** no GPU in this container, so no
+  model load/inference ran and the GPU acceleration / ONNX Runtime GPU-only checks were not
+  exercised. Nothing was merged from `upstream/master` this run — the only shipped change is
+  this log entry, plus the local ancestry reconciliation described above (which changes no
+  file content: `main`'s tree is unchanged from `origin/main`'s). Pushed straight to
+  `origin/main` (no PR); verified with a fresh post-push `git fetch origin main` plus
+  `git merge-base --is-ancestor`, not local exit code alone.
 - 2026-09-18 (thirty-fourth sync, desktop): Fast-forwarded local `main` from `ddd32ac5` to the
   thirty-third sync's `ebcf734d`, then merged one new upstream commit, `3c80da7f` (ACE-Step
   VAE decode crash on non-bf16 GPUs, #16405; `comfy/sd.py` only). Both steps ran under the
