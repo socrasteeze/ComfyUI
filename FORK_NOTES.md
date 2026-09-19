@@ -249,6 +249,10 @@ it is one user's measurement, disputed in the same thread, with no maintainer
 reply; lip-sync replacement packs such as ComfyUI-MiniMax-H3-LongMedia feed the
 source song in as the timing driver. Test both on the clip at hand.
 
+The per-run log behind all of this is `fork_tools/h3_ab_log.md`: every
+configuration tried against one shot, with the audio and video verdict for each
+and the baseline that came out of it.
+
 ### A backup copy of a node pack still loads
 
 `init_external_custom_nodes` skips exactly one suffix, `.disabled`. Everything
