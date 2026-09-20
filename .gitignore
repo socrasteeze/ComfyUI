@@ -24,3 +24,10 @@ web_custom_versions/
 filtered-openapi.yaml
 uv.lock
 .comfy_environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
