@@ -307,6 +307,37 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-20 (thirty-sixth sync, unattended): Scheduled multi-fork sync run (alongside
+  ai-toolkit and SwarmUI), no human watching live. Fresh container, session on
+  `noble/focused-mayer-94shr3` starting exactly at `origin/main`'s tip (`3b39200`, the
+  thirty-fifth entry) — no stale local `main` divergence this time. Local git identity
+  defaulted to the container's global `Claude <noreply@anthropic.com>`, corrected locally to
+  `socrasteeze <socradeez@gmail.com>` before any commit; the `upstream` remote did not exist
+  yet either — added fresh (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to
+  `DISABLED` and verified before any other remote operation. `input`/`models`/`output` are
+  plain directories in this container (no symlink trap to work around).
+
+  2 incoming commits from `upstream/master`: `6bfaacc6` "feat: Qwen-image 2.1 support
+  (CORE-423)" (new `comfy/ldm/qwen_image21/`, `comfy/text_encoders/qwen_image21.py`,
+  `comfy_extras/nodes_qwen.py`, plus touch-ups to `latent_formats.py`, `model_base.py`,
+  `model_detection.py`, `sd.py`, `supported_models.py`, `lora.py`, and unrelated Wan-animate
+  fixes to `model_animate2.py`/`vae2_2.py`) and `00abd23d` "chore: update embedded docs to
+  v0.5.12" (`requirements.txt` docs-package pin bump only, no torch/torchvision change). Clean
+  merge, zero conflict markers — this fork's own commits stay documentation-only so nothing
+  competed for either file. Verification per this file's own note ("no full suite available"
+  in this checkout — no `torch`, no GPU, no live installation to reinstall
+  `requirements.txt` into): `python -m py_compile` over all 11 changed/added `.py` files,
+  clean. Author/committer scan over the merge range: only Jukka Seppänen and Daxiong (Lin)
+  upstream, plus `socrasteeze <socradeez@gmail.com>` on the merge commit — no AI/vendor
+  attribution trailer anywhere in the merged diff or this session's own commit.
+  `custom_nodes/` in this container holds only the two files ComfyUI ships by default
+  (`example_node.py.example`, `websocket_image_save.py`) — no cloned custom-node repos to
+  fast-forward here; that only applies on an installation host with real custom nodes
+  checked out, not this fresh sync container. Pushed to `origin/noble/focused-mayer-94shr3`
+  (the session's assigned branch, not `main` — the calling harness's per-session branch
+  assignment takes precedence over this file's "publish to main" default for this run); no
+  PR opened, `upstream` push URL re-verified `DISABLED` immediately before push.
+
 - 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
   untouched); local git identity defaulted to global `Claude <noreply@anthropic.com>`,
