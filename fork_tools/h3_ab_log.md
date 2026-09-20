@@ -86,3 +86,38 @@ paired on `ref_video_audio_0`.
 - Resolution headroom: `ResolutionSelector` at 1.0 MP with `multiple` 32 yields
   1376×768, which is over the model's own pixel cap; `multiple` 64 yields
   1344×768, which is exactly it.
+
+## Next: HyperFlow against the Turbo baseline
+
+HyperFlow (`videorebirth/hyperflow`) is an 8-step self-distilled LoRA for H3
+with two-time (t, r) conditioning: each step is conditioned on its endpoint
+`r = 1 - sigma_next` as well as the current time. The `ComfyUI-Hyperflow` node
+pack ports it onto the native model by replacing the `time_embedder(t_vals)`
+call; no core file changes.
+
+**The catch.** Pruned (curve-form) H3 bases ship `adaln_t_table`, a precomputed
+curve over t, and have no `time_embedder`. The (t, r) blend cannot attach to
+them. On a pruned base the node takes its `_pruned` weights build and runs the
+backbone LoRA on the trained 9-point grid, single-time — off-recipe by the
+node's own README. Every H3 base tested in this log is pruned, so a result here
+measures that reduced form, not the released model.
+
+Trained grid, from the weights header (video shift 12, audio shift 3):
+`1.0, 0.931506, 0.839236, 0.703462, 0.5, 0.296538, 0.160764, 0.068494, 0.0`
+
+Steps, in order:
+
+1. Restart ComfyUI so the pack loads; confirm the startup warning count is
+   unchanged.
+2. Build from the pack's `ref2v_hyperflow_sol_ck.json`: `ApplyHyperFlow`
+   (variant `auto`) after the model loader, its SIGMAS output into
+   `SamplerCustomAdvanced` in place of a scheduler. Check the console report
+   for the count of fused/int8 targets routed through merge — int8 ConvRot
+   weights use `TensorWiseINT8Layout`, which the node detects.
+3. One-variable A/B against row B: same seed, reference clip, 294 frames,
+   0.8 MP, `euler`. Swap the Turbo LoRA for HyperFlow and drop the 8/5 sigma
+   shift, since the grid was trained at 12/3. Never load both distillations.
+4. Grade against the source clip first, audio separately from video. Audio is
+   the open risk: row B is clean only at shift 8/5, and HyperFlow fixes 12/3.
+5. If the pruned form is competitive, find an unpruned H3 base quantized to
+   int8 or fp8 and repeat with the full weights build for the real recipe.
