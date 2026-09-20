@@ -311,6 +311,48 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-20 (thirty-sixth sync, desktop): Ran on local `main`, level with `origin/main` at the
+  start (0 ahead, 0 behind). `git fetch upstream` found 13 new commits past the thirty-fifth
+  sync's `3c80da7f` tip, through `c194dd00`: `6bfaacc6` (Qwen-Image 2.1 support, CORE-423,
+  #16400 — new `comfy/ldm/qwen_image21/model.py` and `comfy/text_encoders/qwen_image21.py`,
+  plus `comfy_extras/nodes_qwen.py`), `00abd23d` (embedded docs 0.5.12), `c8ed2c8c` (lower wan
+  peak VRAM with comfy-kitchen attention), `96be9a13`/`19c7983c` (workflow templates 0.11.65,
+  0.11.66), `5ba116a4` (`--disable-fast-disk` flag), `3dd559d8` (Meshy 7.1 support), `99073836`
+  (fix MiniMax Music 3 producing noise under CUDA graphs), `73c9bad4` (v0.37.0 version bump),
+  `0f74f7fb` (frontend bumped back to 1.53.6 after the stable-commit downgrade), `2f7c6d47`
+  (Qwen 2.1 KV cache location logic), `1d61dcc3` (compile Qwen Image 2.1 transformer blocks),
+  `c194dd00` (let model files declare per-block attention). 25 files, +997/-96 against the
+  merge base, concentrated in the new Qwen-Image 2.1 model/tokenizer files plus touches to
+  `comfy/ldm/wan/{model,model_animate2,vae2_2}.py`, `comfy/ldm/modules/attention.py`,
+  `comfy/model_base.py`, `comfy/sd.py`, `comfy/lora.py`, `comfy/model_management.py`,
+  `comfy/model_patcher.py`, `comfy/model_detection.py`, `comfy/supported_models.py`,
+  `comfy/storage.py`, `comfy/cli_args.py`, `comfy/latent_formats.py`,
+  `comfy_api_nodes/{apis/meshy.py,nodes_meshy.py}`, `comfy/ldm/minimax/model.py`, and
+  `comfy/ldm/minimax_music/ar.py`. A plain `HEAD..upstream/master` diffstat also showed large
+  deletions in `FORK_NOTES.md`, `fork_tools/`, and the three fork-local touchpoint files —
+  that direction of diff always does, since those paths exist only on the fork side; none of
+  it appears in the actual merge diffstat above. `input`/`models`/`output` are directory
+  symlinks on this host, so the skip-worktree procedure applied: captured the 38 placeholder
+  paths, set `skip-worktree`, ran `git merge upstream/master --no-edit` (merge commit
+  `4251b61a`, `ort` strategy, zero conflict markers), cleared the flags, confirmed the
+  placeholder baseline came back at exactly 38 deleted / 0 modified / 0 untracked. All three
+  fork-local fixes (`folder_paths.py`'s `m2v` MIME entry, line 109;
+  `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home` fixture;
+  the Hunyuan DiT tokenizer's relative `special_tokens_map_file`) re-verified present and
+  untouched. `requirements.txt` moved (`comfyui-workflow-templates` 0.11.62 -> 0.11.66,
+  `comfyui-embedded-docs` 0.5.11 -> 0.5.12); `pip install --dry-run` confirmed torch and
+  torchvision absent from the "Would install" line before the real
+  `python -m pip install -r requirements.txt` ran clean, matching the dry run exactly. All 22
+  merge-touched `.py` files byte-compiled clean, and the three new Qwen-Image 2.1 modules
+  (`comfy_extras.nodes_qwen`, `comfy.text_encoders.qwen_image21`,
+  `comfy.ldm.qwen_image21.model`) imported successfully. The GPU acceleration gate passed on
+  both installations (`ALL INSTALLS OK`, exit 0; main install torch 2.9.1+cu130,
+  `onnxruntime-gpu` 1.23.2, real Conv inference on `CUDAExecutionProvider`; SwarmUI backend
+  torch 2.9.0+cu130, same result). A real startup (`--quick-test-for-ci`) showed only the
+  baseline `LayerStyle -> Cannot import name 'guidedFilter' from 'cv2.ximgproc'` warning and
+  no `IMPORT FAILED` line. Premerge tip was `f480fa7e`, upstream tip `c194dd00`, merge commit
+  `4251b61a`. Pushed `main` to `origin` as a fast-forward-from-merge (`f480fa7e..4251b61a`,
+  no PR).
 - 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
   untouched); local git identity defaulted to an unapproved global author identity,
