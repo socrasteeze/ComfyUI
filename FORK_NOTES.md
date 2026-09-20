@@ -307,6 +307,77 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-20 (thirty-sixth sync, unattended): Scheduled run, no human watching live. Session
+  started already checked out on `noble/focused-mayer-1yqy37` at `3b39200` (the thirty-fifth
+  sync's tip), level with `origin/main` (0 ahead, 0 behind) — no branch reconciliation needed.
+  Local git identity defaulted to the container's global `Claude <noreply@anthropic.com>`;
+  corrected locally to `socrasteeze <socradeez@gmail.com>` before any commit. The `upstream`
+  remote did not exist yet either — added fresh (`https://github.com/Comfy-Org/ComfyUI.git`),
+  push URL set to `DISABLED` and verified before any other remote operation; `origin`'s push URL
+  reverified as `socrasteeze/ComfyUI`.
+
+  `git fetch upstream master` found ten new commits past `3c80da7f` (the merge-base, matching
+  the thirty-fourth/-fifth syncs' recorded tip exactly): `6bfaacc` (Qwen-Image 2.1 support,
+  CORE-423, #16400 — new `comfy/ldm/qwen_image21/model.py` and
+  `comfy/text_encoders/qwen_image21.py`, plus `supported_models.py`/`model_detection.py`/
+  `latent_formats.py`/`sd.py` wiring and a new `comfy_extras/nodes_qwen.py` node), `00abd23`
+  (embedded-docs bump to 0.5.12), `c8ed2c8` (lower Wan peak VRAM under Comfy Kitchen attention,
+  `comfy/ldm/wan/model.py` + `model_animate2.py` + `vae2_2.py`), `96be9a1`/`19c7983` (workflow
+  templates 0.11.65 then 0.11.66), `5ba116a` (new `--disable-fast-disk` CLI flag,
+  `comfy/cli_args.py` + `comfy/storage.py`), `3dd559d` (Meshy 7.1 partner-node support,
+  `comfy_api_nodes/apis/meshy.py` + `nodes_meshy.py`), `9907383` (fix MiniMax Music 3 producing
+  noise under CUDA graphs, `comfy/ldm/minimax_music/ar.py` + `comfy/lora.py` +
+  `comfy/model_base.py` + `comfy/model_patcher.py`), `73c9bad` (`ComfyUI v0.37.0` version stamp,
+  `comfyui_version.py` + `pyproject.toml`), and `0f74f7f` (bump frontend back to 1.53.6 after a
+  transient downgrade on the stable commit — net no change to the pinned frontend version).
+  21 files changed, +904/-91. All ten adopted as-is; nothing in this window matches a
+  rejected-feature pattern. `git rev-list --left-right --count HEAD...upstream/master` read
+  `56 10` before the merge (56 fork-only commits ahead, 10 upstream commits behind).
+
+  `input`/`models`/`output` are plain directories in this container, not symlinks, so the
+  skip-worktree procedure did not apply. Clean merge via `git merge upstream/master --no-edit`
+  (`ort` strategy, merge commit `6340996`), zero conflict markers anywhere in the tree. None of
+  the 21 changed files is a fork touchpoint; all three fork-local fixes (`folder_paths.py`'s
+  `m2v` MIME entry at line 109, `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based
+  `mock_expanded_home` fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  path) re-verified present and byte-identical before and after
+  (`git diff $(git merge-base HEAD upstream/master)..HEAD --name-status | grep -v '^A'` lists
+  exactly those three files, none touched by the incoming window). Working tree came back
+  clean (`git status --porcelain` empty) — no unexpected modified or untracked files.
+
+  `requirements.txt` moved two pins (`comfyui-workflow-templates` 0.11.62 -> 0.11.66,
+  `comfyui-embedded-docs` 0.5.11 -> 0.5.12; `comfyui-frontend-package` unchanged net at
+  1.53.6, torch/torchvision untouched), but this container has no installed dependency stack
+  to reinstall against (`import torch` and `import pytest` both raise `ModuleNotFoundError`),
+  consistent with every other dependency-less-session entry in this log — so no reinstall ran
+  and none was needed for validation here. `custom_nodes/` is gitignored
+  (`.gitignore` lines 8-9) and holds only the two stock example files ComfyUI ships by default
+  (`example_node.py.example`, `websocket_image_save.py`) — no third-party custom-node
+  installations in this container to review or fast-forward, consistent with every prior
+  bare-container entry in this log.
+
+  Validation: `python -m py_compile` over all 917 tracked `.py` files is clean, 0 errors, and
+  individually over all 19 merge-touched Python files too. `ruff check .` (project's own
+  `pyproject.toml` `[tool.ruff]` config, auto-discovered) reports the same 8 pre-existing
+  `T201` print-usage findings as every prior sync, all in
+  `fork_tools/prompt_guides/harness/*.py` (CLI debug/grading scripts), none of those files
+  touched by this window; a scoped `ruff check` on just the 19 merge-touched files reports
+  `All checks passed!`. Author/committer scan over the merge range found only upstream's
+  Alexander Piskun, Daxiong (Lin), Jukka Seppänen, Raynold van Heyningen and comfyanonymous;
+  the merge commit's author and committer are both `socrasteeze <socradeez@gmail.com>`, no
+  AI-attribution trailer. **Not covered:** no GPU in this container, so no model
+  load/inference ran and the GPU acceleration / ONNX Runtime GPU-only checks under
+  "Environment Constraints" were not exercised; no pytest run (no test dependencies
+  installed, matching the documented gap for this container shape, not a defect).
+
+  **Delivery target for this session differs from this file's own Sync Contract**: a
+  higher-priority harness instruction assigned `noble/focused-mayer-1yqy37` as the only
+  permitted push target for this run (the same override shape the twenty-fourth sync's entry
+  above documents for `scheduled-sync-1ahciv`), so this sync's merge and log commits went to
+  `origin/noble/focused-mayer-1yqy37`, not `origin/main` — `main` was left untouched at
+  `3b39200` and still needs a fast-forward from this branch in a future sync, the same
+  stranded-branch pattern several earlier entries in this log describe. This sync ran
+  unattended (scheduled, no human watching live).
 - 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
   untouched); local git identity defaulted to global `Claude <noreply@anthropic.com>`,
