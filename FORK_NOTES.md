@@ -61,11 +61,21 @@ Derive the list from `git status --porcelain`, as above, and from nothing else.
 
 The two disagree because they answer different questions. `ls-files -d` reports
 only paths missing from the filesystem. `git status` also reports a path whose
-worktree content no longer matches the index — and the deletion baseline holds
-both kinds. Here the 10 extra are the real `models/configs/*.yaml` files, which
-exist on disk with content and differ from the indexed copies; the other 28 are
-empty `put_*_here` placeholders that are genuinely absent. Both kinds keep the
-tree dirty, so both need the flag.
+worktree bytes no longer match the index — and the deletion baseline holds both
+kinds. Of the 38, the 28 are empty `put_*_here` placeholders that are genuinely
+absent. The other 10 are the real `models/configs/*.yaml` files, which are
+present on disk and hold **no local edits**: they are byte-identical to the
+indexed copies once CRLF is normalized.
+
+That last part is a line-ending artifact, not drift. `core.autocrlf=true` checks
+those files out with CRLF while the index stores LF. Git normally hides this by
+converting on read, but it cannot walk paths beyond a directory symlink to do so,
+so the round-trip never happens and the files read as deleted. The same CRLF
+checkout on a normal path — `README.md`, `.coderabbit.yaml` — reports clean.
+
+The practical consequence is small but worth knowing: these 10 carry no fork
+changes, so an upstream edit to any of them merges without conflict. Both kinds
+of path still keep the tree dirty, so both still need the flag.
 
 A short list is worse than an outright failure: the unlisted paths still block
 the operation, which aborts with `cannot rebase: You have unstaged changes` after
@@ -83,7 +93,9 @@ unpushed commit needs the flags set for the duration exactly as a merge does.
 
 Never commit or restore the deleted placeholders, and never stash. Each of
 those writes files through the symlinks into the real model and image
-libraries.
+libraries. This holds for the 10 `models/configs/*.yaml` files too, even though
+their content matches: a restore rewrites live files in the model library to
+change nothing but their line endings.
 
 ### After the merge
 
