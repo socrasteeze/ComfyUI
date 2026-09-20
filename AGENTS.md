@@ -1,3 +1,16 @@
+## Fork Branches
+
+- This fork keeps two long-lived branches, one per installation. They are not
+  intended to converge.
+- `main` is the desktop install's branch. It is the line described by the
+  `FORK_NOTES.md` sync contract and carries that installation's sync log.
+- `master` is the laptop install's branch. Sync it from `upstream/master` and
+  publish it to `origin/master`; do not push it to `origin/main`.
+- Sync each branch from `upstream/master` on its own. Do not merge one
+  installation branch into the other to "catch up" — the branches carry
+  host-specific notes and pinned-dependency history that only apply to their
+  own machine.
+
 ## Engineering Style
 
 - Keep changes small and direct. Most fixes should touch the narrowest code path

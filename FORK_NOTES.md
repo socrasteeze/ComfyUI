@@ -200,6 +200,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-20 (twenty-second sync, laptop `master`): Adopted 26 upstream commits
+  through `c194dd00`, spanning the v0.37.0 release tag. Headline changes:
+  Qwen-Image 2.1 support (CORE-423, #16400) with transformer-block compile
+  (#16430) and KV-cache location logic (#16429); Qwen3/3.5/3.8 cudagraphs and
+  w4a8 gemv support (CORE-390, #15623); per-block attention selection from model
+  files (#16419); MoGe 3 support (CORE-443, #16381); `--disable-fast-disk`
+  (#16424); Meshy 7.1 partner nodes (#16412); lower Wan peak VRAM under
+  comfy-kitchen attention (#16418); MiniMax Music 3 CUDA-graph noise fix
+  (#16428); ace-step VAE decode fix on non-bf16 GPUs (#16405). 67 files,
+  +2350/-502. Clean merge, zero conflicts and zero conflict markers. All three
+  fork touchpoints verified intact: `folder_paths.py`'s `m2v` MIME entry,
+  `tests-unit/utils/extra_config_test.py`'s tmp-path home fixture, and the
+  Hunyuan DiT tokenizer's relative `special_tokens_map_file`. `requirements.txt`
+  moved four pins (frontend-package 1.52.7 to 1.53.6, workflow-templates 0.11.62
+  to 0.11.66, embedded-docs 0.5.11 to 0.5.12, comfy-kitchen 0.2.34 to 0.2.35);
+  reinstalled after a `--dry-run` confirmed torch and torchvision were absent
+  from the "Would install" line. ONNX Runtime still reports `onnxruntime-gpu`
+  and `onnxruntime_providers_cuda.dll` loads with every CUDA dependency
+  resolved against torch 13.0's bundled libraries. This sync ran on the laptop
+  branch `master`, which is a separate installation line from `origin/main`;
+  the two were not reconciled, and `AGENTS.md` gained a Fork Branches section
+  recording that split.
+
 - 2026-09-16 (twenty-first sync): Adopted 23 upstream commits through `8ad078bb`, spanning the
   v0.36.0 release tag. Headline changes: Generic Loops (CORE-14, #16227) with loop boundaries
   declared in the node schema and heterogeneous lists carried through a loop; the assets system
