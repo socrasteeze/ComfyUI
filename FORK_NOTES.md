@@ -54,9 +54,32 @@ The `grep '^ D '` filter is required, not cosmetic: the redirection creates
 `paths.txt` before `git status` runs, so an unfiltered list captures that file as a
 39th entry and `git update-index` then fails on it. Check the count before applying.
 
+Derive the list from `git status --porcelain`, as above, and from nothing else.
+`git ls-files -d` looks like the obvious command for the job and returns a
+**short** list with no error: on the installation these notes were written from,
+28 paths against `git status`'s 38.
+
+The two disagree because they answer different questions. `ls-files -d` reports
+only paths missing from the filesystem. `git status` also reports a path whose
+worktree content no longer matches the index — and the deletion baseline holds
+both kinds. Here the 10 extra are the real `models/configs/*.yaml` files, which
+exist on disk with content and differ from the indexed copies; the other 28 are
+empty `put_*_here` placeholders that are genuinely absent. Both kinds keep the
+tree dirty, so both need the flag.
+
+A short list is worse than an outright failure: the unlisted paths still block
+the operation, which aborts with `cannot rebase: You have unstaged changes` after
+the flags appear to have been applied. The untracked host notes record the
+expected count; compare against it before applying, and stop if the two disagree.
+
 `skip-worktree` is the right tool because it also stops git from writing those
 paths out during the merge. Clear the flags in the same session; left set, they
 hide real local changes from `git status`.
+
+The same workaround applies to **any** command that insists on a clean tree, not
+just `merge` and `rebase`. `git filter-branch` refuses with the same
+`cannot rebase: You have unstaged changes`, so stripping a trailer from an
+unpushed commit needs the flags set for the duration exactly as a merge does.
 
 Never commit or restore the deleted placeholders, and never stash. Each of
 those writes files through the symlinks into the real model and image
