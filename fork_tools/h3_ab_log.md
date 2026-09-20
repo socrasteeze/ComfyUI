@@ -1,5 +1,9 @@
 # MiniMax H3 reference-to-video A/B log
 
+> **Looking for the settings to use?** See `fork_tools/h3_reference.md` —
+> the consolidated production reference. This file is the raw evidence
+> behind it.
+
 Every row is one generation of the same shot: a two-performer studio clip where
 both performers are replaced from character sheets, motion and soundtrack kept.
 Held constant unless the row says otherwise — seed `779289819277270`, two
