@@ -307,6 +307,63 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-20 (thirty-sixth sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-7bc75t`, already level with `origin/main` (`3b39200f`, the
+  thirty-fifth sync's log-entry commit) with no upstream tracking set. Local git identity again
+  defaulted to global `Claude <noreply@anthropic.com>`; corrected locally to `socrasteeze
+  <socradeez@gmail.com>` before any commit. `upstream` remote did not exist yet either — added
+  fresh (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to `DISABLED` and verified
+  before any other remote operation (and re-verified immediately before the final push).
+
+  `git fetch upstream` found five new commits past the thirty-fifth sync's `3c80da7f` tip,
+  through `5ba116a4`: Qwen-Image 2.1 model support (`6bfaacc6`, CORE-423 — new
+  `comfy/ldm/qwen_image21/model.py` and `comfy/text_encoders/qwen_image21.py`, plus
+  `latent_formats.py`/`lora.py`/`model_base.py`/`model_detection.py`/`sd.py`/
+  `supported_models.py`/`comfy_extras/nodes_qwen.py` wiring), a Wan peak-VRAM reduction under
+  Comfy Kitchen attention (`c8ed2c8c` — `comfy/ldm/wan/model.py`,
+  `comfy/ldm/wan/model_animate2.py`, `comfy/ldm/wan/vae2_2.py`), a new `--disable-fast-disk`
+  CLI flag (`5ba116a4` — `comfy/cli_args.py`, `comfy/storage.py`), and two dependency-pin-only
+  chores bumping `comfyui-workflow-templates` to 0.11.65 and `comfyui-embedded-docs` to 0.5.12
+  in `requirements.txt` (`96be9a13`, `00abd23d`). All five are additive upstream feature/perf
+  work with nothing resembling a rejected fork feature. `input`/`models`/`output` are plain
+  directories in this container, not symlinks, so the skip-worktree trap did not apply.
+
+  Clean merge via `git merge upstream/master --no-edit` (merge commit `75e24225`), zero
+  conflict markers anywhere in the tree (`grep` for the three marker forms across the working
+  tree returned 0). Touchpoint surface after the merge is exactly the expected **3** files
+  (`git diff upstream/master --name-status | grep -v '^A' | wc -l` = 3); all three fork-local
+  fixes (`folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  `tmp_path`-based absolute-home fixture, the Hunyuan DiT tokenizer's relative
+  `special_tokens_map_file` path) re-verified present and untouched — none of the incoming
+  hunks landed in those three files. `custom_nodes/` is gitignored and holds only the two
+  stock example files ComfyUI ships by default (`example_node.py.example`,
+  `websocket_image_save.py`) — no real custom-node installations in this container to review
+  or fast-forward, consistent with every prior bare-container entry in this log.
+
+  `requirements.txt` changed (the two version bumps above, no torch/numpy pin movement), but
+  this session has no installed dependencies to reinstall against — no torch, no numpy,
+  consistent with every other dependency-less-session entry in this log, though unusually for
+  a bare container `pytest` and a standalone `ruff` binary were present on `PATH` again this
+  run. Pre-merge baseline: `pytest tests-unit -q --continue-on-collection-errors` gave 135
+  passed / 87 collection errors (missing `torch`/`numpy`/`yaml`-adjacent deps); post-merge run
+  is byte-identical apart from non-deterministic `MonkeyPatch` object addresses and timing —
+  same 135 passed / 87 errors. `ruff check .` gave the same pre-existing 8 `T201`
+  print-usage findings in `fork_tools/prompt_guides/harness/*.py` both before and after (one
+  transient `# noqa`-directive cache warning on the untouched `comfy/ldm/sam3/detector.py`
+  appeared only in the pre-merge run and is ruff-cache noise, not a merge effect — the file
+  has no diff and no working-tree change). A full-tree `python -m py_compile` over every
+  tracked `.py` file is clean both before and after. `import comfy_extras.nodes_qwen` (the new
+  Qwen 2.1 node module) fails only at `import torch` inside `node_helpers`, the same
+  dependency boundary every other comfy_extras import hits in this container — not a merge
+  defect. Author scan over the merge range found only the three upstream authors
+  (`comfyanonymous`, Jukka Seppänen/kijai, Daxiong (Lin)) plus the fork's own `socrasteeze`;
+  merge commit author and committer both `socrasteeze <socradeez@gmail.com>`, no
+  AI-attribution trailer. **Not covered:** no GPU in this container, so no model load/inference
+  ran and the GPU acceleration / ONNX Runtime GPU-only checks were not exercised; the new
+  Qwen-Image 2.1 nodes and the Wan VRAM change are therefore unverified at runtime, same
+  caveat as every other bare-container sync in this log. Pushed to `origin` on
+  `noble/focused-mayer-7bc75t` (`git push -u origin noble/focused-mayer-7bc75t`, no PR, no
+  push to `main`, upstream push URL re-verified `DISABLED` immediately before pushing).
 - 2026-09-19 (thirty-fifth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-19t9es` (unrelated leftover feature-branch work, left
   untouched); local git identity defaulted to global `Claude <noreply@anthropic.com>`,
