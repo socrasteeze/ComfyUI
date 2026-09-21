@@ -346,6 +346,52 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-21 (thirty-eighth sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-r5q8uj`, already at the thirty-seventh sync's tip (`e90d5529`)
+  with a clean working tree; the local `main` ref was stale (still `f6e0dd2b`, the pre-rewrite
+  ref earlier entries describe), but `git fetch origin` reported `origin/main` itself had been
+  force-updated to `e90d5529` — i.e. `HEAD` already matched `origin/main` exactly, so `git
+  branch -f main origin/main` repointed the local ref with no ahead/behind to reconcile. Git
+  identity set fresh in this checkout (`socrasteeze <socradeez@gmail.com>`) before the first
+  commit. The `upstream` remote did not exist yet either — added
+  (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to `DISABLED` and verified before
+  any other remote operation.
+
+  `git fetch upstream` found one new commit past the thirty-seventh sync's `c194dd00` tip:
+  `b0f4b7b2` ("JsonExtractString can now handle JSON with prefix and/or suffix.", #16439) —
+  `comfy_extras/nodes_string.py` only, +10/-11, rewriting the node's JSON extraction to scan
+  for the first valid JSON object anywhere in the string (via `json.JSONDecoder().raw_decode`
+  at each `{` match) instead of requiring the whole input to parse as JSON, so LLM output with
+  leading/trailing prose around the JSON now extracts correctly; also adds a `description=`
+  field to the node's schema. `input`/`models`/`output` are plain directories in this
+  container, not symlinks, so the skip-worktree trap did not apply. `git merge upstream/master
+  --no-edit` merged clean with zero conflict markers (merge commit `2a64d2e0`); the one changed
+  file does not overlap any fork-local touchpoint. All three fork-local fixes re-verified
+  present and untouched: `folder_paths.py`'s `m2v` MIME entry (line 109),
+  `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home` fixture, and
+  the Hunyuan DiT tokenizer's relative `special_tokens_map_file` (both
+  `comfy/sd1_tokenizer/tokenizer_config.json` and
+  `comfy/text_encoders/hydit_clip_tokenizer/tokenizer_config.json`). `requirements.txt` did not
+  change, so no reinstall applied or was needed.
+
+  Custom nodes review: `custom_nodes/` holds only the two stock files ComfyUI ships by default
+  (`example_node.py.example`, `websocket_image_save.py`) — no real third-party custom-node git
+  checkouts in this container to review, fetch, or fast-forward, consistent with every prior
+  bare-container entry in this log.
+
+  Validation: this container has neither `torch`, `pytest`, nor `onnxruntime` installed and has
+  no GPU (no `nvidia-smi`), consistent with the established dependency-less-session pattern —
+  noted for completeness, not fabricated as a pass. A full-tree `python -m py_compile` over all
+  916 tracked `.py` files (excluding gitignored `custom_nodes/`) is clean, and the merge-touched
+  `comfy_extras/nodes_string.py` byte-compiles clean on its own too. A standalone `ruff`
+  binary (`ruff check .`, project's own `pyproject.toml` config) reported the same 8
+  pre-existing `T201` print-usage findings in `fork_tools/prompt_guides/harness/*.py`, unchanged
+  from every prior sync and outside this window's diff. **Not covered:** no GPU acceleration
+  check, no ONNX Runtime GPU-only/cuDNN-pin check, no pytest run — none possible in this
+  container.
+
+  Pre-merge tip `e90d5529`, upstream tip `b0f4b7b2`, merge commit `2a64d2e0`. Pushed straight to
+  `origin/main` (no PR) via `git push origin HEAD:main`.
 - 2026-09-21 (thirty-seventh sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-gh18mu`; local git identity had defaulted to an unapproved
   global identity (`Claude <noreply@anthropic.com>`), corrected locally to
