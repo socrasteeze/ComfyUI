@@ -16,7 +16,45 @@ Companion files:
 
 ---
 
-## 1. The config
+## 1. Which graph
+
+"Best" splits two ways, and the split matters more than any single setting. The
+23-row A/B log measures **one** graph — the native ComfyUI one. A second graph,
+Continuity, produced the better result and broke a limit the native graph never
+cleared.
+
+| | Best overall | Best native ComfyUI |
+|---|---|---|
+| Graph | Continuity | native, `MiniMax_H3_00015` (row B) |
+| Frames | 362 | 294 |
+| Distillation | Turbo 8-step — *but see below* | Turbo 8-step |
+| Base | b20-49 fl2va/ref2va hybrid | as logged |
+| Resolution | 1152x672 | 0.8 MP = 1216x672 |
+| Sampler / shift | euler / simple, 8/5 | euler / simple, 8/5 |
+| Reference | 480p (not boundary-cut — see below) | trimmed to the generation length |
+| Audio | source muxed back, offset-corrected | clean in-graph, paired socket |
+| Verdict | operator's best character swap | only run of 23 clean on both |
+
+The left-hand column is render `20260918_00001_`, delivered as
+`20260918_00001_srcaudio_sync.mp4` after the source track was muxed back at the
+measured 155 ms offset. Its 480p reference predates the shot-cut fix in §6; a
+later Continuity run on the same shot used a 600p reference cut on a boundary
+(`in_600p_cut362.mp4`) and is the clean-audio 362-frame run cited in §3. Two
+different renders — do not read the two reference resolutions as a disagreement.
+
+**HyperFlow supersedes the Turbo LoRA in that column**, but was adopted a day
+later, on a separate same-seed comparison, and is not what produced the render
+above. It won on picture — "clearly better and livelier" — at 19:12 against
+Turbo's 18:42. Its own audio is unusable, which does not matter here because the
+audio is discarded either way. It is confirmed on **one seed and one clip**;
+confirming it on a second shot is an open item. See §2 and §5.
+
+Read the rest of this file with that split in mind. **Sections 4 and 10 are
+native-graph findings** — the accelerator ranking and most of the dead ends come
+from the A/B log, and they have not been re-measured on Continuity. Sections 5
+through 8 (audio, reference clips, prompting, grading) are graph-independent.
+
+## 2. The config
 
 The baseline is **row B** of `h3_ab_log.md` — the only run in 23 that came back
 clean on both audio and video. Two items have since been superseded; both are
@@ -24,7 +62,7 @@ marked.
 
 | | Value | Source |
 |---|---|---|
-| Frames | 294 (12.25 s) — *but see §2* | row B |
+| Frames | 294 (12.25 s) — *but see §3* | row B |
 | Resolution | 0.8 MP = 1216x672 | row B |
 | Sampler / scheduler | `euler` / `simple` | row B |
 | Steps | 8 | row B |
@@ -53,7 +91,7 @@ attach, so the audio stream takes an undistilled 0.18 leap every step. Verified
 that the 12/3 shift composes correctly — shift is *not* the fault.
 
 This does not reach production **because the generated audio is discarded anyway**
-(§4). On a pipeline that keeps H3's own audio, HyperFlow is not usable in this
+(§5). On a pipeline that keeps H3's own audio, HyperFlow is not usable in this
 form.
 
 **Caveat:** every H3 base on hand is pruned (curve-form: `adaln_t_table` present,
@@ -63,7 +101,7 @@ the pruned run already peaked at 30.0 GB.
 
 ---
 
-## 2. Generation length
+## 3. Generation length
 
 `h3_ab_log.md` concluded that 362 frames breaks audio unconditionally: no
 362-frame run produced clean audio, including row 15 with every accelerator
@@ -79,7 +117,7 @@ way.
 
 ---
 
-## 3. Accelerators — ranked, with the mechanism
+## 4. Accelerators — ranked, with the mechanism
 
 **Mechanism first, because it explains the whole ranking.** H3's audio and video
 run on *different sigma schedules*. Audio velocity is scaled by
@@ -110,7 +148,7 @@ run.
 
 ---
 
-## 4. Audio: generate it, then throw it away
+## 5. Audio: generate it, then throw it away
 
 For a swap that keeps the source track, **mux the source back in**. H3
 re-synthesizes speech rather than copying it — a timing gap of ~0.1 s is enough
@@ -138,7 +176,7 @@ Hard limits: reference audio 2-15 s per clip, 15 s total.
 
 ---
 
-## 5. The reference clip
+## 6. The reference clip
 
 **Cut on a shot boundary.** A reference opening on even 14 frames (0.58 s) of the
 previous shot makes H3 hold that framing for seconds — one clip cost several
@@ -166,7 +204,7 @@ the frame rate too.
 
 ---
 
-## 6. Prompting: fix once, then reseed
+## 7. Prompting: fix once, then reseed
 
 **What the prompt controls:** lip sync quality, who vocalizes, which gestures the
 subjects perform, whether invented motion appears. Fixing the prompt to the
@@ -206,7 +244,7 @@ unprompted, operator verdict "essentially perfect".
 
 ---
 
-## 7. Grading
+## 8. Grading
 
 **A/B every render against the source clip, not against the previous best.** The
 target is the original video; the best run is itself still off. A comparison
@@ -233,7 +271,7 @@ embedded prompt tag did not.
 
 ---
 
-## 8. Diagnostics
+## 9. Diagnostics
 
 ### A run stalls at step 0
 
@@ -259,7 +297,7 @@ The comfy compiler frees FBC's GPU cache. Run with `--disable-comfy-compiler`.
 
 ---
 
-## 9. Dead ends — do not re-litigate
+## 10. Dead ends — do not re-litigate
 
 Each of these consumed real time and is settled:
 
@@ -282,7 +320,7 @@ of 1,032,192; `multiple` 64 yields 1344x768, exactly it.
 
 ---
 
-## 10. Open
+## 11. Open
 
 Ordered by value.
 
