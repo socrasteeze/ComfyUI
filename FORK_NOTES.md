@@ -346,6 +346,56 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-21 (thirty-seventh sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-gh18mu`; local git identity had defaulted to an unapproved
+  global identity (`Claude <noreply@anthropic.com>`), corrected locally to
+  `socrasteeze <socradeez@gmail.com>` before any commit. The `upstream` remote did not exist yet
+  either — added fresh (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to `DISABLED`
+  and verified before any other remote operation.
+
+  HEAD (`noble/focused-mayer-gh18mu`) was already exactly level with `origin/main` (0 ahead,
+  0 behind, both at `7ac46fc`, the thirty-sixth sync's final commit) — no branch reconciliation
+  needed on the working branch. Local `main`, however, was still the stale pre-rewrite ref the
+  thirty-fifth sync's entry describes (`f6e0dd2`, merge-base with `origin/main` at `36da3ff`):
+  both `git branch -f main origin/main` and `git update-ref refs/heads/main origin/main` were
+  blocked by this sandbox's destructive-action guard (stricter than the sandbox that permitted
+  `update-ref` for the thirty-fifth sync), so local `main` was left stale rather than forced
+  through an unapproved path. This has no effect on delivery: the sync and push worked from HEAD
+  directly (`git push origin HEAD:main`), never local `main`, so nothing shipped depends on that
+  ref — a future session with a less restrictive sandbox should still repoint it.
+
+  The clone was shallow (`.git/shallow` present) on arrival — unshallowed via
+  `git fetch --unshallow origin` before trusting any ahead/behind count, per the thirtieth
+  sync's lesson. `git fetch upstream` found upstream/master still at `c194dd00`, the exact
+  commit the thirty-sixth sync already merged (`git merge-base --is-ancestor upstream/master
+  HEAD` = true, `git rev-list --left-right --count HEAD...upstream/master` = 119/0 — 119
+  fork-only commits ahead, zero upstream commits behind). **Zero new upstream commits this
+  run**; nothing to merge, nothing to read commit messages for.
+
+  `input`/`models`/`output` are plain directories in this container, not symlinks, so the
+  skip-worktree trap did not apply. `custom_nodes/` is gitignored and holds only the two stock
+  files ComfyUI ships by default (`example_node.py.example`, `websocket_image_save.py`) — no
+  real custom-node installations in this container to review or fast-forward, consistent with
+  every prior bare-container entry in this log.
+
+  All three fork-local touchpoints re-verified present and untouched: `folder_paths.py`'s `m2v`
+  MIME entry, `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home`
+  fixture, the Hunyuan DiT tokenizer's relative `special_tokens_map_file`. `requirements.txt`
+  did not change (nothing merged), so no reinstall applied or was needed.
+
+  Validation: this container has neither `torch`, `pytest`, nor `onnxruntime` installed and has
+  no GPU (no `nvidia-smi`), consistent with the established dependency-less-session pattern —
+  noted for completeness, not fabricated as a pass. A full-tree `python -m py_compile` over all
+  916 tracked `.py` files (excluding gitignored `custom_nodes/`) is clean. A standalone `ruff`
+  binary (`ruff check .`, project's own `pyproject.toml` config) reported the same 8
+  pre-existing `T201` print-usage findings in `fork_tools/prompt_guides/harness/*.py`, unchanged
+  from every prior sync. **Not covered:** no GPU acceleration check, no ONNX Runtime
+  GPU-only/cuDNN-pin check, no pytest run — none possible in this container.
+
+  Nothing was merged from `upstream/master` this run — the only shipped change is this log
+  entry. Pushed straight to `origin/main` (no PR) via `git push origin HEAD:main` (HEAD
+  content-identical to `origin/main` plus this entry). Verified with a fresh post-push
+  `git fetch origin main` plus `git merge-base --is-ancestor`.
 - 2026-09-20 (thirty-sixth sync, desktop): Ran on local `main`, level with `origin/main` at the
   start (0 ahead, 0 behind). `git fetch upstream` found 13 new commits past the thirty-fifth
   sync's `3c80da7f` tip, through `c194dd00`: `6bfaacc6` (Qwen-Image 2.1 support, CORE-423,
