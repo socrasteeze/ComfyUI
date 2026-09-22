@@ -346,6 +346,73 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-22 (fortieth sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-8hbv6h` with a clean working tree, exactly level with
+  `origin/main` (`ab7f9c2d`, the thirty-ninth sync's tip) and with `origin`'s copy of this same
+  branch. Git identity had defaulted to the container's unapproved global identity (`Claude
+  <noreply@anthropic.com>`, with `commit.gpgsign=true` also set globally); corrected locally to
+  `socrasteeze <socradeez@gmail.com>` with `commit.gpgsign=false` before any commit. The
+  `upstream` remote did not exist yet — added fresh (`https://github.com/Comfy-Org/ComfyUI.git`),
+  push URL set to `DISABLED` and verified before any other remote operation. Local `main` was
+  stale (`f6e0dd2b`, same pre-rewrite ref prior entries describe); left untouched this run since
+  this session's push target is `noble/focused-mayer-8hbv6h`, not `main` (an explicit one-off
+  instruction for this run only — see below).
+
+  `git fetch upstream` found one new commit, `b16023b0` ("Remove torchaudio dependency.",
+  #16457): it vendors the small slice of TorchAudio's resampling, mel-scale, and spectrogram
+  DSP that ComfyUI actually uses into a new `comfy/audio.py` (Slaney mel filterbank, sinc
+  resampling, STFT-based spectrogram — BSD-2-Clause attributed in the file header), repoints
+  `comfy/audio_encoders/{audio_encoders,whisper}.py`, `comfy/ldm/ace/vae/{music_dcae_pipeline,
+  music_log_mel}.py`, `comfy/ldm/lightricks/{vae/audio_vae,vocoders/vocoder}.py`,
+  `comfy/ldm/mmaudio/vae/autoencoder.py`, `comfy/text_encoders/gemma4.py`,
+  `comfy_api/latest/_ui.py`, and `comfy_extras/nodes_{audio,lt,minimax_h3,wandancer}.py` at the
+  new module instead of `torchaudio`, drops the `torchaudio` line from `requirements.txt`, and
+  updates four CI workflow files' pip-install lines to match. 19 files, +252/-69. Adopted
+  as-is — no rejected content, nothing to diverge. `input`/`models`/`output` are plain
+  directories in this container, not symlinks, so the skip-worktree trap did not apply
+  (`git status --porcelain | grep '^ D '` found zero placeholders). Clean merge via
+  `git merge upstream/master --no-edit`, zero conflict markers anywhere in the tree. The
+  post-merge sweep for orphaned `torchaudio` references (imports, requirements files, anywhere
+  outside `custom_nodes/`) found none. All three fork-local touchpoints re-verified present and
+  untouched: `folder_paths.py`'s `m2v` MIME entry, `tests-unit/utils/extra_config_test.py`'s
+  `mock_expanded_home` fixture, and the Hunyuan DiT tokenizer's relative
+  `special_tokens_map_file` in both tokenizer configs — none overlaps this window's diff.
+  `custom_nodes/` is gitignored and holds only the two stock files ComfyUI ships by default
+  (`example_node.py.example`, `websocket_image_save.py`), no nested `.git` checkouts to
+  fast-forward, consistent with every prior bare-container entry in this log.
+
+  `requirements.txt` moved (one line removed, `torchaudio`); this container has no live
+  installation to reinstall into (no torch, no pip-installed deps at all), so there is nothing
+  to reinstall or dry-run here — noted rather than skipped silently.
+
+  Validation: this container has neither `torch` nor `onnxruntime` installed and has no GPU (no
+  `nvidia-smi`), the same dependency-less-session pattern as every recent entry. Baseline was
+  captured before fetching upstream, per the sync procedure: a full-tree `python -m py_compile`
+  over all 916 tracked `.py` files (excluding gitignored `custom_nodes/`) was clean, `ruff
+  check .` reported the same 8 pre-existing `T201` print-usage findings in
+  `fork_tools/prompt_guides/harness/*.py` as always, and `pytest tests-unit -q` (the same
+  `/root/.local/bin/pytest` 9.0.2 this container carries) failed at collection with 82 errors,
+  all `ModuleNotFoundError` for runtime deps this container never installs (`torch`, `numpy`,
+  `aiohttp`, `requests`, `PIL`, and others). Post-merge: `python -m py_compile` over all 917
+  tracked `.py` files (the new `comfy/audio.py` included) is clean; every changed file also
+  parses cleanly under `ast.parse` as an independent syntax check; `ruff check .` reports the
+  identical 8 `T201` findings (one pre-existing stray `# noqa`-syntax warning on
+  `comfy/ldm/sam3/detector.py:12`, outside this window's diff, appeared on the baseline run and
+  not the post-merge run — the same ruff-side flake noted in the 2026-09-07 third-sync entry,
+  not a merge effect); and `pytest tests-unit -q` again fails at collection with the exact same
+  82 errors on the exact same 82 files as the baseline, confirming the merge introduced no new
+  failure. A grep for any remaining `torchaudio` import confirmed zero hits anywhere outside
+  `custom_nodes/`. **Not covered:** no GPU acceleration check, no ONNX Runtime GPU-only/cuDNN
+  check, no real `pytest` run past collection, no runtime exercise of the new `comfy/audio.py`
+  DSP against real audio tensors — none possible in this container.
+
+  Pushed to `origin noble/focused-mayer-8hbv6h`, **not** `main`, per this run's explicit
+  instruction (a one-off override of the standing "sync straight to `main`" contract above,
+  for this session only). `main` on `origin` is therefore one commit-window behind this branch
+  until a future session fast-forwards it; the next sync should check
+  `git log --oneline origin/main..origin/noble/focused-mayer-8hbv6h` first and fold this
+  branch's tip into `main` rather than re-deriving the same merge. No PR opened, none of any
+  kind, against any target.
 - 2026-09-21 (thirty-ninth sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-qjmw88` with a clean working tree, already exactly level with
   `origin/main` (`51b30285`, the thirty-eighth sync's tip) — no branch reconciliation needed on
