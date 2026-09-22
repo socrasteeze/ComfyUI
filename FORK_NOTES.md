@@ -346,6 +346,41 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-22 (forty-third sync, unattended): Scheduled multi-fork sync run, no human watching
+  live. Session started on `noble/focused-mayer-2ca74b`, clean working tree, already
+  byte-identical to `origin/main` at `c068e5c9` (the forty-second sync's tip) — 0 ahead, 0
+  behind, so no branch reconciliation needed. The `upstream` remote did not exist yet — added
+  fresh (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to `DISABLED` and verified
+  before any other remote operation. Git identity: container global config carried the
+  unapproved vendor identity (`Claude <noreply@anthropic.com>`); set locally to
+  `socrasteeze <socradeez@gmail.com>` and `commit.gpgsign=false` before any commit.
+
+  `git fetch upstream` found 2 new commits past `b33e2b55`: `9498c42b` (TextGenerate: add
+  `system_prompt` input and separate thinking output, CORE-460, #16442) and `95539f56`
+  (support union cn 2.0, #16471). 10 files, +47/-22 against the merge base, touching
+  `comfy_extras/nodes_textgen.py`, `comfy_extras/nodes_minimax_h3.py`,
+  `comfy_extras/nodes_model_patch.py`, `comfy/ldm/minimax/controlnet.py`, and five
+  `comfy/text_encoders/*.py` files. `input`/`models`/`output` are plain directories in this
+  container, not symlinks, so the skip-worktree trap did not apply. `git merge upstream/master
+  --no-edit` merged clean with zero conflict markers (merge commit `84c39553`). All three
+  fork-local fixes (`folder_paths.py`'s `m2v` MIME entry; `tests-unit/utils/extra_config_test.py`'s
+  `tmp_path`-based `mock_expanded_home` fixture; the Hunyuan DiT tokenizer's relative
+  `special_tokens_map_file`) re-verified present and untouched. `requirements.txt` did not
+  change, so no reinstall needed.
+
+  `custom_nodes/` holds only the two stock files ComfyUI ships by default
+  (`example_node.py.example`, `websocket_image_save.py`) — no real third-party custom-node git
+  checkouts in this container to review, fetch, or fast-forward, consistent with every prior
+  bare-container entry in this log.
+
+  Validation: this container has neither `torch` nor `onnxruntime` installed and has no GPU, so
+  the GPU acceleration gate and the ONNX Runtime GPU-only/cuDNN-pin check are not applicable
+  here. A full-tree `python -m py_compile` over all 919 tracked `.py` files (excluding
+  gitignored `custom_nodes/`) is clean both before and after the merge. **Not covered:** GPU
+  acceleration check, ONNX Runtime check, full pytest suite — none possible in this container.
+
+  Pre-merge tip `c068e5c9`, upstream tip `95539f56`, merge commit `84c39553`. Pushed straight to
+  `origin/main` (no PR) via `git push origin HEAD:main`.
 - 2026-09-22 (forty-second sync, desktop): Ran on local `main` after fast-forwarding from
   `c1a469a7` to `origin/main` at `6be34a28` (the forty-first sync's tip, landed earlier the same
   day from a bare-container session). `git fetch upstream` found upstream/master still at
