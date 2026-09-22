@@ -346,6 +346,33 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-22 (forty-second sync, desktop): Ran on local `main` after fast-forwarding from
+  `c1a469a7` to `origin/main` at `6be34a28` (the forty-first sync's tip, landed earlier the same
+  day from a bare-container session). `git fetch upstream` found upstream/master still at
+  `b33e2b55`, already an ancestor of HEAD (`git rev-list --left-right --count
+  HEAD...upstream/master` = 128/0). **Zero new upstream commits this run**; merge skipped.
+  `input`/`models`/`output` remain directory symlinks on this host, so the 38-placeholder
+  deletion baseline is present and untouched (no skip-worktree dance needed without a merge).
+  All three fork-local fixes re-verified present and untouched: `folder_paths.py`'s `m2v` MIME
+  entry; `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home`
+  fixture; the Hunyuan DiT tokenizer's relative `special_tokens_map_file`. `requirements.txt`
+  unchanged (nothing merged), so no reinstall. `onnxruntime` package confirmed
+  `onnxruntime-gpu` on the main install. GPU acceleration gate passed on both installations
+  (`ALL INSTALLS OK`, exit 0; main torch 2.9.1+cu130 / ORT 1.23.2 GPU Conv OK; SwarmUI backend
+  torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager update-all).
+  Of 37 git-backed trees: **3 fast-forwarded** - `ComfyUI-LTXVideo` `dfb2786..cb1f820`
+  (Automated PR 2026-09-22 / #564), `comfyui-manager` `946ef8fe..88bcf04c` (DB update + custom
+  node list PRs), `ComfyUI-MiniMax-H3-LongMedia` `c7fa2db..a9d5a79` (Add files via upload);
+  none of those ranges touched `requirements.txt`. **28 already current.** **Skipped 6:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output`, no upstream tracking -
+  stay put), `comfyui-obvpm` (local `local/separate-outputs` - stay put), `ComfyUI-RMBG`
+  (dirty worktree: local `requirements.txt` onnxruntime guard), `one-node-flux-2-klein`
+  (dirty worktree: local `nodes.py` + web JS), `RES4LYF` (ahead of origin by 3, not behind -
+  leave local tip), `ComfyUI-DaSiWa-Nodes` (diverged: ahead 8 / behind 14 - ff-only refused,
+  not forced). No pip ran from node updates. Pushed `main` to `origin` as the final step
+  (this notes commit only; no PR).
 - 2026-09-22 (forty-first sync, unattended): Scheduled run, no human watching live. Session
   started on `noble/focused-mayer-cgxoc7`, clean working tree, already byte-identical to
   `origin/main` at `c1a469a7` (the fortieth sync's tip, from earlier the same day on a
