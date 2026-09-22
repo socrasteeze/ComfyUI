@@ -346,6 +346,49 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-22 (forty-first sync, unattended): Scheduled run, no human watching live. Session
+  started on `noble/focused-mayer-cgxoc7`, clean working tree, already byte-identical to
+  `origin/main` at `c1a469a7` (the fortieth sync's tip, from earlier the same day on a
+  different host) â€” 0 ahead, 0 behind. Local `main` was stale (still `f6e0dd2b`); `git branch
+  -f main HEAD` repointed it cleanly (a fast-forward, `main` was already an ancestor). The
+  `upstream` remote did not exist yet â€” added fresh
+  (`https://github.com/Comfy-Org/ComfyUI.git`), push URL set to `DISABLED` and verified before
+  any other remote operation. Git identity: container global config carried the unapproved
+  vendor identity (`Claude <noreply@anthropic.com>`, `commit.gpgsign=true`, a vendor
+  `user.signingkey`); set locally to `socrasteeze <socradeez@gmail.com>` and
+  `commit.gpgsign=false` before any commit.
+
+  `git fetch upstream master` found upstream/master still at `b33e2b55`, the exact commit the
+  fortieth sync already merged (`git merge-base --is-ancestor upstream/master HEAD` = true,
+  `git rev-list --left-right --count HEAD...upstream/master` = 61/0). **Zero new upstream
+  commits this run**; nothing to merge, nothing to read commit messages for.
+
+  `input`/`models`/`output` are plain directories in this container, not symlinks, so the
+  skip-worktree trap did not apply. `custom_nodes/` holds only the two stock files ComfyUI
+  ships by default (`example_node.py.example`, `websocket_image_save.py`) â€” no real
+  third-party custom-node git checkouts in this container to review, fetch, or fast-forward,
+  consistent with every prior bare-container entry in this log.
+
+  All three fork-local fixes re-verified present and untouched: `folder_paths.py`'s `m2v` MIME
+  entry (line 109), `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based
+  `mock_expanded_home` fixture, and the Hunyuan DiT tokenizer's relative
+  `special_tokens_map_file` (both `comfy/sd1_tokenizer/tokenizer_config.json` and
+  `comfy/text_encoders/hydit_clip_tokenizer/tokenizer_config.json`). `requirements.txt` did not
+  change (nothing merged), so no reinstall applied or was needed.
+
+  Validation: this container has neither `torch` nor `onnxruntime` installed and has no GPU (no
+  `nvidia-smi`), so the GPU acceleration gate and the ONNX Runtime GPU-only/cuDNN-pin check are
+  not applicable here. A `pytest` binary (9.0.2, under `/root/.local/bin`) is present but was
+  not run since there is no diff to validate. As a tree-health sanity check (not a gate, since
+  nothing changed), `python -m py_compile` over all 919 tracked `.py` files (excluding
+  gitignored `custom_nodes/`) is clean. **Not covered:** GPU acceleration check, ONNX Runtime
+  check, full pytest suite â€” none possible in this container, same underlying reason as every
+  prior bare-container entry.
+
+  Nothing was merged from `upstream/master` this run â€” the only shipped change is this log
+  entry plus the local git-identity and `main`-ref repairs above. Pushed straight to
+  `origin/main` (no PR) via `git push origin HEAD:main`.
+
 - 2026-09-22 (fortieth sync, desktop): Ran on local `main`, level with `origin/main` at
   `3a358af3` at the start (0 ahead, 0 behind). `git fetch upstream` found 2 new commits past
   that tip, through `b33e2b55`: `b09760de` ([Partner Nodes] feat(Tencent): add Hunyuan Image
