@@ -346,6 +346,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-23 (forty-seventh sync, desktop): Scheduled desktop run on local `main` at
+  `8e4ede6f` (forty-sixth tip), byte-identical to `origin/main`
+  (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
+  `upstream/master` `912fca4f..b5cc8830`. Before merge: `HEAD...upstream/master` = 136/1.
+  Applied 38-path LF-only `skip-worktree` dance, then merged `upstream/master` (ort):
+  `b5cc8830` Port some optimizations to flux model family. (#16488)
+  (`comfy/ldm/flux/layers.py`, `comfy/ldm/flux/math.py`, `comfy/ldm/chroma/layers.py`;
+  3 files, +29/-14). Merge commit `9eeceaa5`. Cleared skip-worktree; deletion baseline
+  back to exactly 38 deleted / 0 modified / 0 untracked. `requirements.txt` unchanged,
+  so no reinstall. `onnxruntime` package confirmed `onnxruntime-gpu` 1.23.2 on the
+  main install. GPU acceleration gate passed on both installations (`ALL INSTALLS OK`,
+  exit 0; main torch 2.9.1+cu130 / ORT 1.23.2 GPU Conv OK; SwarmUI backend torch
+  2.9.0+cu130 / same). After merge: `HEAD...upstream/master` = 137/0;
+  `HEAD...origin/main` = 2/0 (merge + this notes).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 38 git-backed trees: **1 fast-forwarded** — `comfyui-manager`
+  `30fc9660..3223e802` (update DB). **30 already current.** **Skipped 7:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` - stay put),
+  `comfyui-obvpm` (local `local/separate-outputs` - stay put), `ComfyUI-RMBG` (dirty),
+  `one-node-flux-2-klein` (dirty), `ComfyUI-MiniMax-H3-LongMedia` (dirty),
+  `RES4LYF` (ahead of origin by 3 - leave local tip), `ComfyUI-DaSiWa-Nodes`
+  (diverged: ahead 8 / behind 15 - ff-only refused, not forced). No pip ran from node
+  updates. Pushed `main` to `origin` as the final step (no PR; no force-push).
+
 - 2026-09-22 (forty-sixth sync, desktop / Overwatch): On-demand sync requested via Overwatch-6.
   Local `main` started at `809d0399` (forty-fifth tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
