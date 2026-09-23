@@ -346,6 +346,42 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-23 (forty-ninth sync, desktop): Scheduled desktop run on local `main` at
+  `608aeecf` (forty-eighth tip), byte-identical to `origin/main`
+  (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
+  `upstream/master` `b5cc8830..2255709a`. Before merge: `HEAD...upstream/master` = 139/4.
+  Applied 38-path LF-only `skip-worktree` dance, then merged `upstream/master` (ort):
+  `51238926` [Partner Nodes] feat(Quiver): add Arrow 2 models with reasoning effort to the SVG nodes (#16478)
+  `d435c298` [Partner Nodes] feat(Anthropic): add Claude Opus 5.5 to the Claude node (#16479)
+  `15ef24d1` [Partner Nodes] feat(Recraft): add Recraft V4.1 Flash to the V4 text-to-image node (#16501)
+  `2255709a` chore: update workflow templates to v0.11.69 (#16503)
+  (5 files, +142/-67: `comfy_api_nodes/apis/quiver.py`, `nodes_anthropic.py`,
+  `nodes_quiver.py`, `nodes_recraft.py`, `requirements.txt`). Merge commit `7d3d0e78`.
+  Cleared skip-worktree; deletion baseline back to exactly 38 deleted / 0 modified / 0 untracked
+  (two pre-existing untracked scratch files `temp_schema2.py`, `temp_schema_dump.py` left alone).
+  All three fork-local fixes re-verified present and untouched: `folder_paths.py`'s `m2v` MIME
+  entry; `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home`
+  fixture; the Hunyuan DiT tokenizer's relative `special_tokens_map_file`.
+  `requirements.txt` moved `comfyui-workflow-templates` 0.11.68 -> 0.11.69. Dry-run pip:
+  Would install only workflow-templates packages (core 0.3.360, json 0.1.95, media-assets-01/02,
+  templates 0.11.69) — **no torch/torchvision**. Installed without `-U`. `onnxruntime`
+  package confirmed `onnxruntime-gpu` 1.23.2 on the main install. GPU acceleration gate
+  passed on both installations (`ALL INSTALLS OK`, exit 0; main torch 2.9.1+cu130 / ORT 1.23.2
+  GPU Conv OK; SwarmUI backend torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 38 git-backed trees: **0 fast-forwarded**. **29 already current.**
+  **Skipped 8:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` — stay put),
+  `comfyui-obvpm` (local `local/separate-outputs` — stay put), `ComfyUI-RMBG` (dirty),
+  `one-node-flux-2-klein` (dirty), `ComfyUI-MiniMax-H3-LongMedia` (dirty),
+  `RES4LYF` (ahead of origin — leave local tip), `ComfyUI-DaSiWa-Nodes`
+  (diverged — ff-only refused, not forced), `ComfyUI-Flux2Klein-Enhancer` (untracked
+  `__pycache__/` only; already current 0/0 vs origin/main). **Failed 1:**
+  `ComfyUI-Hyperflow` (`git fetch` → remote `git@github.com:Saganaki22/ComfyUI-Hyperflow.git`
+  returns Repository not found — left at local tip `164d454` / v1.3.1; no force). No pip ran
+  from node updates. Pushed `main` to `origin` as the final step (no PR; no force-push).
+
 - 2026-09-23 (forty-eighth sync, desktop): Scheduled desktop run on local `main` at
   `fa51efce` (forty-seventh tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` left
