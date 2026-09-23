@@ -346,6 +346,37 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-22 (forty-fifth sync, desktop): Scheduled desktop run on local `main` at
+  `230595f4` (the forty-fourth sync's tip), already byte-identical to `origin/main`
+  (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` left
+  `upstream/master` at `95539f56` (support union cn 2.0, #16471), still an ancestor of
+  HEAD (`git rev-list --left-right --count HEAD...upstream/master` = 133/0). **No
+  upstream merge this run** — zero new commits past the forty-third/forty-fourth tip.
+  `input`/`models`/`output` remain directory symlinks; deletion baseline stayed at
+  exactly 38 deleted / 0 modified / 0 untracked (no skip-worktree dance needed without
+  a merge). All three fork-local fixes re-verified present and untouched:
+  `folder_paths.py`'s `m2v` MIME entry;
+  `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home`
+  fixture; the Hunyuan DiT tokenizer's relative `special_tokens_map_file`
+  (`./special_tokens_map.json`). `requirements.txt` unchanged (nothing merged), so no
+  reinstall. `onnxruntime` package confirmed `onnxruntime-gpu` on the main install.
+  GPU acceleration gate passed on both installations (`ALL INSTALLS OK`, exit 0; main
+  torch 2.9.1+cu130 / ORT 1.23.2 GPU Conv OK; SwarmUI backend torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 37 git-backed trees: **2 fast-forwarded** —
+  `ComfyUI-Continuity` `44e5f1d..2700124` (Ideogram magic-prompt caption handling +
+  ControlNet card art; no requirements.txt), `comfyui-manager` `16989582..30fc9660`
+  (DB update; requirements.txt untouched in range). **28 already current.** **Skipped
+  7:** `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` — stay put),
+  `comfyui-obvpm` (local `local/separate-outputs` — stay put), `ComfyUI-RMBG` (dirty
+  worktree: local `requirements.txt` onnxruntime guard), `one-node-flux-2-klein`
+  (dirty worktree: local `nodes.py` + web JS), `ComfyUI-MiniMax-H3-LongMedia` (dirty
+  worktree: untracked `__pycache__` only), `RES4LYF` (ahead of origin by 3 — leave
+  local tip), `ComfyUI-DaSiWa-Nodes` (diverged: ahead 8 / behind 15 — ff-only refused,
+  not forced). No pip ran from node updates. Pushed `main` to `origin` as the final
+  step (this notes commit only; no PR).
+
 - 2026-09-22 (forty-fourth sync, desktop): Scheduled desktop run on local `main`. Started
   behind `origin/main` by 4 at `c068e5c9` (the forty-second sync's tip). `git fetch upstream`
   / `git fetch origin` showed origin already carried the forty-third sync's merge of 2
