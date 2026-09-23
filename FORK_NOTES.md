@@ -346,6 +346,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-23 (forty-eighth sync, desktop): Scheduled desktop run on local `main` at
+  `fa51efce` (forty-seventh tip), byte-identical to `origin/main`
+  (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` left
+  `upstream/master` at `b5cc8830` (Port some optimizations to flux model family. #16488);
+  only a forced update on an unrelated upstream feature branch was observed.
+  `HEAD...upstream/master` = 138/0 — **no upstream merge this run** (already current).
+  Deletion baseline stayed at exactly 38 deleted placeholders under the
+  `input`/`models`/`output` directory symlinks; two pre-existing untracked
+  scratch files (`temp_schema2.py`, `temp_schema_dump.py`) left alone and not
+  committed. `requirements.txt` unchanged, so no reinstall. `onnxruntime`
+  package confirmed `onnxruntime-gpu` 1.23.2 on the main install. GPU acceleration
+  gate passed on both installations (`ALL INSTALLS OK`, exit 0; main torch
+  2.9.1+cu130 / ORT 1.23.2 GPU Conv OK; SwarmUI backend torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 38 git-backed trees: **1 fast-forwarded** — `comfyui-manager`
+  `3223e802..4ef99f88` (Merge pull request #3313 from Zoltar358-ComfyUI/update-universal-model-loader-107).
+  **30 already current.** **Skipped 7:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` - stay put),
+  `comfyui-obvpm` (local `local/separate-outputs` - stay put), `ComfyUI-RMBG` (dirty),
+  `one-node-flux-2-klein` (dirty), `ComfyUI-MiniMax-H3-LongMedia` (dirty),
+  `RES4LYF` (ahead of origin by 3 - leave local tip), `ComfyUI-DaSiWa-Nodes`
+  (diverged: ahead 8 / behind 15 - ff-only refused, not forced). No pip ran from node
+  updates. Pushed `main` to `origin` as the final step (no PR; no force-push).
 - 2026-09-23 (forty-seventh sync, desktop): Scheduled desktop run on local `main` at
   `8e4ede6f` (forty-sixth tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
