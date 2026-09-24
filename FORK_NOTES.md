@@ -346,6 +346,38 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-23 (fifty-first sync, desktop): Scheduled desktop run (Overwatch-6) on local `main` at
+  `7b2f9892` (fiftieth tip), byte-identical to `origin/main`
+  (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
+  `upstream/master` `f427c3a2..41c83ee7`. Before merge: `HEAD...upstream/master` = 143/2.
+  Applied 38-path LF-only `skip-worktree` dance, then merged `upstream/master` (ort):
+  `3b4c0b0e` feat: ming-image support (#16482)
+  `41c83ee7` Fix saving/loading ming image model breaking detection. (#16514)
+  (13 files, +624/-60: `comfy/text_encoders/ming_image.py`, `comfy_extras/nodes_ming.py`,
+  `comfy/latent_formats.py`, `comfy/ldm/lumina/model.py`, `comfy/model_base.py`,
+  `comfy/model_detection.py`, `comfy/ops.py`, `comfy/sd.py`, `comfy/supported_models.py`,
+  `comfy/text_encoders/gpt_oss.py`, `comfy/text_encoders/llama.py`, `nodes.py`,
+  `tests-unit/comfy_test/model_detection_test.py`).
+  Merge commit `16b1e7a3`. Cleared skip-worktree; deletion baseline back to exactly 38 deleted /
+  0 modified / 0 untracked (two pre-existing untracked scratch files `temp_schema2.py`,
+  `temp_schema_dump.py` left alone). All three fork-local fixes re-verified present and untouched:
+  `folder_paths.py`'s `m2v` MIME entry; `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based
+  `mock_expanded_home` fixture; the Hunyuan DiT tokenizer's relative `special_tokens_map_file`.
+  `requirements.txt` unchanged, so no reinstall. `onnxruntime` package confirmed `onnxruntime-gpu`
+  1.23.2 on the main install. GPU acceleration gate passed on both installations (`ALL INSTALLS OK`,
+  exit 0; main torch 2.9.1+cu130 / ORT 1.23.2 GPU Conv OK; SwarmUI backend torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 38 git-backed trees: **0 fast-forwarded**. **31 already current.** **Skipped 6:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` — stay put / no origin counterpart),
+  `comfyui-obvpm` (local `local/separate-outputs` — stay put), `ComfyUI-RMBG` (dirty:
+  modified `requirements.txt`), `one-node-flux-2-klein` (dirty: `nodes.py` + web js),
+  `RES4LYF` (diverged ahead 3 / behind 1 — ff-only refused, not forced),
+  `ComfyUI-DaSiWa-Nodes` (diverged ahead 8 / behind 17 — ff-only refused, not forced).
+  **Failed 1:**
+  `ComfyUI-Hyperflow` (`git fetch` → remote `Repository not found` — left at local tip; no force).
+  No pip ran from node updates. Pushed `main`
+  to `origin` as the final step (no PR; no force-push).
 - 2026-09-23 (fiftieth sync, desktop): Scheduled desktop run on local `main` at
   `2a7e7605` (forty-ninth tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
