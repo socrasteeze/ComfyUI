@@ -346,6 +346,38 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-24 (fifty-second sync, desktop): Local `main` started at `d3860876` (fifty-first
+  tip), byte-identical to `origin/main` (0 ahead / 0 behind), after deleting two pre-existing
+  untracked scratch files (`temp_schema2.py`, `temp_schema_dump.py`) that had lingered since
+  the fifty-first sync — user confirmed deletion before proceeding. `git fetch upstream` moved
+  `upstream/master` `41c83ee7..1568e6cf`. Before merge: `HEAD...upstream/master` = 146/0 minus
+  the one new commit (1/0 net). Applied the 38-path LF-only `skip-worktree` dance, then merged
+  `upstream/master` (ort strategy):
+  `1568e6cf` Lower memory usage and .comfy_attention support for lumina family models. (#16515)
+  (1 file, +6/-2: `comfy/ldm/lumina/model.py`). Merge commit `b1518ce9`. Cleared skip-worktree;
+  deletion baseline back to exactly 38 deleted / 0 modified / 0 untracked. All three fork-local
+  fixes re-verified present and untouched: `folder_paths.py`'s `m2v` MIME entry;
+  `tests-unit/utils/extra_config_test.py`'s `tmp_path`-based `mock_expanded_home` fixture; the
+  Hunyuan DiT tokenizer's relative `special_tokens_map_file`. `requirements.txt` unchanged, so
+  no reinstall. GPU acceleration gate passed on both installations before and after the
+  custom-node sweep (`ALL INSTALLS OK`, exit 0; main torch 2.9.1+cu130 / ORT 1.23.2 GPU Conv OK;
+  SwarmUI backend torch 2.9.0+cu130 / same).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only (never Manager
+  update-all). Of 35 git-backed trees: **4 fast-forwarded** —
+  `ComfyUI-Continuity` `51f6db6..231cd97` (creator lift-stage UI + locale additions),
+  `ComfyUI-UtilsCollection` `303a18d..fc6104c` (encoder/model/patcher/sampling helper
+  expansion + new tests, no requirements.txt change), `H3-Optimizations` `2c5b1a1..64979f6`
+  (Sparge Attention native backend + updated `.dll`/`.so` binaries, no requirements.txt),
+  `comfyui-manager` `9c354fb2..9002c327` (DB update). **29 already current.** **Skipped 6:**
+  `ComfyUI-H3-Ref2VA-Accelerator` (local `fix/first-block-output` — stay put / no origin
+  counterpart), `comfyui-obvpm` (local `local/separate-outputs` — stay put), `ComfyUI-RMBG`
+  (dirty: modified `requirements.txt`), `one-node-flux-2-klein` (dirty: modified `nodes.py`),
+  `RES4LYF` (diverged — ff-only refused, not forced), `ComfyUI-DaSiWa-Nodes` (diverged —
+  ff-only refused, not forced). **Failed 1:** `ComfyUI-Hyperflow` (`git fetch` → remote
+  "Repository not found" — left at local tip; no force). No pip ran from node updates (no
+  requirements.txt hash change on any of the 4 FFs). Pushed `main` to `origin` as the final
+  step (no PR; no force-push).
 - 2026-09-23 (fifty-first sync, desktop): Scheduled desktop run (Overwatch-6) on local `main` at
   `7b2f9892` (fiftieth tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
