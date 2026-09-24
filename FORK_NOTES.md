@@ -378,6 +378,16 @@ and cause.
   "Repository not found" — left at local tip; no force). No pip ran from node updates (no
   requirements.txt hash change on any of the 4 FFs). Pushed `main` to `origin` as the final
   step (no PR; no force-push).
+
+  Follow-up the same day, resolving both divergences: `ComfyUI-DaSiWa-Nodes`' 8 "local"
+  commits were the author's own, re-pushed upstream under new hashes (local tip `0210f85`
+  tree-identical to upstream `5e57fee`), so reset to `origin/main` `a9ea632` (0/0); old tip
+  kept on local branch `backup/pre-reset-0210f85`. `RES4LYF` carries one real local fix,
+  `6ccb82f` (pass `outer_sigmas_len` only to samplers that accept it; upstream still sets it
+  unconditionally), so merged `origin/main` `3d1d69d` (packed-latent noise types, no file
+  overlap) cleanly; now 4 ahead / 0 behind, diff vs upstream is that fix alone. It will keep
+  reading as diverged until the fix goes upstream. No requirements.txt change; changed files
+  compile; GPU gate `ALL INSTALLS OK`.
 - 2026-09-23 (fifty-first sync, desktop): Scheduled desktop run (Overwatch-6) on local `main` at
   `7b2f9892` (fiftieth tip), byte-identical to `origin/main`
   (0 ahead / 0 behind). `git fetch upstream` / `git fetch origin` moved
