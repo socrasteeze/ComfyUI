@@ -346,6 +346,35 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-26 (fifty-third sync, desktop): Local `main` started at `1e0cb438`, byte-identical to
+  `origin/main` (0 ahead / 0 behind), tree at the 38-deletion baseline. `git fetch upstream`
+  brought 14 commits (`1568e6cf..79be670e`, 63 files, +3029/-696). Applied the 38-path
+  `skip-worktree` dance, then merged `upstream/master` (ort) with no conflicts. Merge commit
+  `6e1556d7`. Main themes: asset scanner/upload/seeder hardening and a new Alembic migration
+  `0008_drop_asset_meta` (runs on next startup against the user database); HDR LogC3/ACEScct and
+  a negative-value fix in Convert Image Color Space; Qwen VL RGBA preprocessing crash fix;
+  sheetsage2 ABC update; NPU async offload streams; RDNA2 arch list; ByteDance Seedance 2.5 Draft
+  and Seedream 5.0 Flash, OpenAI GPT-6 Sol/Luna partner nodes; `main.py` reshuffle (+/-144).
+  Cleared skip-worktree; baseline back to exactly 38 deleted / 0 modified / 0 untracked. All
+  three fork-local fixes re-verified present. `requirements.txt` moved one pin
+  (`comfyui-workflow-templates` 0.11.69 -> 0.11.70); dry-run showed only template packages,
+  no torch/torchvision, then reinstalled without `-U`. Changed `.py` files `py_compile` clean;
+  `comfy_extras.nodes_images` imports. GPU acceleration gate passed on both installations
+  (`ALL INSTALLS OK`, exit 0).
+
+  Custom nodes swept with `git fetch` + `git merge --ff-only` only. **7 fast-forwarded** —
+  `ComfyUI-Continuity` `231cd97..eefa562` (image-to-3D stage, vendors three.js r170),
+  `ComfyUI-DaSiWa-Nodes` `a9ea632..9a766c6` (37 commits; AMD ADLX telemetry, H3 Prompt Forge,
+  docs), `ComfyUI-LTXVideo` `f8387c8..61ee82b`, `ComfyUI-UtilsCollection` `fc6104c..a35600b`
+  (video reference modes, H3 prompt builder widget), `H3-Optimizations` `64979f6..8627749`
+  (FastH3 VSA attention), `LanPaint` `32cf848..be34cf3` (README only), `comfyui-manager`
+  `9002c327..9c29dc68` (DB update). DaSiWa's requirements added `safetensors`, `nvidia-ml-py`,
+  `amd-adlx`, `llama-cpp-python>=0.3.26`: the first, second, and fourth were already installed
+  (0.7.0 / 13.590.48 / 0.3.48); `amd-adlx` is AMD-only and its import is guarded, so no pip ran.
+  The other two dep-file changes were version bumps only. Changed node `.py` files compile.
+  **29 already current** (`RES4LYF` still 4 ahead with its local fix). **Skipped 2** on local
+  branches with no upstream: `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`. **Failed 1:**
+  `ComfyUI-Hyperflow` (remote "Repository not found", left at local tip).
 - 2026-09-24 (fifty-second sync, desktop): Local `main` started at `d3860876` (fifty-first
   tip), byte-identical to `origin/main` (0 ahead / 0 behind), after deleting two pre-existing
   untracked scratch files (`temp_schema2.py`, `temp_schema_dump.py`) that had lingered since
