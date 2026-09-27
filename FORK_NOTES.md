@@ -346,6 +346,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-26 (fifty-fourth sync, desktop): Local `main` started at `a9a2e373` (fifty-third tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 3
+  commits (`79be670e..4ef23c34`, 9 files, +61/-10): `a73d24ba` Support tiny VAE for Qwen-Image
+  2.1 (#16552), `5c4d2568` Support ID-V2V (#15139), `4ef23c34` Fix potential regression with
+  previous PR (#16596). Applied the 38-path `skip-worktree` dance and merged (ort, no conflicts).
+  Merge commit `978354cb`. Baseline back to 38 deleted / 0 modified / 0 untracked; three
+  fork-local fixes present. `requirements.txt` unchanged, no reinstall. Changed `.py` files
+  compile; `comfy_extras.nodes_wan` imports. GPU gate `ALL INSTALLS OK`, exit 0.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** —
+  `ComfyUI-UtilsCollection` `a35600b..a800419` (H3 sage QKV split fix, media_config
+  equivalent-square scaling; pyproject version bump only; changed files compile). No pip ran.
+  Rest current (`RES4LYF` still 4 ahead with its local fix). **Skipped 2** (local branches, no
+  upstream): `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`. **Failed 1:**
+  `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-09-26 (fifty-third sync, desktop): Local `main` started at `1e0cb438`, byte-identical to
   `origin/main` (0 ahead / 0 behind), tree at the 38-deletion baseline. `git fetch upstream`
   brought 14 commits (`1568e6cf..79be670e`, 63 files, +3029/-696). Applied the 38-path
