@@ -346,6 +346,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-27 (fifty-fifth sync, desktop): Local `main` started at `9e7a8f2d` (fifty-fourth tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 3
+  commits (`4ef23c34..8d534945`, 24 files, +208/-283): `a9b777bc` remove deprecated Sora partner
+  nodes (#16609), `47e63a20` clamp Qwen Image 2.1 fp16 activations in place (#16608),
+  `8d534945` add `comfy_attention` and `AttentionTensorContainer` to Wan (incl. animate,
+  multitalk, wandancer), Krea2, Cosmos, HunyuanVideo, Kandinsky5 and others (#16595). Applied the
+  38-path `skip-worktree` dance and merged (ort, no conflicts). Merge commit `0cf2f75c`. Baseline
+  back to 38 / 0 / 0; three fork-local fixes present. `requirements.txt` unchanged. Changed `.py`
+  files compile; Wan, Krea2, Qwen Image 2.1 and attention modules import. The attention change
+  was checked against the custom nodes that set `optimized_attention_override` (Continuity,
+  KJNodes, LTXVideo, H3-LongMedia, SolAttn_triton, Spectrum-H3, UtilsCollection): `wrap_attn`
+  unwraps containers to plain tensors before calling an override that has no
+  `container_function`, so those overrides see the same arguments as before. GPU gate
+  `ALL INSTALLS OK`, exit 0.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** —
+  `ComfyUI-Continuity` `eefa562..f986661` (17 commits: chat seed, room-aware Retake, in-place clip
+  replacement, H3 pass settings, audio seam fixes), `ComfyUI-DaSiWa-Nodes` `9a766c6..9f5aef4`
+  (H3 continuity media moved to PyAV; version bump only), `LanPaint` `be34cf3..a923825`
+  (Qwen-Image 2.1 example, H3 per-token denoise-mask adaptation). No new dependencies, no pip;
+  changed files compile. Rest current (`RES4LYF` still 4 ahead with its local fix). **Skipped 2**
+  (local branches, no upstream): `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`. **Failed 1:**
+  `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-09-26 (fifty-fourth sync, desktop): Local `main` started at `a9a2e373` (fifty-third tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 3
   commits (`79be670e..4ef23c34`, 9 files, +61/-10): `a73d24ba` Support tiny VAE for Qwen-Image
