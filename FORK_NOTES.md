@@ -346,6 +346,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-29 (fifty-eighth sync, desktop): Local `main` started at `b9791292` (fifty-seventh tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. Earlier attempt the same day was
+  blocked (machine offline). `git fetch upstream` brought 1 commit (`986c4d15..9d80841a`, 1 file,
+  +1/-1): `9d80841a` chore: update embedded docs to v0.5.13 (#16618). Applied the 38-path
+  `skip-worktree` dance (arg form; `--stdin` prints Ignoring path and does not set the bits under
+  the directory symlinks on git 2.52.0.windows.1) and merged (ort, no conflicts). Merge commit
+  `d21ec427`. Baseline back to 38 / 0 / 0. `requirements.txt` moved one pin
+  (`comfyui-embedded-docs` 0.5.12 -> 0.5.13); dry-run listed only that package, then reinstalled
+  without `-U`. No `.py` files in the window. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current
+  (`RES4LYF` still 4 ahead with its local fix). **Skipped 10:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`, `ComfyUI_VNCCS_Utils`; ahead
+  `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-09-29 (fifty-seventh sync, desktop): Local `main` started at `dc9ad923` (fifty-sixth tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. Earlier scheduled run around 06:25 PT
   left no leftover `skip-worktree` flags or dirty sync artifacts (only the usual Claude worktree under
