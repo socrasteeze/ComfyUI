@@ -346,6 +346,28 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-28 (fifty-sixth sync, desktop): Local `main` started at `2c595aca` (fifty-fifth tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 9
+  commits (`8d534945..d669bcfe`, 27 files, +2430/-1843): Qwen-Image 2.1 union Fun ControlNet
+  (#16519), w6a8 quantization format (#16483) and its follow-up (#16637), SeedVR2 optimization
+  with a VAE rewrite (#16530), Yue2 AR speedup (#16626), startup DB-lock wait (#16602), start
+  without the assets packages (#16580), kitchen search alias (#16632), `comfy-kitchen` 0.2.36
+  (#16635). Applied the 38-path `skip-worktree` dance and merged (ort, no conflicts). Merge
+  commit `22f16b25`. Baseline back to 38 / 0 / 0; three fork-local fixes present.
+  `requirements.txt` moved one pin (`comfy-kitchen` 0.2.35 -> 0.2.36); dry-run listed only
+  that package, then reinstalled without `-U`. Changed `.py` files compile; SeedVR2 model/VAE,
+  Qwen-Image 2.1, `nodes_model_patch`, Yue2 and `comfy.ops` import. GPU gate `ALL INSTALLS OK`,
+  exit 0.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **5 fast-forwarded** —
+  `ComfyUI-Continuity` `f986661..6821f55` (12 commits: headless render CLI and endpoint, timeline
+  UI fixes), `ComfyUI-DaSiWa-Nodes` `9f5aef4..53e2630` (system monitor bar UI),
+  `ComfyUI-UtilsCollection` `a800419..6d4f769` (H3 continuation Qwen sampling-rate fix, VLM
+  preset wording), `LanPaint` `a923825..2d7912f` (Qwen-Image 2.1 edit example),
+  `comfyui-manager` `9c29dc68..7b703a15` (DB update). Dep-file changes were version bumps only;
+  no pip; changed files compile. Rest current (`RES4LYF` still 4 ahead with its local fix).
+  **Skipped 2** (local branches, no upstream): `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm`. **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-09-27 (fifty-fifth sync, desktop): Local `main` started at `9e7a8f2d` (fifty-fourth tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 3
   commits (`4ef23c34..8d534945`, 24 files, +208/-283): `a9b777bc` remove deprecated Sora partner
