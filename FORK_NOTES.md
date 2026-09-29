@@ -346,6 +346,32 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-29 (fifty-seventh sync, desktop): Local `main` started at `dc9ad923` (fifty-sixth tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. Earlier scheduled run around 06:25 PT
+  left no leftover `skip-worktree` flags or dirty sync artifacts (only the usual Claude worktree under
+  `.claude/worktrees/`). `git fetch upstream` brought 6 commits (`d669bcfe..986c4d15`, 14 files,
+  +963/-18): `56c50055` keep the UI responsive during asset scans and rescan output by listing
+  folders (#16546), `67f11ccb` speedup generation on qwen3.5/3.8 with long contexts (#16638),
+  `a7169322` avoid unnecessary write (#16639), `7a8f3add` update codeowners (#16655), `6b747c04`
+  ComfyUI v0.38.0, `986c4d15` Support LynnReal light Minimax-H3 vae (#16657). Applied the 38-path
+  `skip-worktree` dance and merged (ort, no conflicts). Merge commit `c9994740`. Baseline back to
+  38 / 0 / 0. `requirements.txt` unchanged (no pip). Changed `.py` files compile; minimax VAE,
+  `comfy.sd`, llama text encoder, and assets scanner/gil modules compile. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **4 fast-forwarded** —
+  `ComfyUI-DaSiWa-Nodes` `53e2630..1163c8c` (rtx-upscaler chunking / FP16 storage; version 0.4.65),
+  `ComfyUI-LTXVideo` `61ee82b..5722b53` (automated PR 2026-09-29), `comfyui-manager`
+  `7b703a15..14b5aaab` (11 commits: DB updates, Qwen-Image 2.1 Multi-GPU catalog, Fizgig H3 Tweaks,
+  MiniMax H3 Context Loop catalogue fix), `ComfyUI-UtilsCollection` `6d4f769..834d66b` (8 commits:
+  H3 first/last frame + native image refs, ref-media isolation, VLM MiniMax H3 presets; 0.25.7 ->
+  0.26.1). Dep-file changes were version bumps only; no pip. Rest current (`RES4LYF` still 4 ahead
+  with its local fix). **Skipped 9:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`,
+  `ComfyUI_VNCCS_Utils`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow` (remote
+  "Repository not found").
 - 2026-09-28 (fifty-sixth sync, desktop): Local `main` started at `2c595aca` (fifty-fifth tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought 9
   commits (`8d534945..d669bcfe`, 27 files, +2430/-1843): Qwen-Image 2.1 union Fun ControlNet
