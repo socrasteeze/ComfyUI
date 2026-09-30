@@ -346,6 +346,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-30 (sixty-second sync, desktop): Local `main` started at `3a6017d0` (sixty-first tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
+  2 commits (`8cfe5e1e..83071e1a`, 3 files, +432/-2): `33ee2b36` [Partner Nodes] feat(Ideogram):
+  add Ideogram 4.5 text-to-image, edit and precise edit nodes (#16689), `83071e1a` Fix minimax
+  vae offload issue. (#16698). Applied the 38-path `skip-worktree` dance (arg form) and
+  merged (ort, no conflicts). Merge commit `dd3ddd9c`. Baseline back to 38 / 0 / 0.
+  `requirements.txt` unchanged (no pip). Changed `.py` files compile. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** —
+  `ComfyUI-Continuity` `6821f55..8b48961` (1 commit: shot can place picture/clip on phone/
+  tablet/laptop/TV with sharp screen text; no pip), `ComfyUI-DaSiWa-Nodes` `db34bc1..3b93735`
+  (2 commits: Seamless Loop node + docs assets, sync DaSiWa node list in bug-report form; no
+  pip), `ComfyUI-LTXVideo` `5722b53..bf2ca02` (Automated PR 2026-09-30 merge; no pip). Rest
+  current (`RES4LYF` still 4 ahead with its local fix). **Skipped 11:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
 - 2026-09-30 (sixty-first sync, desktop): Local `main` started at `588da9cd` (sixtieth tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
   1 commit (`fb2315f1..8cfe5e1e`, 2 files, +9/-7): `8cfe5e1e` [Partner Nodes] feat(Anthropic):
