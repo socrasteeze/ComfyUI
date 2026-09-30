@@ -346,6 +346,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-29 (fifty-ninth sync, desktop): Local `main` started at `b7f9c0aa` (fifty-eighth tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
+  1 commit (`9d80841a..a65316bd`, 5 files, +13/-11): `a65316bd` Use higher quality defaults for
+  Save Video encoding. (#16663) (default CRF 18 on h264 / 24 on AV1). Applied the 38-path
+  `skip-worktree` dance (arg form) and merged (ort, no conflicts). Merge commit `c590a76f`.
+  Baseline back to 38 / 0 / 0. `requirements.txt` unchanged (no pip). Changed `.py` files
+  compile. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current
+  (`RES4LYF` still 4 ahead with its local fix). **Skipped 10:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`, `ComfyUI_VNCCS_Utils`; ahead
+  `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-09-29 (fifty-eighth sync, desktop): Local `main` started at `b9791292` (fifty-seventh tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. Earlier attempt the same day was
   blocked (machine offline). `git fetch upstream` brought 1 commit (`986c4d15..9d80841a`, 1 file,
