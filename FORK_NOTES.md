@@ -346,6 +346,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-30 (sixty-first sync, desktop): Local `main` started at `588da9cd` (sixtieth tip),
+  0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
+  1 commit (`fb2315f1..8cfe5e1e`, 2 files, +9/-7): `8cfe5e1e` [Partner Nodes] feat(Anthropic):
+  add Sonnet 5.5 model (#16647). Applied the 38-path `skip-worktree` dance (arg form) and
+  merged (ort, no conflicts). Merge commit `b0255710`. Baseline back to 38 / 0 / 0.
+  `requirements.txt` unchanged (no pip). Changed `.py` files compile. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** —
+  `ComfyUI-DaSiWa-Nodes` `1163c8c..db34bc1` (4 commits: Lable annotation node, ultra-compact
+  system monitor, retire Comfy Kitchen attention patch, docs; version 0.4.65 -> 0.4.68;
+  pyproject version bump only, no pip), `comfyui-manager` `14b5aaab..6db282e2` (DB updates +
+  catalog adds VideoMark / CFG Megapack / ComfyUI-FeiFei). Rest current (`RES4LYF` still 4
+  ahead with its local fix). **Skipped 11:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
 - 2026-09-30 (sixtieth sync, desktop): Local `main` started at `d057eae3` (fifty-ninth tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
   4 commits (`a65316bd..fb2315f1`, 17 files, +1412/-51): `2d2fa46e` feat: add DynamicGroup
