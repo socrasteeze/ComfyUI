@@ -346,6 +346,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-09-30 (sixty-third sync, desktop): Local `main` started at `95f47400` (sixty-second tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (not 38): the 11
+  `models/configs/*.yaml` files no longer report as deleted under the per-subdir junction layout
+  (configs junctioned to `E:\Models\configs` and index-clean). `git fetch upstream` brought
+  2 commits (`83071e1a..b65d1ffa`, 2 files, +299/-6): `051ddeda` [Partner Nodes] feat(HeyGen):
+  add HeyGen Video 1.0 reference-to-video and image-to-video nodes (#16695), `b65d1ffa` chore:
+  update workflow templates to v0.11.73 (#16693). Applied the 27-path `skip-worktree` dance
+  (arg form; porcelain-derived) and merged (ort, no conflicts). Merge commit `a748f424`.
+  Baseline back to 27 / 0 / 0 (3 pre-existing untracked lorascope scratch files left alone).
+  `requirements.txt` moved one pin (`comfyui-workflow-templates` 0.11.70 -> 0.11.73); dry-run
+  listed only template packages (no torch/torchvision), then reinstalled without `-U`. Changed
+  `.py` file (`comfy_api_nodes/nodes_heygen.py`) compiles. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` confirmed. Fork-local `m2v` MIME and `tmp_path` fixture still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** —
+  `ComfyUI-Continuity` `8b48961..c9c8ba9` (4 commits: green-screen follow, @phone-1 citation,
+  headless multi-GPU pin + distillation checkpoint note; no pip). Rest current (`RES4LYF` still
+  4 ahead with its local fix). **Skipped 11:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-subject-eraser`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
 - 2026-09-30 (sixty-second sync, desktop): Local `main` started at `3a6017d0` (sixty-first tip),
   0 ahead / 0 behind `origin/main`, at the 38-deletion baseline. `git fetch upstream` brought
   2 commits (`8cfe5e1e..83071e1a`, 3 files, +432/-2): `33ee2b36` [Partner Nodes] feat(Ideogram):
