@@ -346,6 +346,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-01 (sixty-fifth sync, desktop): Local `main` started at `42323b2c` (sixty-fourth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-fourth). `git fetch upstream` brought 1 commit (`651ca296..2d6b7328`, 2 files,
+  +99/-40): `2d6b7328` Reduce MiniMax-H3 peak VRAM by releasing embedding temporaries before
+  blocks. Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived, LF-only) and
+  merged (ort, no conflicts). Merge commit `39eb1434`. Baseline back to 27 / 0 / 0 (3
+  pre-existing untracked lorascope scratch files left alone). `requirements.txt` unchanged (no
+  pip). Changed `.py` files (`comfy/ldm/minimax/model.py`,
+  `tests-unit/comfy_test/test_minimax_h3_model.py`) compile. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` confirmed. Fork-local `m2v` MIME and `tmp_path` fixture still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `3b93735..25e4d6a` (1 commit: release 0.4.72 H3 reference intent +
+  concise loop docs; no pip), `ComfyUI-LTXVideo` `bf2ca02..3bf3ca6` (2 commits: Automated PR
+  2026-10-01 merge; no pip), `comfyui-manager` `6db282e2..2a6cb164` (1 commit: update DB; no
+  pip). Rest current (27). **Skipped 11:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead
+  `RES4LYF` (4 local), `ComfyUI-llm-prompter` (2 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
 - 2026-10-01 (sixty-fourth sync, desktop): Local `main` started at `0b32c370` (sixty-third tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-third). `git fetch upstream` brought 2 commits (`b65d1ffa..651ca296`, 2 files,
