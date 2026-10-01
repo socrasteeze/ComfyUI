@@ -346,6 +346,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-01 (sixty-sixth sync, desktop): Local `main` started at `1e224d22` (sixty-fifth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-fifth). `git fetch upstream` brought 1 commit (`2d6b7328..77c0f39e`, 1 file,
+  +1/-1): `77c0f39e` Update default bit depth for 'exr' option to 16 bit float. (#16715).
+  Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived, LF-only) and
+  merged (ort, no conflicts). Merge commit `57ac2731`. Baseline back to 27 / 0 / 0 (3
+  pre-existing untracked lorascope scratch files left alone). `requirements.txt` unchanged (no
+  pip). Changed `.py` file (`comfy_extras/nodes_images.py`) compiles. GPU gate `ALL INSTALLS OK`,
+  exit 0; `onnxruntime-gpu` confirmed. Fork-local `m2v` MIME still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** --
+  `ComfyUI-AusBoss` `c96885b..650714b` (6 commits: release 2.5.1, stale-frontend cache bust,
+  Manager search name; no pip), `ComfyUI-DaSiWa-Nodes` `25e4d6a..87096db` (2 commits: Prompt
+  Forge stale-subject fix 0.4.73 + Forge aspect/detail cuts; no pip). Rest current (29).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
 - 2026-10-01 (sixty-fifth sync, desktop): Local `main` started at `42323b2c` (sixty-fourth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-fourth). `git fetch upstream` brought 1 commit (`651ca296..2d6b7328`, 2 files,
