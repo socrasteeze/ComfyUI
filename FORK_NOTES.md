@@ -346,6 +346,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-01 (sixty-fourth sync, desktop): Local `main` started at `0b32c370` (sixty-third tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-third). `git fetch upstream` brought 2 commits (`b65d1ffa..651ca296`, 2 files,
+  +10/-2): `0e70b969` Add 16-bit float support to Save EXR. (#16706), `651ca296` Bump
+  comfyui-frontend-package to 1.53.10 (#16456). Applied the 27-path `skip-worktree` dance
+  (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts). Merge commit `c50db00e`.
+  Baseline back to 27 / 0 / 0 (3 pre-existing untracked lorascope scratch files left alone).
+  `requirements.txt` moved one pin (`comfyui-frontend-package` 1.53.6 -> 1.53.10); dry-run
+  listed only that package (no torch/torchvision), then reinstalled without `-U`. Changed
+  `.py` file (`comfy_extras/nodes_images.py`) compiles. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` confirmed. Fork-local `m2v` MIME and `tmp_path` fixture still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current
+  (32). **Skipped 9:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`. **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
 - 2026-09-30 (sixty-third sync, desktop): Local `main` started at `95f47400` (sixty-second tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (not 38): the 11
   `models/configs/*.yaml` files no longer report as deleted under the per-subdir junction layout
