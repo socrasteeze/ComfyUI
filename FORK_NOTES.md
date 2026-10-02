@@ -346,6 +346,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-02 (seventieth sync, desktop): Local `main` started at `ab3b0807` (sixty-ninth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-ninth). `git fetch upstream` brought 1 commit (`65787d66..2472a20b`, 1 file,
+  +1/-1): `2472a20b` Update comfy-kitchen version to 0.2.37 (#16738). Applied the 27-path
+  `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts).
+  Merge commit `6a191bcf`. Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files
+  left alone: H3 studio bat/py + lorascope backups). `requirements.txt` moved one pin
+  (`comfy-kitchen` 0.2.36 -> 0.2.37); dry-run listed only `comfy-kitchen-0.2.37` under
+  "Would install" (torch/torchvision absent); installed without `-U`. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still
+  present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** --
+  `ComfyUI-AusBoss` `ae2de02..15c4854` (6 commits: release 2.5.2 — refresh cached frontend
+  modules after updates; Stitch Inpaint portable regression / console advice; Mask Refine
+  hole size in saved fallback expectations; no pip). Rest current (30). **Skipped 10:**
+  stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`),
+  `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`,
+  `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:**
+  `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-10-02 (sixty-ninth sync, desktop): Local `main` started at `ae7740cb` (sixty-eighth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-eighth). `git fetch upstream` left `upstream/master` at `65787d66`, the exact
