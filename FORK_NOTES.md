@@ -346,6 +346,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-01 (sixty-seventh sync, desktop): Local `main` started at `4c7bf112` (sixty-sixth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-sixth); leftover skip-worktree on those 27 from a prior session was cleared
+  first so porcelain could report the baseline. `git fetch upstream` brought 3 commits
+  (`77c0f39e..43444cbf`, 9 files, +270/-15): `170594057` feat: add --offline and
+  --disable-partner-nodes, deprecate --disable-api-nodes (#16672), `1b883beab` [Partner Nodes]
+  feat(BFL): add FLUX 3 Image node (#16716), `43444cbf3` [Partner Nodes] feat(Grok): add
+  grok-imagine-video-1.5-lite model to Grok Video node (#16721). Applied the 27-path
+  `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts).
+  Merge commit `bd0daef6`. Baseline back to 27 / 0 / 0 (3 pre-existing untracked lorascope
+  scratch files left alone). `requirements.txt` unchanged (no pip). Changed `.py` files
+  (`comfy/cli_args.py`, `comfy_api_nodes/apis/bfl.py`, `comfy_api_nodes/nodes_bfl.py`,
+  `comfy_api_nodes/nodes_grok.py`, `main.py`, `server.py`,
+  `tests-unit/server_test/test_offline_flag.py`) compile. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` confirmed. Fork-local `m2v` MIME still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current
+  (31). **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
 - 2026-10-01 (sixty-sixth sync, desktop): Local `main` started at `1e224d22` (sixty-fifth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-fifth). `git fetch upstream` brought 1 commit (`2d6b7328..77c0f39e`, 1 file,
