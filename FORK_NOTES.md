@@ -346,6 +346,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-02 (sixty-eighth sync, desktop): Local `main` started at `ed1cd884` (sixty-seventh tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-seventh). `git fetch upstream` brought 2 commits (`43444cbf..65787d66`, 5 files,
+  +474/-41): `fa98a189` chore: update workflow templates to v0.11.74 (#16724), `65787d66`
+  fix(assets): batch prefix filters so scans work with many model folders (#16645). Applied the
+  27-path `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged (ort, no
+  conflicts). Merge commit `54530a9b`. Baseline back to 27 / 0 / 0 (5 pre-existing untracked
+  scratch files left alone: H3 studio bat/py + lorascope backups). `requirements.txt` moved one
+  pin (`comfyui-workflow-templates` 0.11.73 -> 0.11.74); dry-run listed only template packages
+  under "Would install" (torch/torchvision absent); installed without `-U`. Changed `.py` files
+  (`app/assets/helpers.py`, `app/assets/scanner.py`, `app/assets/scanner_changes.py`,
+  `tests-unit/assets_test/services/test_many_scan_prefixes.py`) compile. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still
+  present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** --
+  `ComfyUI-AusBoss` `650714b..ae2de02` (2 commits: versioned module URLs so updates never meet
+  old browser copies; no pip). Rest current (30). **Skipped 10:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead
+  `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-10-01 (sixty-seventh sync, desktop): Local `main` started at `4c7bf112` (sixty-sixth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-sixth); leftover skip-worktree on those 27 from a prior session was cleared
