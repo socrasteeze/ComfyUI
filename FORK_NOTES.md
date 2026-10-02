@@ -346,6 +346,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-02 (sixty-ninth sync, desktop): Local `main` started at `ae7740cb` (sixty-eighth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as sixty-eighth). `git fetch upstream` left `upstream/master` at `65787d66`, the exact
+  tip the sixty-eighth sync already merged (`git merge-base --is-ancestor upstream/master HEAD`
+  = true, `git rev-list --left-right --count HEAD...upstream/master` = 180/0). **Zero new
+  upstream commits this run**; nothing to merge, skip-worktree dance not applied. Baseline stayed
+  27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio bat/py + lorascope
+  backups). `requirements.txt` untouched; no pip. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current (31).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`,
+  `ComfyUI-PixelDriftFix`; ahead `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow`
+  (remote "Repository not found").
+
+
+
 - 2026-10-02 (sixty-eighth sync, desktop): Local `main` started at `ed1cd884` (sixty-seventh tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-seventh). `git fetch upstream` brought 2 commits (`43444cbf..65787d66`, 5 files,
