@@ -603,7 +603,7 @@ and cause.
 - 2026-09-30 (sixty-third sync, desktop): Local `main` started at `95f47400` (sixty-second tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (not 38): the 11
   `models/configs/*.yaml` files no longer report as deleted under the per-subdir junction layout
-  (configs junctioned to `E:\Models\configs` and index-clean). `git fetch upstream` brought
+  (configs junctioned to the external model config directory and index-clean). `git fetch upstream` brought
   2 commits (`83071e1a..b65d1ffa`, 2 files, +299/-6): `051ddeda` [Partner Nodes] feat(HeyGen):
   add HeyGen Video 1.0 reference-to-video and image-to-video nodes (#16695), `b65d1ffa` chore:
   update workflow templates to v0.11.73 (#16693). Applied the 27-path `skip-worktree` dance
