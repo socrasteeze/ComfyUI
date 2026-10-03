@@ -346,6 +346,28 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-02 (seventy-first sync, desktop): Local `main` started at `c3d5a9a5` (seventieth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventieth). `git fetch upstream` brought 3 commits (`2472a20b..4d981c9b`, 4 files,
+  +16/-6): `f355cb18` [Partner Nodes] chore(Luma): deprecate Ray 2 nodes (#16741);
+  `36c0b0a6` chore: update workflow templates to v0.11.76 (#16739); `4d981c9b` Disable pinned
+  memory automatically on integrated GPUs (#16746). Applied the 27-path `skip-worktree` dance
+  (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts). Merge commit `e1b2eead`.
+  Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio bat/py
+  + lorascope backups). `requirements.txt` moved one pin (`comfyui-workflow-templates` 0.11.74
+  -> 0.11.76); dry-run listed only template packages under "Would install" (torch/torchvision
+  absent); installed without `-U`. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu`
+  1.23.2 confirmed. Fork-local `m2v` MIME still present. Changed `.py` files compile.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** --
+  `ComfyUI-AusBoss` `15c4854..a7a8f07` (8 commits: MaskEditor tint on Crop+Rotate+Pad;
+  corner handles / Centre buttons; rotate knob past 180; Divisible-by Round canvas steps;
+  no pip). Rest current (30). **Skipped 10:** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`), `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead
+  `RES4LYF` (4 local). **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-10-02 (seventieth sync, desktop): Local `main` started at `ab3b0807` (sixty-ninth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as sixty-ninth). `git fetch upstream` brought 1 commit (`65787d66..2472a20b`, 1 file,
