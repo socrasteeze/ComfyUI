@@ -346,6 +346,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-03 (seventy-fourth sync, desktop): Local `main` started at `9dfcfb25` (seventy-third tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-third). `git fetch upstream` / `git fetch origin` left `upstream/master` at
+  `e9027f2b` (already the tip adopted in the seventy-third merge `8730b38d`); only a forced
+  update on an unrelated upstream feature branch (`cloud-openapi-projection`) and a new
+  unrelated branch were observed. `HEAD..upstream/master` = 0 — **no upstream merge this run**
+  (already current). Skip-worktree dance not needed. Baseline stayed 27 / 0 / 0 (5 pre-existing
+  untracked scratch files left alone: H3 studio bat/py + lorascope backups). `requirements.txt`
+  unchanged, so no reinstall. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2
+  confirmed. Fork-local `m2v` MIME still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** --
+  `ComfyUI-Continuity` `c9c8ba9..250013d` (headless render samples with last-set attention /
+  low-VRAM / fast-math; no pip); `ComfyUI-DaSiWa-Nodes` `117f1cc..3596238` (3 commits: H3
+  continuity checkpoint IDs per commit; preserve legacy prompts/widget callbacks; migration
+  docs; no pip); `ComfyUI-UtilsCollection` `73da6f1..97bec5e` (v0.26.4: dynamic/base prompt
+  builder multimodal; 32-pixel spatial / 17k+5 temporal alignment in reference media helpers;
+  no pip). Rest current (29).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead-only `RES4LYF` (ahead 1).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-10-03 (seventy-third sync, desktop): Local `main` started at `1320379f` (seventy-second tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-second). `git fetch upstream` brought 2 commits (`f730add0..e9027f2b`, 10 files,
