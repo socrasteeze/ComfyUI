@@ -346,6 +346,33 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-03 (seventy-second sync, desktop): Local `main` started at `0b373370` (seventy-first tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-first). `git fetch upstream` brought 5 commits (`4d981c9b..f730add0`, 26 files,
+  +1223/-123): `30f15eaf` feat(assets): report scan CPU and paused time, and classify scan
+  failures (#16719); `2e0316ea` fix(assets): don't take the database lock when assets are off;
+  warn when it's held (#16742); `3c169c2c` Echo the Create Bounding Boxes background as a UI
+  preview (#16636); `30c4c3aa` perf(assets): let the partial live-path index serve
+  live-row-at-path lookups (#16659); `f730add0` [Partner Nodes] feat(ElevenLabs): add Eleven
+  v4 and v4 Turbo models (#16737). Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived, LF-only) and merged (ort, no conflicts). Merge commit `52d1209a`.
+  Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio
+  bat/py + lorascope backups). `requirements.txt` unchanged, so no reinstall. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still
+  present. Changed `.py` files compile.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** --
+  `comfyui-manager` `2a6cb164..855a0f50` (DB updates + Krea2 Harness node list; no pip);
+  `ComfyUI-UtilsCollection` `834d66b..73da6f1` (v0.26.3: DMAD re-noise sampler; H3 VLM 4D
+  preserve; UC_VideoResolutionAndLengthPicker; no pip); `z-tipo-extension`
+  `6132862..319be75` (Forge Neo prompt parser fallback; no pip). Rest current (28).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; diverged `RES4LYF` (ahead 4 / behind 3).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+
 - 2026-10-02 (seventy-first sync, desktop): Local `main` started at `c3d5a9a5` (seventieth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventieth). `git fetch upstream` brought 3 commits (`2472a20b..4d981c9b`, 4 files,
