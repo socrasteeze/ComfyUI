@@ -762,7 +762,7 @@ class PromptServer():
                 return obj_class.GET_NODE_INFO_V1()
             info = {}
             info['input'] = obj_class.INPUT_TYPES()
-            info['input_order'] = {key: list(value.keys()) for (key, value) in obj_class.INPUT_TYPES().items()}
+            info['input_order'] = {key: list(value.keys()) for (key, value) in info['input'].items()}
             info['is_input_list'] = getattr(obj_class, "INPUT_IS_LIST", False)
             info['output'] = obj_class.RETURN_TYPES
             info['output_is_list'] = obj_class.OUTPUT_IS_LIST if hasattr(obj_class, 'OUTPUT_IS_LIST') else [False] * len(obj_class.RETURN_TYPES)

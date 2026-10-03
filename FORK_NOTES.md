@@ -311,6 +311,10 @@ it out of `custom_nodes/` entirely; do not park it in place.
 
 ## Local Fixes
 
+- Compute model file paths relative to their directory once per directory during
+  model-list scans, while preserving directory modification times for cache checks.
+- Read legacy node input schemas once per metadata request and use the same schema
+  for input order.
 - Classify `.m2v` as video explicitly; it is absent from some system MIME tables.
 - Use a native absolute temporary home path in the extra-config test fixture.
   A root-relative Unix path is not an absolute Windows home path.

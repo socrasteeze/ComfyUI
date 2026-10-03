@@ -416,13 +416,16 @@ def recursive_search(directory: str, excluded_dir_names: list[str] | None=None) 
 
     for dirpath, subdirs, filenames in os.walk(directory, followlinks=True, topdown=True):
         subdirs[:] = [d for d in subdirs if d not in excluded_dir_names]
+        try:
+            relative_dir = os.path.relpath(dirpath, directory)
+        except ValueError:
+            logging.warning(f"Warning: Unable to access {dirpath}. Skipping this path.")
+            continue
         for file_name in filenames:
-            try:
-                relative_path = os.path.relpath(os.path.join(dirpath, file_name), directory)
-                result.append(relative_path)
-            except:
-                logging.warning(f"Warning: Unable to access {file_name}. Skipping this file.")
-                continue
+            if relative_dir == os.curdir:
+                result.append(file_name)
+            else:
+                result.append(os.path.join(relative_dir, file_name))
 
         for d in subdirs:
             path: str = os.path.join(dirpath, d)
