@@ -346,6 +346,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-03 (seventy-third sync, desktop): Local `main` started at `1320379f` (seventy-second tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-second). `git fetch upstream` brought 2 commits (`f730add0..e9027f2b`, 10 files,
+  +980/-87): `42664106` [Partner Nodes] fix(OpenAI): remove transparent background for GPT Image 2
+  (#16744); `e9027f2b` fix(assets): write the prune and offline marking in short batches so saves
+  aren't locked out (#16696). Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived, LF-only) and merged (ort, no conflicts). Merge commit `8730b38d`.
+  Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio
+  bat/py + lorascope backups). `requirements.txt` unchanged, so no reinstall. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still
+  present. Changed `.py` files compile.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `87096db..117f1cc` (0.4.74: H3 continuity audio-lock paths; wildcard
+  picker restore after load; no pip). Rest current (31).
+  **Skipped 9:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`.
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-10-03 (seventy-second sync, desktop): Local `main` started at `0b373370` (seventy-first tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-first). `git fetch upstream` brought 5 commits (`4d981c9b..f730add0`, 26 files,
