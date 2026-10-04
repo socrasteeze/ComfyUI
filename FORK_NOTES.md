@@ -350,6 +350,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-04 (seventy-sixth sync, desktop): Local `main` started at `f07074cb` (seventy-fifth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-fifth). `git fetch upstream` / `git fetch origin` left `upstream/master` at
+  `f1072eb0` (already the tip adopted in the seventy-fifth merge `d5f7ba17`); only unrelated
+  upstream feature-branch updates were observed. `HEAD..upstream/master` = 0 — **no upstream merge
+  this run** (already current). Skip-worktree dance not needed. Baseline stayed 27 / 0 / 0 (5
+  pre-existing untracked scratch files left alone: H3 studio bat/py + lorascope backups).
+  `requirements.txt` unchanged, so no reinstall. GPU gate `ALL INSTALLS OK`, exit 0;
+  `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still present.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `2fe2c3d..afd0094` (12 commits through 0.4.77: shared LLM runtime /
+  backends / prompt presets, H3 prompt construction, PromptForge fetch timeout fix; no pip);
+  `ComfyUI-UtilsCollection` `97bec5e..cdffe30` (v0.26.5: canvas draw-loop hover tooltips on
+  prompt builder buttons; no pip). Rest current (30).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`, ahead 1 / behind 0), `comfyui-obvpm`
+  (`local/separate-outputs`, ahead 1 / behind 33); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead-only `RES4LYF` (ahead 1,
+  `c9657cb` Only pass outer_sigmas_len to samplers that accept it).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git 3.2.0 registry tree (not pulled).
+
 - 2026-10-04 (seventy-fifth sync, desktop): Local `main` started at `ffa34b1e` (post-seventy-fourth tip; notes cleanup commit),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-fourth). `git fetch upstream` brought 1 commit (`e9027f2b..f1072eb0`, 1 file,
