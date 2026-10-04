@@ -350,6 +350,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-04 (seventy-fifth sync, desktop): Local `main` started at `ffa34b1e` (post-seventy-fourth tip; notes cleanup commit),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-fourth). `git fetch upstream` brought 1 commit (`e9027f2b..f1072eb0`, 1 file,
+  +4/-0): `f1072eb0` Add new attention and compiler stuff to AGENTS.md (#16762). Applied the 27-path
+  `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts).
+  Merge commit `d5f7ba17`. Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files
+  left alone: H3 studio bat/py + lorascope backups). `requirements.txt` unchanged, so no
+  reinstall. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed.
+  Fork-local `m2v` MIME still present. Changed file is markdown only (no `.py` compile).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** --
+  `ComfyUI-AusBoss` `a7a8f07..d6e31b5` (2.6.0/2.6.1: Civitai lookup back; Ctrl+Shift drag-zoom /
+  pan over AusBoss nodes in Nodes 2.0; Latent Size for Qwen Image 2.1; no pip);
+  `ComfyUI-Continuity` `250013d..6347afe` (kept-take trim/crop on card; last-card delete /
+  emptied timeline; clip-card remove fix; no pip);
+  `ComfyUI-DaSiWa-Nodes` `3596238..2fe2c3d` (0.4.76: H3 Forge picture labels / shot planning /
+  harden refs; Director typed REF2VA empty-field warning fix; no pip). Rest current (29).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`), `comfyui-obvpm` (`local/separate-outputs`); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead-only `RES4LYF` (ahead 1).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
 - 2026-10-03 (seventy-fourth sync, desktop): Local `main` started at `9dfcfb25` (seventy-third tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-third). `git fetch upstream` / `git fetch origin` left `upstream/master` at
