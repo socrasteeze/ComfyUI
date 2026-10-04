@@ -350,6 +350,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-04 (seventy-seventh sync, desktop): Local `main` started at `04fa1693` (seventy-sixth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-sixth). `git fetch upstream` brought 1 commit (`f1072eb0..b87fe48b`, 15 files,
+  +105/-44): `b87fe48b` Add comfy_attention and AttentionTensorContainer support to more models. (#16766).
+  Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged (ort, no conflicts).
+  Merge commit `4218cf18`. Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files
+  left alone: H3 studio bat/py + lorascope backups). `requirements.txt` unchanged, so no
+  reinstall. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed.
+  Fork-local `m2v` MIME still present. Changed files are `.py` model attention wiring (no pip).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. Rest current (32).
+  **Skipped 10:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`, ahead 1 / behind 0), `comfyui-obvpm`
+  (`local/separate-outputs`, ahead 1 / behind 33); dirty trees
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `ComfyUI-MiniMax-H3-LongMedia`,
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI_VNCCS_Utils`, `ComfyUI-PixelDriftFix`; ahead-only `RES4LYF` (ahead 1,
+  `c9657cb` Only pass outer_sigmas_len to samplers that accept it).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git 3.2.0 registry tree (not pulled).
 - 2026-10-04 (seventy-sixth sync, desktop): Local `main` started at `f07074cb` (seventy-fifth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-fifth). `git fetch upstream` / `git fetch origin` left `upstream/master` at
