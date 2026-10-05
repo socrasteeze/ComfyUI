@@ -13,7 +13,7 @@ import mimetypes
 import os
 from typing import Any, NamedTuple, Sequence
 
-from sqlalchemy import func, select
+from sqlalchemy import false, func, select
 from sqlalchemy.orm import Session
 
 from app.assets import mode
@@ -131,10 +131,11 @@ _UPLOAD_HASH_ATTEMPTS = 3
 
 
 def _remove_temp_path(temp_path: str | None) -> None:
-    if not temp_path or not os.path.exists(temp_path):
+    if not temp_path:
         return
     with contextlib.suppress(OSError):
-        os.remove(temp_path)
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
     parent = os.path.dirname(temp_path)
     with contextlib.suppress(OSError):
         if parent and os.path.isdir(parent):
@@ -309,7 +310,7 @@ def _reconcile_live_content_at_path(
     existing = session.scalars(
         select(AssetContent).where(
             AssetContent.path == locator,
-            AssetContent.is_missing.is_(False),
+            AssetContent.is_missing == false(),
         )
     ).first()
     if existing is None:
@@ -364,7 +365,7 @@ def _settle_destination_before_write(session: Session, dest_abs: str) -> None:
     existing = session.scalars(
         select(AssetContent).where(
             AssetContent.path == dest_abs,
-            AssetContent.is_missing.is_(False),
+            AssetContent.is_missing == false(),
         )
     ).first()
     if existing is None:
@@ -480,11 +481,14 @@ def upload_from_temp_path(
         _remove_temp_path(temp_path)
         raise ValueError("tags are required for new asset uploads")
 
-    dest_abs = _hash_mode_dest_path(tags, digest, client_filename, name)
-    content_type = _guess_upload_mime_type(
-        mime_type, client_filename, name, os.path.basename(dest_abs)
-    )
-    _move_temp_to_dest(temp_path, dest_abs)
+    try:
+        dest_abs = _hash_mode_dest_path(tags, digest, client_filename, name)
+        content_type = _guess_upload_mime_type(
+            mime_type, client_filename, name, os.path.basename(dest_abs)
+        )
+        _move_temp_to_dest(temp_path, dest_abs)
+    finally:
+        _remove_temp_path(temp_path)
     size_bytes, mtime_ns = verified_stat.st_size, verified_stat.st_mtime_ns
     system_metadata = _extract_system_metadata_sync(dest_abs, content_type)
     with create_session() as session:
@@ -657,7 +661,7 @@ def register_cached_output(
         with create_session() as session:
             existing = session.scalars(
                 select(AssetContent).where(
-                    AssetContent.path == locator, AssetContent.is_missing.is_(False)
+                    AssetContent.path == locator, AssetContent.is_missing == false()
                 )
             ).first()
             if existing is None:
@@ -736,7 +740,7 @@ def register_executed_output(
                 existing = session.scalars(
                     select(AssetContent).where(
                         AssetContent.path == locator,
-                        AssetContent.is_missing.is_(False),
+                        AssetContent.is_missing == false(),
                     )
                 ).first()
                 if existing is not None:
