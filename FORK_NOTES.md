@@ -350,6 +350,34 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-04 (seventy-eighth sync, desktop): Local `main` started at `e3dd314f` (seventy-seventh tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-seventh). `git fetch upstream` brought 2 commits (`b87fe48b..d707c97a`, 7 files,
+  +288/-19): `ae913fdc` fix(assets): write scan inserts in short transactions so uploads and output
+  saves aren't locked out + use WAL synchronous=NORMAL (#16748); `d707c97a` fix(assets): resume the
+  background scan once the prompt queue is empty (#16765). Touches `app/assets/seeder.py`,
+  `app/database/db.py`, `main.py` plus unit tests. Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived, LF-only) and merged (ort, no conflicts). Merge commit `f53aa982`. Flags cleared
+  (0 left). Baseline back to 27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio
+  bat/py + lorascope backups). Changed modules byte-compiled. `requirements.txt` unchanged, so no
+  reinstall. GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v`
+  MIME still present (`folder_paths.py`).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** --
+  `ComfyUI-AusBoss` `d6e31b5..636427c` (10 commits through release 2.6.2: Ctrl+Enter runs the
+  workflow from its text/number boxes, Workflow Note keeps per-model notes, reload notice; no pip);
+  `ComfyUI-MiniMax-H3-LongMedia` `a9d5a79..409e4cb` (2 file-upload commits; no pip; only untracked
+  `__pycache__` in the tree); `ComfyUI_VNCCS_Utils` `70b752f..eedaed7` (2 commits: UniCanvas layers
+  for Qwen-Image-2.1 / Krea2 Edit / MiniMax H3 / Pose Studio, and the Draco decoder registry fix;
+  `requirements.txt` gained `color-matcher`, already installed at 0.6.0, so the dry run planned
+  nothing and pip did not run). Rest current (34). Dirty check now counts tracked changes only, so
+  packs with only untracked `__pycache__` are no longer skipped.
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git 3.2.0 registry tree (not pulled).
 - 2026-10-04 (seventy-seventh sync, desktop): Local `main` started at `04fa1693` (seventy-sixth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-sixth). `git fetch upstream` brought 1 commit (`f1072eb0..b87fe48b`, 15 files,
