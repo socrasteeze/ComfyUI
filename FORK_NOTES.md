@@ -350,6 +350,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-05 (eightieth sync, desktop): No upstream change. Local `main` started at `9f000799`
+  (seventy-ninth tip), 0 ahead / 0 behind `origin/main`; `git fetch upstream` left `upstream/master`
+  at `5c460d81`, so `main` is 201 ahead / 0 behind it and no merge or `skip-worktree` dance was
+  needed. Deletion baseline 27 / 0 / 0 (5 pre-existing untracked scratch files left alone: H3 studio
+  bat/py + lorascope backups). `requirements.txt` unchanged, so no reinstall. GPU gate
+  `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**; 38 current, pip did not run.
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git registry tree (not pulled).
 - 2026-10-05 (seventy-ninth sync, desktop): Local `main` started at `b65709ae` (seventy-eighth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-eighth). `git fetch upstream` brought 1 commit (`d707c97a..5c460d81`, 6 files,
