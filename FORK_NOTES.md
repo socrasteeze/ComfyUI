@@ -350,6 +350,30 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-05 (seventy-ninth sync, desktop): Local `main` started at `b65709ae` (seventy-eighth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
+  same as seventy-eighth). `git fetch upstream` brought 1 commit (`d707c97a..5c460d81`, 6 files,
+  +285/-13): `5c460d81` fix(assets): pause the startup scan during its folder walk and file stats
+  (#16764) -- the pause gate is now checked before each directory and file instead of only between
+  phases, so a prompt started mid-walk no longer waits for the whole library listing. Touches
+  `app/assets/scanner.py`, `scanner_admission.py`, `seeder.py`, `services/file_utils.py` plus unit
+  tests. Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived, LF-only) and merged
+  (ort, no conflicts). Merge commit `662cf723`. Flags cleared (0 left). Baseline back to 27 / 0 / 0
+  (5 pre-existing untracked scratch files left alone: H3 studio bat/py + lorascope backups). Changed
+  modules byte-compiled. `requirements.txt` unchanged, so no reinstall. GPU gate `ALL INSTALLS OK`,
+  exit 0; `onnxruntime-gpu` 1.23.2 confirmed. Fork-local `m2v` MIME still present (`folder_paths.py`).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `afd0094..4b6d52a` (2 commits: Prompt Writer with opt-in Forge vision, and
+  a bug-report form node-list sync; `pyproject.toml` only bumped version 0.4.77 to 0.4.78, no
+  dependency change, so pip did not run); `ComfyUI-Omnichar` `1e00103..87fefb0` (3 FUNDING.yml
+  commits; no code). Rest current (36).
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git 3.2.0 registry tree (not pulled).
 - 2026-10-04 (seventy-eighth sync, desktop): Local `main` started at `e3dd314f` (seventy-seventh tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (configs junctioned;
   same as seventy-seventh). `git fetch upstream` brought 2 commits (`b87fe48b..d707c97a`, 7 files,
