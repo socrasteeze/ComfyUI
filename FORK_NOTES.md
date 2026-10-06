@@ -350,6 +350,39 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-06 (eighty-second sync, desktop, manual run): Local `main` started at `786e698e` (eighty-first
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 9 commits (`7ddf9a4f..7a5dad69`, 45 files, +3399/-274), still v0.39.0 (no new tag;
+  `git describe` reads `v0.39.0-10`): `dddb41aa` comfy_attention / AttentionTensorContainer support
+  for the remaining models (#16806; HiDream, HiDream-O1, Hunyuan3D 2.1, LTXV, MMDiT, SeedVR, Wan AR);
+  `ccda0377` local asset export API (#16578; new `app/asset_export.py`); `43e33a13` every 3D node now
+  reports a standard 3d output item (#16200); `181fc83e` CreateCameraInfo node + CameraInfoState
+  widget input (#14964; new `comfy_extras/nodes_camera.py`); `73c4868d` video metadata extracted into
+  `system_metadata` on asset ingest and scan (#15180); `6806341a` metadata can ride on a prompt's
+  websocket messages (#16763; `server.py`, `execution.py`); `7c8fbc69` dynamic input validation and
+  lazy scheduling fix (#16377); `d49e8885` DynamicGroup kept internal while it stabilizes (#16811);
+  `7a5dad69` CameraAngle node with camera_info and shot-prompt outputs (#16251). Applied the 27-path
+  `skip-worktree` dance (arg form; porcelain-derived) and merged (ort, `server.py` auto-merged, no
+  conflicts). Merge commit `a623afcc`. Flags cleared (0 left). Baseline back to 27 / 0 / 0 (5
+  pre-existing untracked scratch files left alone: H3 studio bat/py + lorascope backups). 44 changed
+  modules byte-compiled; new/changed `comfy_extras` camera and 3D modules import. `requirements.txt`
+  unchanged, so no reinstall. `--quick-test-for-ci` startup clean (no IMPORT FAILED, DWPose reports
+  acceleration). GPU gate `ALL INSTALLS OK`, exit 0; `onnxruntime-gpu` 1.23.2 confirmed, torch
+  2.9.1+cu130 untouched. Fork-local `m2v` MIME still present (`folder_paths.py`).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI-AusBoss`
+  `d87c259..376b56f` (2 commits, Ko-fi link only); `ComfyUI-DaSiWa-Nodes` `4b6d52a..650b823` (7
+  commits, 0.4.79: H3 Forge context sizing grows per picture, plainer out-of-context / OOM messages;
+  `pyproject.toml` version bump only); `ComfyUI-Omnichar` `87fefb0..0934753` (3 commits, 0.2.0:
+  character voice read/write and voice workflows; requirement floor raised to
+  `omnichar-sdk>=0.1.1,<0.2`, so `omnichar-sdk` 0.1.0 -> 0.1.1 installed after a dry run showed it as
+  the only package, no deps). Rest current.
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git registry tree (not pulled).
 - 2026-10-05 (eighty-first sync, desktop): Local `main` started at `3db86146` (eightieth tip),
   0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch upstream`
   brought 3 commits (`5c460d81..7ddf9a4f`, 5 files, +143/-11): `53320288` fix(assets): copy uploads
