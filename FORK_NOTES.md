@@ -350,6 +350,34 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-06 (eighty-third sync, desktop, scheduled run): Local `main` started at `b5a85fed` (eighty-second
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 3 commits (`7a5dad69..6a8dcf51`, 6 files, +101/-17); upstream also tagged `v0.39.1`
+  on `release/v0.39` (backports of the same two partner/template commits), not on master:
+  `0b5b009d` Nano Banana 2.1 added to the Nano Banana 2 node (#16822; `comfy_api_nodes/nodes_gemini.py`);
+  `f4d76984` workflow templates 0.11.76 -> 0.11.77 (#16823; `requirements.txt`); `6a8dcf51` low-VRAM
+  performance for the Qwen 3.5 LLM (#16820; `comfy/ops.py`, `comfy/sd1_clip.py`,
+  `comfy/text_encoders/llama.py`, `comfy/text_encoders/qwen35.py`). Applied the 27-path `skip-worktree`
+  dance (arg form; porcelain-derived) and merged (ort, no conflicts). Merge commit `20ccf198`. Flags
+  cleared (0 left). Baseline back to 27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone).
+  `requirements.txt` moved one pin: dry run of `comfyui-workflow-templates==0.11.77` listed only the
+  templates packages (torch/torchvision absent), then installed. 5 changed modules byte-compiled;
+  `comfy.ops` and `comfy.text_encoders.qwen35` import. GPU gate `ALL INSTALLS OK`, exit 0; torch
+  2.9.1+cu130 sees the RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **4 fast-forwarded** -- `ComfyUI-AusBoss`
+  `376b56f..18b7c17` (28 commits, 2.7.0: Mask by Name via SAM 3, Workflow Switches, Image Folder, Nodes
+  2.0 card heights); `ComfyUI-Continuity` `6347afe..00a9a8f` (2 commits: Qwen Image 2.1 still via Fun
+  ControlNet-Union tracing, headless render LoRA patching); `ComfyUI-DaSiWa-Nodes` `650b823..18ed2d2`
+  (8 commits, 0.5.1: MiniMaxH3 Enhanced Upscale 0.5.0, docs, LLM Prompt Writer display rename);
+  `ComfyUI-UtilsCollection` `cdffe30..73028c3` (10 commits, 0.26.8: grid stitcher, path text loader,
+  model-only LoRA loader, whisper token fix, H3 visual-token cache reverted). No node `requirements.txt`
+  changed, so no pip. All four byte-compiled. Rest current.
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull). `ComfyUI-Hyperflow` is no longer present (replaced by the
+  community `ComfyUI-HyperFlow-H3`, which is current). `vnccs` left as the non-git registry tree.
 - 2026-10-06 (eighty-second sync, desktop, manual run): Local `main` started at `786e698e` (eighty-first
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 9 commits (`7ddf9a4f..7a5dad69`, 45 files, +3399/-274), still v0.39.0 (no new tag;
