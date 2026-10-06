@@ -350,6 +350,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-05 (eighty-first sync, desktop): Local `main` started at `3db86146` (eightieth tip),
+  0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch upstream`
+  brought 3 commits (`5c460d81..7ddf9a4f`, 5 files, +143/-11): `53320288` fix(assets): copy uploads
+  into place when the destination is on another volume (#16722), touching
+  `app/assets/services/ingest.py` plus a new unit test; `b0b74356` ComfyUI v0.39.0 (version bump in
+  `comfyui_version.py` and `pyproject.toml`); `7ddf9a4f` server.py CSP now allows `blob:` (#15565).
+  Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived) and merged (ort, no
+  conflicts). Merge commit `33160777`. Flags cleared (0 left). Baseline back to 27 / 0 / 0 (5
+  pre-existing untracked scratch files left alone: H3 studio bat/py + lorascope backups). Changed
+  modules byte-compiled. `requirements.txt` unchanged, so no reinstall. GPU gate `RESULT: OK`
+  (torch 2.9.1+cu130 sees the RTX 5090, CUDA available), exit 0; `onnxruntime-gpu` 1.23.2 confirmed.
+  Fork-local `m2v` MIME still present (`folder_paths.py`).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `636427c..d87c259` (13 commits, releases 2.6.3 and 2.6.4: popup Ctrl + Enter, LoRA Workflow Note,
+  RGBA Stitch Inpaint fix, node minimum width, integer step by 1, example notes; `pyproject.toml`
+  only bumped version 2.6.2 to 2.6.4, no dependency change, so pip did not run). Rest current.
+  **Skipped 4:** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`)
+  and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified
+  `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull).
+  **Failed 1:** `ComfyUI-Hyperflow` (remote "Repository not found").
+  `vnccs` left as the non-git registry tree (not pulled).
 - 2026-10-05 (eightieth sync, desktop): No upstream change. Local `main` started at `9f000799`
   (seventy-ninth tip), 0 ahead / 0 behind `origin/main`; `git fetch upstream` left `upstream/master`
   at `5c460d81`, so `main` is 201 ahead / 0 behind it and no merge or `skip-worktree` dance was
