@@ -350,6 +350,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-06 (eighty-fifth sync, desktop, manual run): Local `main` started at `0032cbc7` (eighty-fourth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` found `upstream/master` still at `b26625f2`, the exact commit the eighty-fourth sync already
+  merged (`git merge-base --is-ancestor upstream/master HEAD` = true; `git rev-list --left-right --count
+  HEAD...upstream/master` reports fork-only ahead / 0 behind). **Zero new upstream commits this run**;
+  nothing to merge, skip-worktree dance not applied. Baseline stayed 27 / 0 / 0 (same 5 pre-existing
+  untracked scratch files left alone). `requirements.txt` unchanged (nothing merged), so no pip. GPU
+  gate `ALL INSTALLS OK`, exit 0; torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA;
+  `onnxruntime-gpu` 1.23.2 confirmed, plain `onnxruntime` absent. ComfyUI left running on :8888
+  throughout (queue empty at start and end; no restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-AusBoss`
+  `6a089e2..ade11dd` (11 commits, 2.9.0: Tiled Upscale + Tiled Upscale Stitch, shrink report, Nodes 2.0
+  Callout height keep, Upscale + Restore example notes); `ComfyUI-UtilsCollection` `73028c3..4b81485`
+  (1 commit, 0.26.9: preserve all H3 reference images when media config is connected). Only
+  `pyproject.toml` version/description changed (no dependency edits), so no pip. Both byte-compiled.
+  Rest current. **Skipped 5 (unchanged):** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`) and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`
+  (modified `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull). `vnccs` left as the non-git registry tree.
 - 2026-10-06 (eighty-fourth sync, desktop, scheduled run): Local `main` started at `45d8db71` (eighty-third
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 5 commits (`6a8dcf51..b26625f2`, 29 files, +2932/-105), still v0.39.0 (`git describe`
