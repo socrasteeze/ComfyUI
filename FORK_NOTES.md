@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-07 (eighty-eighth sync, desktop, scheduled run): Local `main` started at `a330cc4b` (eighty-seventh
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 2 commits (`b00c6e95..87c32827`, 4 files, +433/-1): `af89add6` Vidu Q4 image-to-video
+  and reference-to-video partner nodes (#16849; `comfy_api_nodes/apis/vidu.py`, `comfy_api_nodes/
+  nodes_vidu.py`) and `87c32827` ClarityAI Crystal Upscaler partner node (#16817; new `comfy_api_nodes/
+  apis/clarityai.py`, `comfy_api_nodes/nodes_clarityai.py`). Applied the 27-path `skip-worktree` dance and
+  merged (ort, no conflicts). Merge commit `cdbd78ca`. Flags cleared (0 left). Baseline back to 27 / 0 / 0
+  (same 5 pre-existing untracked scratch files left alone). `requirements.txt` unchanged, so no reinstall.
+  All 4 changed modules byte-compiled. GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch
+  2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed, real Conv ran
+  on CUDAExecutionProvider. ComfyUI was not running on :8888 and was left stopped.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-DaSiWa-Nodes`
+  `612bd17..418e245` (1 commit: Registry audit parsing fix and secured preview file access) and
+  `ComfyUI-UtilsCollection` `4b81485..cc6d516` (1 commit: VLM presets redefine Shot N usage). No dependency
+  files changed, so no pip. Changed `.py` files byte-compiled. Rest current (incl. `ComfyUI-HyperFlow-H3`).
+  **Skipped 5 (unchanged):** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` and `comfyui-obvpm`;
+  dirty trees `ComfyUI-RMBG` and `one-node-flux-2-klein`; ahead-only `RES4LYF`. `vnccs` left as the non-git
+  registry tree.
 - 2026-10-07 (eighty-seventh sync, desktop, scheduled run): Local `main` started at `d35ef1c4` (eighty-sixth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 1 commit (`c9d8a6e6..b00c6e95`, 2 files, +282/-9): `b00c6e95` Quiver partner nodes
