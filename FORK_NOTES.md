@@ -350,6 +350,32 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-06 (eighty-fourth sync, desktop, scheduled run): Local `main` started at `45d8db71` (eighty-third
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 5 commits (`6a8dcf51..b26625f2`, 29 files, +2932/-105), still v0.39.0 (`git describe`
+  reads `v0.39.0-18`): `7d9e5a04` k/v made contiguous before SDPA on gfx1151 when they don't fit in L2
+  (#16726; `comfy/ldm/modules/attention.py`); `0752bcb2` Linear forward API consolidated with
+  prologue/epilogue fusion paths (#16816; `comfy/ops.py`, `QUANTIZATION.md`, model call sites);
+  `84164fc0` prompt metadata also attached to preview image frames (#16809; `server.py`); `3d9b2d55`
+  governance enforcement for custom nodes (#16167; new `app/governance.py`, `main.py`, `nodes.py`,
+  `comfy/cli_args.py`, tests); `b26625f2` comfy_attention configs in model files can use kitchen sol
+  attention (#16831). Applied the 27-path `skip-worktree` dance (arg form; porcelain-derived) and merged
+  (ort, no conflicts; `server.py` auto-merged). Merge commit `1b0f000b`. Flags cleared (0 left). Baseline
+  back to 27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone). `requirements.txt` added
+  unpinned `cryptography`, already present (46.0.3); `pip install --dry-run -r requirements.txt` would
+  install nothing, so no pip. 15 changed modules byte-compiled; `comfy.ops`, `app.governance` and
+  `comfy.ldm.modules.attention` import. GPU gate `ALL INSTALLS OK`, exit 0; torch 2.9.1+cu130 sees the
+  NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed, plain `onnxruntime` absent.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-AusBoss`
+  `18b7c17..6a089e2` (32 commits, 2.8.0: Callout note node, Save Video gif/webp preview, Image Folder
+  keeps saved size, Nodes 2.0 height fixes, help/changelog text); `ComfyUI-DaSiWa-Nodes`
+  `18ed2d2..ee00cc5` (1 commit, 0.5.2: independent H3 upscale tiling and chunking controls). Only
+  `pyproject.toml` version/description changed (no dependency edits), so no pip. Both byte-compiled.
+  Rest current. **Skipped 4 (unchanged):** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator`
+  (`fix/first-block-output`) and `comfyui-obvpm` (`local/separate-outputs`); dirty trees `ComfyUI-RMBG`
+  (modified `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2 modified, current); ahead-only
+  `RES4LYF` (ahead 1, nothing to pull). `vnccs` left as the non-git registry tree.
 - 2026-10-06 (eighty-third sync, desktop, scheduled run): Local `main` started at `b5a85fed` (eighty-second
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 3 commits (`7a5dad69..6a8dcf51`, 6 files, +101/-17); upstream also tagged `v0.39.1`
