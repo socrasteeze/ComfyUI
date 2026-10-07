@@ -350,6 +350,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-07 (eighty-sixth sync, desktop, scheduled run): Local `main` started at `877b16cb` (eighty-fifth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 1 commit (`b26625f2..c9d8a6e6`, 1 file, +1/-1): `c9d8a6e6` comfyui-frontend-package
+  1.53.10 -> 1.55.14 (#16736; `requirements.txt`). Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived) and merged (ort, no conflicts). Merge commit `ec43aa35`. Flags cleared (0 left).
+  Baseline back to 27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone). `pip install
+  --dry-run -r requirements.txt` listed only `comfyui_frontend_package` 1.55.14 (no torch/torchvision),
+  then installed that pin without `-U`; `pip show` reads 1.55.14. No `.py` changes in the merge. GPU gate
+  (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with
+  CUDA; `onnxruntime-gpu` 1.23.2 confirmed, real Conv ran on CUDAExecutionProvider. ComfyUI left running
+  on :8888 (not restarted; the new frontend loads on its next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-DaSiWa-Nodes`
+  `ee00cc5..0f23e67` (8 commits, 0.5.4: H3 Forge REF2VA port, picture buttons, frame-subject roles for
+  I2VA / FL2VA / L2VA, target-grid tile and temporal planning). Only the `pyproject.toml` version changed
+  among dependency files, so no pip. Byte-compiled. Rest current. **Skipped 5 (unchanged):** stay-put
+  local branches `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`) and `comfyui-obvpm`
+  (`local/separate-outputs`); dirty trees `ComfyUI-RMBG` (modified `requirements.txt`, behind 15) and
+  `one-node-flux-2-klein` (2 modified, current); ahead-only `RES4LYF` (ahead 1, nothing to pull). `vnccs`
+  left as the non-git registry tree.
 - 2026-10-06 (eighty-fifth sync, desktop, manual run): Local `main` started at `0032cbc7` (eighty-fourth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` found `upstream/master` still at `b26625f2`, the exact commit the eighty-fourth sync already
