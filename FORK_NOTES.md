@@ -350,6 +350,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-07 (eighty-seventh sync, desktop, scheduled run): Local `main` started at `d35ef1c4` (eighty-sixth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 1 commit (`c9d8a6e6..b00c6e95`, 2 files, +282/-9): `b00c6e95` Quiver partner nodes
+  gain V2 SVG nodes with per-model inputs and deprecate the originals (#16775; `comfy_api_nodes/apis/
+  quiver.py`, `comfy_api_nodes/nodes_quiver.py`). Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived) and merged (ort, no conflicts). Merge commit `1104fde1`. Flags cleared (0 left).
+  Baseline back to 27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone). `requirements.txt`
+  unchanged, so no reinstall. Both changed modules byte-compiled and `nodes_quiver` imported cleanly. GPU
+  gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090
+  with CUDA; `onnxruntime-gpu` 1.23.2 confirmed, real Conv ran on CUDAExecutionProvider. ComfyUI left
+  running on :8888 (not restarted; the Quiver change loads on its next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-DaSiWa-Nodes`
+  `0f23e67..612bd17` (2 commits, 0.5.5: Forge shot-timing check fix, About badge reads the version from
+  `pyproject.toml`). Only the `pyproject.toml` version changed among dependency files, so no pip.
+  Byte-compiled. Rest current. **Skipped 5 (unchanged):** stay-put local branches
+  `ComfyUI-H3-Ref2VA-Accelerator` (`fix/first-block-output`) and `comfyui-obvpm` (`local/separate-outputs`);
+  dirty trees `ComfyUI-RMBG` (modified `requirements.txt`, behind 15) and `one-node-flux-2-klein` (2
+  modified, current); ahead-only `RES4LYF` (ahead 1, nothing to pull). `vnccs` left as the non-git
+  registry tree.
 - 2026-10-07 (eighty-sixth sync, desktop, scheduled run): Local `main` started at `877b16cb` (eighty-fifth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 1 commit (`b26625f2..c9d8a6e6`, 1 file, +1/-1): `c9d8a6e6` comfyui-frontend-package
