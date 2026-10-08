@@ -350,6 +350,32 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-08 (eighty-ninth sync, desktop, scheduled run): Local `main` started at `e636b526` (eighty-eighth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 7 commits (`87c32827..46493d82`, 15 files, +250/-144): `f856877e` Kling Virtual
+  Try-On partner node (#16844; `comfy_api_nodes/apis/kling.py`, `comfy_api_nodes/nodes_kling.py`);
+  `52f98af2` workflow templates to v0.11.78 (#16851); `62c49c4d` Linear call function wrappers in model
+  code (#16861; `comfy/ops.py` and several LDM modules); `d91ed5f5` bypass-LoRA / fused-path fix
+  (#16862); `58b176f0` PNG compress level 4 for GLB textures (#16867); `b28cb564` Comfy Aimdo 0.5.6 +
+  Qwen 2.1 low-VRAM rogue fix (#16870); `46493d82` Qwen3.5 MTP embedding offload fix (#16877). Applied
+  the 27-path `skip-worktree` dance (LF paths file via cmd stdin; porcelain-derived) and merged (ort, no
+  conflicts). Merge commit `1f146c9c`. Flags cleared (0 left). Baseline back to 27 / 0 / 0 (same 5
+  pre-existing untracked scratch files left alone). `requirements.txt` moved two pins
+  (`comfyui-workflow-templates` 0.11.77 to 0.11.78, `comfy-aimdo` 0.5.5 to 0.5.6). Dry-run confirmed torch /
+  torchvision / onnxruntime absent from the plan; installed those five packages only (templates + aimdo +
+  three templates subdeps). All 14 changed `.py` modules byte-compiled. GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch
+  2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed, real Conv ran
+  on CUDAExecutionProvider (both Main and SwarmUI backend). ComfyUI was already listening on :8888 and was left
+  running (not restarted).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI-AusBoss`
+  `ade11dd..cad96ce` (2 commits: Image Compare A/B shows the result after a run), `ComfyUI-DaSiWa-Nodes`
+  `418e245..aedf359` (3 commits, 0.5.6: H3 Forge Who-order optional), and `comfyui-manager`
+  `855a0f50..87ed66b8` (22 commits: mostly node-DB refreshes plus MiniMax H3 Studio / SigMax registry
+  entry). No node dependency files needed pip. Rest current (incl. `ComfyUI-HyperFlow-H3`). **Skipped 5
+  (unchanged):** stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` and `comfyui-obvpm`; dirty
+  trees `ComfyUI-RMBG` and `one-node-flux-2-klein`; ahead-only `RES4LYF`. `vnccs` left as the non-git
+  registry tree.
 - 2026-10-07 (eighty-eighth sync, desktop, scheduled run): Local `main` started at `a330cc4b` (eighty-seventh
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 2 commits (`b00c6e95..87c32827`, 4 files, +433/-1): `af89add6` Vidu Q4 image-to-video
