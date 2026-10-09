@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-09 (ninety-second sync, desktop, scheduled run): Local `main` started at `2de8fda2` (ninety-first
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 2 commits (`926d828e..08ff3c11`, 29 files, +660/-181): `1d2ea294` turn the assets
+  system on by default and add `--disable-assets` (#16884; `main.py`, `app/database/db.py`,
+  `app/assets/*`, `comfy/cli_args.py`, new startup-failure tests) and `08ff3c11` HeyGen Video 1.0 nodes
+  gain 2k resolution (#16876). Applied the 27-path `skip-worktree` dance (porcelain-derived, arg form)
+  and merged (ort, no conflicts). Merge commit `93b726a9`. Flags cleared (0 left). Baseline back to
+  27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone). `requirements.txt` unchanged, so
+  no reinstall. Changed `.py` modules byte-compiled. GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0;
+  torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed.
+  ComfyUI was running on :8888 and left as-found (picks up the merge on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI-DaSiWa-Nodes`
+  `9b87af8..a96f0dd` (3 commits, 0.5.8: H3 local-tile upscale and video RefMod fixes),
+  `ComfyUI-Omnichar` `0934753..251c02e` (1 commit, readme) and `ComfyUI-UtilsCollection`
+  `cc6d516..6783aea` (10 commits, 0.26.10: TPS face-warp fixes, Image Batch to Batch List node, H3 motion
+  presets). pyproject changes were version bumps only; no new pip dependencies. **Skipped known 5:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`,
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead). No new dirty, diverged or ahead nodes.
 - 2026-10-09 (ninety-first sync, desktop, scheduled run): Local `main` started at `b5d3d2c2` (ninetieth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 1 commit (`a4b5a045..926d828e`, 3 files, +251/-0): `926d828e` add native LoRA stack
