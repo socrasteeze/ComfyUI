@@ -350,6 +350,26 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-08 (ninetieth sync, desktop, scheduled run): Local `main` started at `3764967d` (eighty-ninth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 2 commits (`46493d82..a4b5a045`, 5 files, +50/-2): `f49c531e` Loras can now replace
+  the per layer attention config on a model (#16880; `comfy/configurable.py` new, `comfy/ldm/modules/
+  attention.py`, `comfy/lora.py`, `comfy/model_patcher.py`); `a4b5a045` Configure cross-repository
+  CodeRabbit context (#16769; `.coderabbit.yaml`). Applied the 27-path `skip-worktree` dance (arg form;
+  porcelain-derived, LF paths file) and merged (ort, no conflicts). Merge commit `06b83291`. Flags
+  cleared (0 left). Baseline back to 27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone).
+  `requirements.txt` unchanged, so no reinstall. All 4 changed `.py` modules byte-compiled. GPU gate
+  (`check-gpu-accel.py`) `RESULT: OK` / `ALL INSTALLS OK`, exit 0; torch 2.9.1+cu130 sees the NVIDIA
+  GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed, real Conv ran on CUDAExecutionProvider
+  (both Main and SwarmUI backend). ComfyUI left as-found (not started or restarted).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-Spectrum-MiniMax-H3`
+  `5161f04..806fe49` (1 commit, 0.2.29: Restore Core BSA/Flow/Untwist forecasting). No node dependency
+  files needed pip. Byte-compiled. Rest current (incl. `ComfyUI-HyperFlow-H3`). **Skipped known 5:**
+  stay-put local branches `ComfyUI-H3-Ref2VA-Accelerator` and `comfyui-obvpm`; dirty trees
+  `ComfyUI-RMBG` and `one-node-flux-2-klein`; ahead-only `RES4LYF`. **Also left dirty (unexpected,
+  no FF):** `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`. `vnccs` left as the non-git registry tree.
 - 2026-10-08 (eighty-ninth sync, desktop, scheduled run): Local `main` started at `e636b526` (eighty-eighth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 7 commits (`87c32827..46493d82`, 15 files, +250/-144): `f856877e` Kling Virtual
