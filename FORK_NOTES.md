@@ -350,6 +350,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-09 (ninety-first sync, desktop, scheduled run): Local `main` started at `b5d3d2c2` (ninetieth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 1 commit (`a4b5a045..926d828e`, 3 files, +251/-0): `926d828e` add native LoRA stack
+  loader nodes (CORE-186) (#16309; `comfy_extras/nodes_lora_stack.py` new, `nodes.py`, new unit test).
+  Applied the 27-path `skip-worktree` dance (porcelain-derived, arg form) and merged (ort, no conflicts).
+  Merge commit `ff66d891`. Flags cleared (0 left). Baseline back to 27 / 0 / 0 (same 5 pre-existing
+  untracked scratch files left alone). `requirements.txt` unchanged, so no reinstall. Changed `.py`
+  modules byte-compiled. GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch 2.9.1+cu130 sees the
+  NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI left as-found.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-AusBoss`
+  `cad96ce..667a0c1` (4 commits, crop-keep-under-paint / transform engine) and `ComfyUI-DaSiWa-Nodes`
+  `aedf359..9b87af8` (1 commit, 0.5.7: saved LLM backends used automatically). No new pip dependencies.
+  **Skipped known 5:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`,
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead). No new dirty, diverged or ahead nodes.
 - 2026-10-08 (ninetieth sync, desktop, scheduled run): Local `main` started at `3764967d` (eighty-ninth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 2 commits (`46493d82..a4b5a045`, 5 files, +50/-2): `f49c531e` Loras can now replace
