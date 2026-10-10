@@ -350,6 +350,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-09 (ninety-third sync, desktop, scheduled run): Local `main` started at `8ddb1b62` (ninety-second
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 1 commit (`08ff3c11..e450673e`, 1 file, +43/-1): `e450673e` add LatentOperationBlend
+  and start/end percent to LatentApplyOperationCFG (#16923; `comfy_extras/nodes_latent.py`). Applied the
+  27-path `skip-worktree` dance (porcelain-derived, arg form) and merged (ort, no conflicts). Merge commit
+  `c3814271`. Flags cleared (0 left). Baseline back to 27 / 0 / 0 (same 5 pre-existing untracked scratch
+  files left alone). `requirements.txt` unchanged, so no reinstall. Changed `.py` module byte-compiled.
+  GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0; torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090
+  with CUDA; `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI was running on :8888 and left as-found (picks up the merge on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `667a0c1..ec61f13` (10 commits, 2.9.0 to 2.10.1: Workflow Switches finds LoRA rows by file name, zoom/pan
+  over node gaps, video tests run GPU-hidden). pyproject change was a version bump only; no new pip
+  dependencies. **Skipped known 5:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches),
+  `ComfyUI-RMBG`, `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead). No new dirty, diverged or ahead nodes.
 - 2026-10-09 (ninety-second sync, desktop, scheduled run): Local `main` started at `2de8fda2` (ninety-first
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 2 commits (`926d828e..08ff3c11`, 29 files, +660/-181): `1d2ea294` turn the assets
