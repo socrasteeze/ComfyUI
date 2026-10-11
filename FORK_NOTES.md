@@ -350,6 +350,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-11 (ninety-fifth sync, desktop, scheduled run): Local `main` started at `f91692c0` (ninety-fourth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought nothing new for `master` (only unrelated upstream feature branches), so no merge and no
+  skip-worktree dance; baseline unchanged at 27 / 0 / 0 (same 5 pre-existing untracked scratch files left
+  alone). GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2
+  confirmed. ComfyUI was running on :8888 and left as-found (picks up node updates on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-AusBoss`
+  `ec61f13..27cf7cf` (2 commits, #163: new Mask by Touch node with example workflow; no requirements
+  change) and `ComfyUI-UtilsCollection` `239dd46..aae0741` (5 commits, 0.26.11 to 0.26.12: UC_LoraStack and
+  UC_LoraStackLoaderModelOnly LoRA stack loaders, DynamicGroup link fix, Reference Media socket gathering and
+  audio resampling fix; pyproject change was a version bump only). **Skipped known 5:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead); `ComfyUI-Hyperflow` left alone. No new dirty, diverged or ahead nodes.
 - 2026-10-10 (ninety-fourth sync, desktop, scheduled run): Local `main` started at `2212f0f3` (ninety-third
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 6 commits (`e450673e..7f7fd918`, 23 files, +539/-118): `3a52aae7` disable output assets
