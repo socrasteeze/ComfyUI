@@ -350,6 +350,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-11 (ninety-seventh sync, desktop, scheduled run): Local `main` started at `2c5a8a4b` (ninety-sixth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought nothing new for `master` (only unrelated upstream feature branches), so no merge and no
+  skip-worktree dance; baseline unchanged at 27 / 0 / 0 (same 5 pre-existing untracked scratch files left
+  alone). GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2
+  confirmed. ComfyUI was running on :8888 and was left alone (node updates take effect on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI_VNCCS_Utils`
+  `eedaed7..2b0f404` (1 commit, 0.6.9 to 0.7.0; adds `VNCCS_PromptDesigner`, drops `VNCCS_QWEN_Detailer`,
+  `VNCCS_ModelManager`, `VNCCS_ModelSelector` from NodeIds; new requirement `dynamicprompts>=0.31,<1` is NOT
+  installed in python_embeded -- lazy import, only Prompt Designer needs it), `ComfyUI-DaSiWa-Nodes`
+  `a7142e9..23cc047` (2 commits, 0.5.9 to 0.5.11; version bump only) and `comfyui-manager`
+  `c2de81a3..45c3fb68` (5 commits; no requirements change). **Skipped known 5:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead); `ComfyUI-Hyperflow` left alone. No new dirty, diverged or ahead nodes.
 - 2026-10-11 (ninety-sixth sync, desktop, scheduled run): Local `main` started at `bd61b79c` (ninety-fifth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought nothing new for `master` (only unrelated upstream feature branches), so no merge and no
