@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-10 (ninety-fourth sync, desktop, scheduled run): Local `main` started at `2212f0f3` (ninety-third
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
+  upstream` brought 6 commits (`e450673e..7f7fd918`, 23 files, +539/-118): `3a52aae7` disable output assets
+  scanning (#16926), `a09d037e` enable MTP with images on Qwen3.5 (#16922), `ec1537de` decode MiniMax H3
+  single images as the first latent of a clip (#16881), `0df64eb2` date scanned assets by file mtime with
+  alembic migration 0009 (#16810), `ad30981c` enable compression on saved EXR (#16948), `7f7fd918` fix
+  loading half-float files with pyav (#16949). Applied the 27-path `skip-worktree` dance (porcelain-derived,
+  arg form) and merged (ort, no conflicts). Merge commit `e3046368`. Flags cleared (0 left). Baseline back to
+  27 / 0 / 0 (same 5 pre-existing untracked scratch files left alone). `requirements.txt` unchanged, so no
+  reinstall. 13 changed `.py` modules byte-compiled. GPU gate (`check-gpu-accel.py`) `RESULT: OK`, exit 0;
+  torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI
+  was running on :8888 and left as-found (picks up the merge on next restart; the new asset migration runs then).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-UtilsCollection`
+  `6783aea..239dd46` (7 commits, 0.26.10 to 0.26.11: MiniMax H3 Diffusion-Aware Cache sibling node, Adv
+  MiniMax H3 Reference Media to Video (Temporal Fusion) node, prompt builder fixes). pyproject change was a
+  version bump only; no new pip dependencies. **Skipped known 5:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead). No
+  new dirty, diverged or ahead nodes.
 - 2026-10-09 (ninety-third sync, desktop, scheduled run): Local `main` started at `8ddb1b62` (ninety-second
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 1 commit (`08ff3c11..e450673e`, 1 file, +43/-1): `e450673e` add LatentOperationBlend
