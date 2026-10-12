@@ -350,6 +350,19 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-11 (ninety-eighth sync, desktop, scheduled run): Local `main` started at `6bf343c7` (ninety-seventh
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start had been **cleared to 0** skip-worktree
+  flags (27 placeholder deletions showing as ` D`); re-flagged all 27 with `git update-index --skip-worktree`
+  before merging, baseline restored to 27. `git fetch upstream` brought 2 new `master` commits
+  (`7f7fd918..e8665ca8`: #16920 "Keep linked repository findings focused", #16960 "Remove some outdated
+  code"; touches `.coderabbit.yaml` and `main.py`), merged cleanly as `694500d8` (no conflicts). GPU gate:
+  torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI
+  was running on :8888 and was left alone (changes take effect on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `27cf7cf..6f942ef` (20 commits; no requirements change). **Skipped known 5:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead); `ComfyUI-Hyperflow` left alone. No new dirty, diverged or ahead nodes.
 - 2026-10-11 (ninety-seventh sync, desktop, scheduled run): Local `main` started at `2c5a8a4b` (ninety-sixth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought nothing new for `master` (only unrelated upstream feature branches), so no merge and no
