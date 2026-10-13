@@ -350,6 +350,24 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-13 (hundredth sync, desktop, scheduled run): Local `main` started at `9f3a114a` (ninety-ninth
+  tip), 0 ahead / 3 behind `origin/main`: `origin/main` already carried `40111315` "Merge upstream/master
+  into fork" (pushed 2026-10-12 17:55 PT, adopting #16985 "Add a ARM64 nvidia portable" and #16988 "Remove
+  the cryptography package dependency", which drops `cryptography` from `requirements.txt` and adds
+  `utils/ed25519.py`), so `main` was fast-forwarded to it first. Deletion baseline at start was **27**.
+  `git fetch upstream` then brought 2 new `master` commits (`40111315..8010b48d`): #16981 "update embedded
+  docs to v0.5.14" and #16913 "[Partner Nodes] feat(Higgsfield): add Genjutsu Motion Transfer node" (3 files,
+  +156/-1). Merged cleanly as `ded70dd0` (ort, no conflicts). Skip-worktree stayed at 27 through the
+  fast-forward and merge (no restore needed). `requirements.txt` moved one pin (comfyui-embedded-docs 0.5.13
+  to 0.5.14); a dry run showed only that package, so it was installed alone. 4 changed runtime `.py` modules
+  byte-compiled. GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu`
+  1.23.2 confirmed. ComfyUI was running and was left alone (changes take effect on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead 1). **Newly skipped dirty:** `ComfyUI-AusBoss` (behind 4, local edits to
+  `js/cache_guard/index.js` and `tests/cache_guard.test.mjs`). No `ComfyUI-Hyperflow` dir present.
+
 - 2026-10-12 (ninety-ninth sync, desktop, scheduled run): Local `main` started at `adeb3e24` (ninety-eighth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27** (flags 0). `git fetch
   upstream` brought 2 new `master` commits (`adeb3e24..14c55315` merge base window `0ebee95b..14c55315`:
