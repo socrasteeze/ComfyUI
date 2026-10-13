@@ -31,3 +31,4 @@ uv.lock
 *.key
 *.p12
 *.pfx
+/previews/
