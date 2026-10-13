@@ -350,6 +350,31 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-13 (hundred-and-second sync, desktop, scheduled run): Local `main` started at `3b3ba101`
+  (hundred-and-first tip), 0 ahead / 2 behind `origin/main`. `origin/main` already carried
+  `437903188` "Merge upstream/master into main (EXR asset previews); keep both .gitignore sides"
+  (adopting #16898 "feat(assets): previews for EXR assets, written by SaveImageAdvanced for
+  outputs"), so `main` was fast-forwarded to it first. Deletion baseline at start was **27**.
+  `git fetch upstream` then brought 5 new `master` commits (`12081cf9b..1b64c0407`): #16999
+  "[Partner Nodes] feat(FishAudio): add Drama 3 model", #17001 "Update workflow templates to
+  v0.11.82", #17004 "Bump comfyui-frontend-package to 1.55.17", `3541246a` "ComfyUI v0.40.0",
+  and #16990 "Add ImageSDRToHDR node". Merged cleanly as `1882d29c` (ort, no conflicts).
+  Skip-worktree stayed at 27 through the merge (no restore needed). `requirements.txt` moved
+  two pins (`comfyui-frontend-package` 1.55.14 to 1.55.17, `comfyui-workflow-templates`
+  0.11.78 to 0.11.82); scoped dry-run showed only those packages under "Would install", with torch /
+  torchvision / onnxruntime absent, then they were installed. GPU gate: torch sees the NVIDIA
+  GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI was left alone (not
+  started or restarted).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** -- `ComfyUI-DaSiWa-Nodes`
+  `bdb62d4..c99e9c4` (4 commits: H3 memory reserve / Image Inpaint upscale 0.5.16, Spike Guard docs,
+  Nodes 2.0 UI repair, video-combine fullscreen/preview seeking) and `ComfyUI-UtilsCollection`
+  `aae0741..09885e8` (7 commits through 0.26.13: video/audio save+concat, continuation audio list,
+  keyframe video save, face-mask nose protection, VLM preset sync). **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`,
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present.
+  **Also skipped (dirty):** `ComfyUI-AusBoss` (behind 11), `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`.
 - 2026-10-13 (hundred-and-first sync, desktop, scheduled run): Local `main` started at `9334695c` (hundredth
   tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**. `git fetch upstream`
   brought no new `master` commits (tip still `8010b48d`), so there was nothing to merge. Skip-worktree
