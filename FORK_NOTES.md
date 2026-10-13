@@ -350,6 +350,24 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-13 (hundred-and-first sync, desktop, scheduled run): Local `main` started at `9334695c` (hundredth
+  tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**. `git fetch upstream`
+  brought no new `master` commits (tip still `8010b48d`), so there was nothing to merge. Skip-worktree
+  stayed at 27 (no restore needed). GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA;
+  `onnxruntime-gpu` 1.23.2 confirmed. ComfyUI was running and was left alone (node changes take effect on
+  next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-LTXVideo`
+  `3bf3ca6..7f22eb1` (2 commits, #577 "Automated PR - 2026-10-13": removes legacy nodes LTXVAddGuideAdvanced,
+  LTXVAddGuideAdvancedAttention, LTXVPromptEnhancer/Loader, LTXVPreprocessMasks, LTXVPatcherVAE,
+  LTXVSaveConditioning, the per-step Adain/StatNorm patchers and the whole `tricks/` pack; adds
+  LTXVImgToVideoAdvanced; refreshes the 2.5 example workflows). `requirements.txt` only relaxed
+  `transformers[timm]>=4.50.0` to `transformers>=4.50.0`, so no install. A scan of `E:\Models\Workflows` and
+  `user\default\workflows` found no saved graph using any removed node. **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG`, `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead 1), `ComfyUI-AusBoss` (still dirty in `js/cache_guard/index.js` and
+  `tests/cache_guard.test.mjs`, now behind 4). No `ComfyUI-Hyperflow` dir present.
+
 - 2026-10-13 (hundredth sync, desktop, scheduled run): Local `main` started at `9f3a114a` (ninety-ninth
   tip), 0 ahead / 3 behind `origin/main`: `origin/main` already carried `40111315` "Merge upstream/master
   into fork" (pushed 2026-10-12 17:55 PT, adopting #16985 "Add a ARM64 nvidia portable" and #16988 "Remove
