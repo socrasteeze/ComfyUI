@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-13 (hundred-and-third sync, desktop, scheduled run): Local `main` started at `e43ae78b`
+  (hundred-and-second tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 1 new `master` commit (`1b64c0407..e0a32bce8`): #16956 "Add a core
+  route for the default workflow" (new `default_workflow.json`, `openapi.yaml`, `server.py`).
+  Merged cleanly as `18fdef03` (ort, no conflicts). Skip-worktree stayed at 27 through the merge
+  (no restore needed). No `requirements.txt` changes, so nothing was installed. GPU gate: torch
+  2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed.
+  ComfyUI was already running and was left alone (not restarted).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-UtilsCollection`
+  `09885e8..cec37ae` (9 commits through 0.26.14: H3 Reference Media soundtrack packing, Mapping
+  audio input, tooltip cleanup, and removal of the `UC_MiniMaxH3Spectrum` node and Spectrum runtime;
+  no saved workflows reference that node). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty, behind 15), `one-node-flux-2-klein`
+  (dirty), `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present. **Also skipped (dirty):**
+  `ComfyUI-AusBoss` (behind 17).
 - 2026-10-13 (hundred-and-second sync, desktop, scheduled run): Local `main` started at `3b3ba101`
   (hundred-and-first tip), 0 ahead / 2 behind `origin/main`. `origin/main` already carried
   `437903188` "Merge upstream/master into main (EXR asset previews); keep both .gitignore sides"
