@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-14 (hundred-and-fourth sync, desktop, scheduled run): Local `main` started at `b7385b39`
+  (hundred-and-third tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought no new `master` commits (tip still `e0a32bce8`; only unrelated upstream
+  feature branches), so there was nothing to merge. Skip-worktree stayed at 27 (no restore needed). GPU
+  gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed
+  (real Conv ran on CUDAExecutionProvider). ComfyUI was running and was left alone (node changes take
+  effect on next restart).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `7232bb3..bc5d884` (8 commits, release 2.12.1: Image Compare A/B gives the node its size back when
+  leaving Erase, stale text fixes in README/registry description, Mask by Touch and Qwen Image 2.1
+  Inpaint example workflow touch-ups). JS/docs/examples only; no `requirements.txt` change and no nodes
+  removed, so no install. AusBoss had already been cleaned up and fast-forwarded to 2.12.0 outside the
+  sync since the last run, so it is no longer dirty. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty, behind 15), `one-node-flux-2-klein` (dirty),
+  `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present; `ComfyUI-HyperFlow-H3` already current.
 - 2026-10-13 (hundred-and-third sync, desktop, scheduled run): Local `main` started at `e43ae78b`
   (hundred-and-second tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 1 new `master` commit (`1b64c0407..e0a32bce8`): #16956 "Add a core
