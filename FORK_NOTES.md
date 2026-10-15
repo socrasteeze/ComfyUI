@@ -350,6 +350,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-15 (hundred-and-sixth sync, desktop, scheduled run): Local `main` started at `841d48ae`
+  (hundred-and-fifth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought no new `master` commits (tip still `ba994879b`, already in `main` via
+  `647ee9e36`; only unrelated upstream feature branches moved), so there was nothing to merge.
+  Skip-worktree stayed at 27 (no restore needed). GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce
+  RTX 5090 with CUDA (CUDA matmul ran); `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider
+  available). This install's ComfyUI was not running and was not started; the separate SwarmUI Comfy
+  backend was running and was left alone.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI-AusBoss`
+  `37b1105..2799d17` (5 commits, release 2.13.0: Text node "big look" per-node style with Callout teal
+  glow, saved height kept on workflow load; JS/docs/tests only), `ComfyUI-DaSiWa-Nodes`
+  `04ecdec..f943afa` (4 commits: RefMod creation and saved-member editing via new
+  `nodes/refmod_export.py` + `js/refmod_export.js`, Forge RefMod descriptions, H3 Forge style cards
+  name the medium first), and `ComfyUI-UtilsCollection` `cec37ae..c968ea8` (4 commits through 0.26.15:
+  new Krea2 Normalized Attention Guidance patcher node, MP4 muxer keeps workflow metadata via
+  `movflags use_metadata_tags+faststart`). No `requirements.txt` changes and no files removed, so no
+  install; the nine changed Python modules compile cleanly. **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty, behind 15),
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present;
+  `ComfyUI-HyperFlow-H3` already current.
 - 2026-10-14 (hundred-and-fifth sync, desktop, scheduled run): Local `main` started at `9863e4f7`
   (hundred-and-fourth tip), 0 ahead / 7 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 6 new `master` commits (`e0a32bce8..ba994879b`): #17009 ReferenceMultiLatent
