@@ -350,6 +350,28 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-15 (hundred-and-seventh sync, desktop, scheduled run): Local `main` started at `cae9f41a`
+  (hundred-and-sixth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 5 new `master` commits (`ba994879b..29e28e2b4`): #17064 "Support
+  Flux3-image" (new `comfy/ldm/flux3/model.py`, model detection, LoRA keys, text encoder), #17065
+  workflow templates v0.11.84, `98cc0bf84` "ComfyUI v0.41.0", #17067 "[Partner Nodes] feat(Krea): add
+  Krea 3 Image node", and #17068 workflow templates v0.11.85. Merged cleanly as `0522f243` (ort, no
+  conflicts). Skip-worktree stayed at 27 through the merge (no restore needed). `requirements.txt`
+  moved one pin (`comfyui-workflow-templates` 0.11.82 to 0.11.85); scoped dry-run listed only the
+  template packages under "Would install" (torch / torchvision / onnxruntime absent), then it was
+  installed. The eleven changed core Python modules compile cleanly. GPU gate: torch 2.9.1+cu130
+  sees the NVIDIA GeForce RTX 5090 with CUDA (CUDA matmul ran); `onnxruntime-gpu` 1.23.2 confirmed
+  (CUDAExecutionProvider available). ComfyUI was not running and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded** -- `ComfyUI-AusBoss`
+  `2799d17..2216773` (3 commits, PR #202: LoRA Loader rows on a subgraph box, lock on rows a switch
+  sets; JS/docs/tests only), `comfyui-manager` `8eae7501..45ef35b0` (2 DB updates), and
+  `ComfyUI-UtilsCollection` `78a737b..438e71a` (2 commits through 0.27.1: H3 continuation outputs
+  restored, per-segment overlap metadata propagated; it had already moved `c968ea8..78a737b` outside
+  the sync). No `requirements.txt` changes and no files removed, so no install; changed Python
+  modules compile cleanly. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`
+  (local branches), `ComfyUI-RMBG` (dirty, behind 15), `one-node-flux-2-klein` (dirty), `RES4LYF`
+  (ahead 1). No `ComfyUI-Hyperflow` dir present.
 - 2026-10-15 (hundred-and-sixth sync, desktop, scheduled run): Local `main` started at `841d48ae`
   (hundred-and-fifth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought no new `master` commits (tip still `ba994879b`, already in `main` via
