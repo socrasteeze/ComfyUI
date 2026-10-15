@@ -350,6 +350,23 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-14 (hundred-and-fifth sync, desktop, scheduled run): Local `main` started at `9863e4f7`
+  (hundred-and-fourth tip), 0 ahead / 7 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 6 new `master` commits (`e0a32bce8..ba994879b`): #17009 ReferenceMultiLatent
+  node, #17050 disable LoRA stack nodes (reverted by #17054), #17053 ReferenceMultiLatent UX, #17049
+  MiniMax-H3 LightVAE support, #16093 Latent Geometries nodes. These had already been merged into
+  `origin/main` outside the sync as merge `647ee9e36` (via `noble/inspiring-gates-4hs0vl`), so local
+  `main` was fast-forwarded `9863e4f7..647ee9e3` with no new merge and no conflicts. Skip-worktree stayed
+  at 27 (no restore needed). GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA;
+  `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider available). ComfyUI was not running and was
+  not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `bc5d884..37b1105` (6 commits, releases 2.12.2 and 2.12.3: Image Compare A/B Erase keeps the node size
+  and Copy puts the mix on the clipboard; CHANGELOG left out of the Registry archive). JS/docs/packaging
+  only; no `requirements.txt` change, so no install. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty, behind 15), `one-node-flux-2-klein` (dirty),
+  `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present.
 - 2026-10-14 (hundred-and-fourth sync, desktop, scheduled run): Local `main` started at `b7385b39`
   (hundred-and-third tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought no new `master` commits (tip still `e0a32bce8`; only unrelated upstream
