@@ -350,6 +350,24 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-16 (hundred-and-ninth sync, desktop, scheduled run): Local `main` started at `0088a5b47`
+  (hundred-and-eighth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 1 new `master` commit (`5a665890d..bdc63e72f`): #17083 "chore: update
+  workflow templates to v0.11.86" (`requirements.txt` only). Merged cleanly as `b2f6b2dd7` (ort, no
+  conflicts). Skip-worktree stayed at 27 through the merge (no restore needed). `requirements.txt`
+  moved one pin (`comfyui-workflow-templates` 0.11.85 to 0.11.86); scoped dry-run listed only the
+  template packages under "Would install" (torch / torchvision / onnxruntime absent), then it was
+  installed. No core Python modules changed. GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce
+  RTX 5090 with CUDA (CUDA matmul ran); `onnxruntime-gpu` 1.23.2 confirmed (real Conv ran on
+  CUDAExecutionProvider). ComfyUI was already running on port 8888 (started 13:48 PT 2026-10-15,
+  before this sync) and was left alone; it picks up these changes on its next restart.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded**. **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty),
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1). No `ComfyUI-Hyperflow` dir present;
+  `ComfyUI-HyperFlow-H3` left alone (known skip). **Also skipped (dirty, not behind):**
+  `ComfyUI-ConditioningKrea2Rebalance`, `ComfyUI-Flux2Klein-Enhancer`,
+  `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`.
 - 2026-10-15 (hundred-and-eighth sync, desktop, scheduled run): Local `main` started at `7c30f3fe`
   (hundred-and-seventh tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 2 new `master` commits (`29e28e2b4..5a665890d`): #17075 "Use FLUX 3
