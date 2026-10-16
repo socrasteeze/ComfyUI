@@ -350,6 +350,24 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-16 (hundred-and-eleventh sync, desktop, scheduled run): Local `main` started at `b0e0201c4`
+  (hundred-and-tenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 2 new `master` commits (`bdc63e72f..fc04da91b`): #17095 "feat: Add
+  MOSS-image support" (new `comfy/ldm/moss_image`, text encoder, `nodes_moss_image`, model
+  detection/base/LoRA hooks) and #17102 "[Partner Nodes] chore(Quiver): remove retired Arrow 1.x
+  models". Merged cleanly as `2f4ac7160` (ort, no conflicts). Skip-worktree stayed at 27 through the
+  merge (no restore needed). No `requirements.txt` changes. GPU gate: torch 2.9.1+cu130 sees the
+  NVIDIA GeForce RTX 5090 with CUDA (CUDA matmul ran); `onnxruntime-gpu` 1.23.2 confirmed
+  (CUDAExecutionProvider available). ComfyUI was already running on port 8888 and was left alone;
+  it picks up these changes on its next restart.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `00e216b..738ed2c` (0.5.27 Continuity subgraph validation/output hints,
+  0.5.28 sample-exact H3 Opus segment export) and `comfyui-krea2edit` `86f886d..13ef60f` (v2.0.0
+  reference placement, `ref_position` / `ref_position_a`). **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty),
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1), `ComfyUI-HyperFlow-H3` (known skip).
+  No other node was dirty-and-behind, diverged or ahead.
 - 2026-10-16 (hundred-and-tenth sync, desktop, scheduled run): Local `main` started at `493743d98`
   (hundred-and-ninth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **0** new `master` commits (already at `bdc63e72f`). No merge.
