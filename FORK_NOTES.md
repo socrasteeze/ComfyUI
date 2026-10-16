@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-15 (hundred-and-eighth sync, desktop, scheduled run): Local `main` started at `7c30f3fe`
+  (hundred-and-seventh tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought 2 new `master` commits (`29e28e2b4..5a665890d`): #17075 "Use FLUX 3
+  Image in node display labels" (`comfy_api_nodes/nodes_bfl.py`, `comfy_extras/nodes_flux.py`) and
+  #17078 "Better documentation about the comfy quant format" (`QUANTIZATION.md`). Merged cleanly as
+  `a46e70fb` (ort, no conflicts). Skip-worktree stayed at 27 through the merge (no restore needed).
+  No `requirements.txt` changes, so no install; the two changed core Python modules compile cleanly.
+  GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA (CUDA matmul ran);
+  `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider available). ComfyUI was already running
+  on port 8888 (started 13:48 PT, before this sync) and was left alone; it picks up these changes on
+  its next restart.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-UtilsCollection`
+  `438e71a..167274d` (4 commits through 0.27.2: Flux 3 Qwen3-VL text encoder in visual conditioning
+  nodes, Create Bounding Boxes canvas editor node, Qwen textgen context alignment + MTP support). No
+  `requirements.txt` changes and no files removed, so no install; changed Python modules parse
+  cleanly. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local branches),
+  `ComfyUI-RMBG` (dirty, behind 15), `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1). No
+  `ComfyUI-Hyperflow` dir present.
 - 2026-10-15 (hundred-and-seventh sync, desktop, scheduled run): Local `main` started at `cae9f41a`
   (hundred-and-sixth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 5 new `master` commits (`ba994879b..29e28e2b4`): #17064 "Support
