@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-16 (hundred-and-tenth sync, desktop, scheduled run): Local `main` started at `493743d98`
+  (hundred-and-ninth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **0** new `master` commits (already at `bdc63e72f`). No merge.
+  Skip-worktree stayed at 27 (no restore needed). No `requirements.txt` changes. GPU gate: torch
+  2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed
+  (CUDAExecutionProvider available). ComfyUI was not started or restarted.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded** --
+  `ComfyUI-DaSiWa-Nodes` `6a4a032..00e216b` (12 commits: H3 continuity segments/clip assembly,
+  Join Clips transitions, lossless copy option, RGBA alpha keep, bug-report form sync) and
+  `comfyui-manager` `45ef35b0..4d3bed4b` (7 commits: node DB updates, Sidebar Hider, emaki,
+  mute-bypass entry). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator` (local branch, ahead 1),
+  `comfyui-obvpm` (diverged on local branch), `ComfyUI-RMBG` (dirty, also behind 15),
+  `one-node-flux-2-klein` (dirty), `RES4LYF` (ahead 1), `ComfyUI-HyperFlow-H3` (known skip).
+  **Also skipped (dirty, not behind):** `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`.
 - 2026-10-16 (hundred-and-ninth sync, desktop, scheduled run): Local `main` started at `0088a5b47`
   (hundred-and-eighth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 1 new `master` commit (`5a665890d..bdc63e72f`): #17083 "chore: update
