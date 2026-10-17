@@ -350,6 +350,19 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-16 (hundred-and-twelfth sync, desktop, scheduled run): Local `main` started at `be56771c8`
+  (hundred-and-eleventh tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **0** new `master` commits. No merge. Skip-worktree stayed at 27
+  (no restore needed). No `requirements.txt` changes. GPU gate: torch 2.9.1+cu130 sees the NVIDIA
+  GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider available).
+  ComfyUI was not started or restarted.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** --
+  `ComfyUI-UtilsCollection` `167274d..a1dd1b0` (11 commits, 0.27.2 to 0.27.4: MOSS-Image temporal
+  clip patcher, bounding-box presets/editor split, Gemini response schema for text generation,
+  hybrid media style presets; pyproject version bump only). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm`, `ComfyUI-RMBG`, `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`.
+  No new dirty, diverged or ahead nodes.
 - 2026-10-16 (hundred-and-eleventh sync, desktop, scheduled run): Local `main` started at `b0e0201c4`
   (hundred-and-tenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought 2 new `master` commits (`bdc63e72f..fc04da91b`): #17095 "feat: Add
