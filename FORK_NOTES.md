@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-16 (hundred-and-thirteenth sync, desktop, manual run): Local `main` started at `fb7ec8cc4`
+  (hundred-and-twelfth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **3** new `master` commits (`fc04da91b..4d7b59459`): #17107 "Update
+  comfy-kitchen version to 0.2.38", #17099 "Use fused situ with MOSS-image", #17007 "Performance
+  improvements for qwen 3.x (Part 2)" (ops.py, llama.py, qwen35.py, attention.py, new
+  qwen35_decode_test.py). Merged cleanly as `1b98c1870`, no conflicts. Skip-worktree stayed at 27
+  (no restore needed). `requirements.txt` moved one pin (`comfy-kitchen` 0.2.37 -> 0.2.38); dry-run
+  listed only `comfy-kitchen-0.2.38` (torch/onnxruntime untouched), installed into `python_embeded`.
+  GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2
+  confirmed (CUDAExecutionProvider available). ComfyUI was not running and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **0 fast-forwarded** (nothing behind).
+  **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`, `ComfyUI-RMBG`,
+  `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer`, `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`.
+  No new dirty, diverged or ahead nodes.
 - 2026-10-16 (hundred-and-twelfth sync, desktop, scheduled run): Local `main` started at `be56771c8`
   (hundred-and-eleventh tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **0** new `master` commits. No merge. Skip-worktree stayed at 27
