@@ -350,6 +350,23 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-18 (hundred-and-sixteenth sync, desktop, scheduled run): Local `main` started at `9692f9d0f`
+  (hundred-and-fifteenth tip), 0 ahead / 3 behind `origin/main`: `origin/main` had gained an upstream merge
+  `015b51ad9` pushed outside this routine with no sync-log entry (#17144 "Fix webcam node no longer working.",
+  #17159 "add support for loading embeddings models onto Qwen3.5"); fast-forwarded to it first. Deletion
+  baseline at start was **27**. `git fetch upstream` moved `master` `c06bf5f56..446ef4e00` (4 commits, 2 not
+  yet on `origin/main`): #17157 "Support models with PDD baked in", #17155 "Make NAF neighborhood attention
+  work per LR cell". Merged cleanly as `778f7d145`, no conflicts. Skip-worktree stayed at 27 (no restore
+  needed). No `requirements.txt` change. GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with
+  CUDA; `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider available). ComfyUI was running on port
+  8888 and was left alone (needs a restart to pick up the merge).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **2 fast-forwarded**: `ComfyUI-DaSiWa-Nodes`
+  (`60d7a36..6b2d829`, 2 commits, version 0.5.29 -> 0.5.31, no dependency change), `comfyui-manager`
+  (`65dafe57..b230402a`, 4 commits, custom-node DB updates). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm` (local branches), `ComfyUI-RMBG` (dirty, 15 behind), `one-node-flux-2-klein` (dirty),
+  `RES4LYF` (1 ahead), `ComfyUI-HyperFlow-H3`, `ComfyUI-Flux2Klein-Enhancer` (remote repository not found).
+  No new dirty, diverged or ahead nodes.
 - 2026-10-17 (hundred-and-fifteenth sync, desktop, manual run): Local `main` started at `4b146e37d`
   (hundred-and-fourteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **1** new `master` commit (`bab80ef79..c06bf5f56`): #16859 "Bump
