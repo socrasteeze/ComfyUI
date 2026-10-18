@@ -350,6 +350,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-18 (hundred-and-seventeenth sync, desktop, manual run): Local `main` started at `617855e8a`
+  (hundred-and-sixteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **2** new `master` commits (`446ef4e00..d4056d50c`): #17169 "Fix text
+  generation not properly cleaning itself up" (llama.py), #17170 "CPU device doesn't support fp8,
+  nvfp4, mxfp8 or int8" (model_management.py). Merged cleanly as `35ec9881f`, no conflicts.
+  Skip-worktree stayed at 27 (no restore needed). No `requirements.txt` changes. GPU gate: torch
+  2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed
+  (CUDAExecutionProvider available). ComfyUI was not running and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss`
+  `2216773..d1aea18` (5 commits: Compare and Save Image can step through several pictures; Tiled
+  Upscale Stitch now handles image lists; no requirements change). **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`, `ComfyUI-RMBG`, `one-node-flux-2-klein`,
+  `RES4LYF`, `ComfyUI-HyperFlow-H3`, `ComfyUI-Flux2Klein-Enhancer` (remote gone).
+  No new dirty, diverged or ahead nodes.
 - 2026-10-18 (hundred-and-sixteenth sync, desktop, scheduled run): Local `main` started at `9692f9d0f`
   (hundred-and-fifteenth tip), 0 ahead / 3 behind `origin/main`: `origin/main` had gained an upstream merge
   `015b51ad9` pushed outside this routine with no sync-log entry (#17144 "Fix webcam node no longer working.",
