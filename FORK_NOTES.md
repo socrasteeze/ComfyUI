@@ -350,6 +350,24 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-17 (hundred-and-fourteenth sync, desktop, scheduled run): Local `main` started at `5dd97aed5`
+  (hundred-and-thirteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **6** new `master` commits (`4d7b59459..bab80ef79`): #17110 "chore: update
+  workflow templates to v0.11.87", #17121 "Fix Qwen think-block templates in TextGenerate", #17138 "Update
+  workflow templates to v0.11.89", #17139 "Add ARM Linux to execution and unit tests", #16805 "Refactor 3D
+  model remeshing (CORE-560)", #17140 "Fix crash issue with solid mode + empty mesh". Merged cleanly as
+  `17f760a15`, no conflicts. Skip-worktree stayed at 27 (no restore needed). `requirements.txt` moved one
+  pin (`comfyui-workflow-templates` 0.11.86 -> 0.11.89); dry-run listed only the templates package and its
+  core/json/media-assets-02 subpackages (torch/onnxruntime untouched), installed into `python_embeded`.
+  GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2
+  confirmed (CUDAExecutionProvider available). ComfyUI was already running on port 8888 and was left
+  alone (needs a restart to pick up the merge).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **3 fast-forwarded**: `ComfyUI-DaSiWa-Nodes`
+  (`738ed2c..60d7a36`), `comfyui-manager` (`4d3bed4b..69187ed4`), `ComfyUI-UtilsCollection`
+  (`a1dd1b0..5252471`). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm` (local
+  branches), `ComfyUI-RMBG` (dirty, 15 behind), `one-node-flux-2-klein` (dirty), `RES4LYF` (1 ahead),
+  `ComfyUI-Flux2Klein-Enhancer` (remote repository not found). No new dirty, diverged or ahead nodes.
 - 2026-10-16 (hundred-and-thirteenth sync, desktop, manual run): Local `main` started at `fb7ec8cc4`
   (hundred-and-twelfth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **3** new `master` commits (`fc04da91b..4d7b59459`): #17107 "Update
