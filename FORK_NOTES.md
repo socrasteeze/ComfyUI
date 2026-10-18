@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-17 (hundred-and-fifteenth sync, desktop, manual run): Local `main` started at `4b146e37d`
+  (hundred-and-fourteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
+  `git fetch upstream` brought **1** new `master` commit (`bab80ef79..c06bf5f56`): #16859 "Bump
+  comfyui-frontend-package to 1.55.18". Merged cleanly as `8bf1de652`, no conflicts. Skip-worktree
+  stayed at 27 (no restore needed). `requirements.txt` moved one pin (`comfyui-frontend-package`
+  1.55.17 -> 1.55.18); dry-run listed only `comfyui_frontend_package-1.55.18` (torch/onnxruntime
+  untouched), installed into `python_embeded`. GPU gate: torch 2.9.1+cu130 sees the NVIDIA GeForce
+  RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 confirmed (CUDAExecutionProvider available).
+  ComfyUI was running (queue empty) and was left running; not restarted.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `comfyui-manager`
+  `69187ed4..65dafe57` (2 commits: 3 BSAI entries added to custom-node-list.json; no requirements
+  change). **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`, `ComfyUI-RMBG`,
+  `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`, `ComfyUI-ConditioningKrea2Rebalance`,
+  `ComfyUI-Flux2Klein-Enhancer` (repo gone), `ComfyUI-MiniMax-H3-LongMedia`, `ComfyUI-PixelDriftFix`.
+  No new dirty, diverged or ahead nodes.
 - 2026-10-17 (hundred-and-fourteenth sync, desktop, scheduled run): Local `main` started at `5dd97aed5`
   (hundred-and-thirteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **6** new `master` commits (`4d7b59459..bab80ef79`): #17110 "chore: update
