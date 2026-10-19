@@ -350,6 +350,22 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-19 (hundred-and-nineteenth sync, desktop, scheduled run): Local `main` started at `765a9195d`
+  (hundred-and-eighteenth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **0** new
+  `master` commits (`upstream/master` still `8f04fd6ec`, already merged), so no merge this run. Skip-worktree
+  stayed at 27 (no restore needed). GPU gate passed: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 and
+  ran a CUDA op; `onnxruntime-gpu` 1.23.2 with CUDAExecutionProvider available. ComfyUI was running on port
+  8888 and was left alone (needs a restart to load the node updates below).
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **5 fast-forwarded** -- `ComfyUI-AusBoss`
+  `2f80577..bcff775` (8 commits: Release 2.14.1, Layout Boxes node, Release 2.15.0; the 5 stale local
+  commits flagged last run were no longer present, so it was clean 0 ahead), `ComfyUI-DaSiWa-Nodes`
+  `6b2d829..fcd0ec5` (2: Tiled Diffusion (Image) MODEL patch node, 0.5.32), `comfyui-manager`
+  `b0b8bbe4..a74929c6` (10: DB updates), `ComfyUI-UtilsCollection` `5252471..55d6995` (4: MOSS-Image VLM
+  presets and encoder/patcher fixes, 0.27.6), `H3-Optimizations` `8627749..c6bc3cf` (17: 0.2.46, rebuilt
+  native binaries, Kitchen routing default). `pyproject.toml` changes were version/description only; no
+  dependency changes, no reinstall. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`,
+  `ComfyUI-RMBG`, `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`.
 - 2026-10-18 (hundred-and-eighteenth sync, desktop, scheduled run): Local `main` started at `426d871b2`
   (hundred-and-seventeenth tip), 0 ahead / 6 behind `origin/main`: `origin/main` had gained an upstream merge
   `704328606` pushed outside this routine with no sync-log entry; its tree matched a clean local merge of
