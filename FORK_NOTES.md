@@ -350,6 +350,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-18 (hundred-and-eighteenth sync, desktop, scheduled run): Local `main` started at `426d871b2`
+  (hundred-and-seventeenth tip), 0 ahead / 6 behind `origin/main`: `origin/main` had gained an upstream merge
+  `704328606` pushed outside this routine with no sync-log entry; its tree matched a clean local merge of
+  `426d871b2` and `upstream/master`, so it was fast-forwarded to as-is. That covers **5** upstream `master`
+  commits (`d4056d50c..8f04fd6ec`): #17171 comfy-kitchen 0.2.38 -> 0.2.39, ComfyUI v0.42.0 (`355cd6b14`),
+  #17178 "model_prefetch: syncrhonize all graph cleanups", #17172 "Add rope scaling support to MOSS-image",
+  #16943 "[Partner Nodes] Renew partner-node sign-in tokens in API nodes". No conflicts; the local fixes
+  were not in the window. Skip-worktree stayed at 27 (no restore needed). `requirements.txt` moved one pin,
+  so it was reinstalled after a dry run showed only `comfy-kitchen-0.2.39` in the plan (no torch,
+  torchvision or onnxruntime). The 8 changed source modules byte-compiled. GPU gate passed on both
+  installs: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 with CUDA; `onnxruntime-gpu` 1.23.2 ran a
+  real Conv on CUDAExecutionProvider. ComfyUI was running on port 8888 and was left alone (needs a restart
+  to pick up the merge and the new comfy-kitchen); the running process still holds the old comfy-kitchen
+  CUDA extension, so pip left its `~` stash directory in site-packages to remove after that restart.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `comfyui-manager`
+  `b230402a..b0b8bbe4` (1 commit: Manager-owned theme CSS replaces PrimeVue styling; no dependency
+  change). **New skip:** `ComfyUI-AusBoss` is 5 ahead / 13 behind -- upstream rewrote #206/#207 with new
+  hashes and added Release 2.14.0, so the five local commits are the old copies of the same PRs; left
+  untouched. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`, `ComfyUI-RMBG`,
+  `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`, `ComfyUI-Flux2Klein-Enhancer`.
 - 2026-10-18 (hundred-and-seventeenth sync, desktop, manual run): Local `main` started at `617855e8a`
   (hundred-and-sixteenth tip), 0 ahead / 0 behind `origin/main`. Deletion baseline at start was **27**.
   `git fetch upstream` brought **2** new `master` commits (`446ef4e00..d4056d50c`): #17169 "Fix text
