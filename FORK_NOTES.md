@@ -350,6 +350,19 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-20 (hundred-and-twenty-second sync, desktop, scheduled run): Local `main` started at `7190542b5`
+  (hundred-and-twenty-first tip), 0 ahead / 2 behind `origin/main`: `origin/main` already carried an un-logged merge
+  `060e3ec9b` (pushed 2026-10-20 09:55 PT) of `fd734e958` BFL FLUX 3 Max partner nodes (#17202, 2 files, +307).
+  Fast-forwarded to `060e3ec9b`, then `git fetch upstream` brought **1** further `master` commit (`fd734e958..7ef1f42a3`,
+  1 file, +2/-1), merged clean as `a88107425`: `7ef1f42a3` fixes the top-p sampling threshold in
+  `comfy/text_encoders/llama.py` (#17221). No requirements change. Skip-worktree stayed at 27 (no restore needed). GPU
+  gate passed: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 and ran a CUDA op; `onnxruntime-gpu` 1.23.2 with
+  CUDAExecutionProvider available. ComfyUI was already running on port 8888; not restarted or queued.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-UtilsCollection` `55d6995..d5f277c`
+  (2 commits: eager YOLOv8/YOLO11 safetensors detection and segmentation, megapixel step fix). **Skipped known:**
+  `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`, `ComfyUI-RMBG` (dirty, 28 behind), `one-node-flux-2-klein`, `RES4LYF`,
+  `ComfyUI-HyperFlow-H3`, `ComfyUI-Flux2Klein-Enhancer` (remote repository not found).
 - 2026-10-20 (hundred-and-twenty-first sync, desktop, scheduled run): Local `main` started at `e6e6830df`
   (hundred-and-twentieth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **1** new `master`
   commit (`e3bee7ffc..b1a247c9c`, 1 file, +1/-1), merged clean as `7c7de3fa2`: `b1a247c9c` README notes MOSS image
