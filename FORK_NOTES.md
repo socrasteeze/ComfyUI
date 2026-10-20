@@ -350,6 +350,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-19 (hundred-and-twentieth sync, desktop, scheduled run): Local `main` started at `5c19da2be`
+  (hundred-and-nineteenth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **4** new `master`
+  commits (`8f04fd6ec..e3bee7ffc`, 9 files, +463/-19), merged clean as `b4f3771fb`: `a2440bc77` HeyGen Voice 1.0
+  instant clone and text-to-speech partner nodes (#17043), `35f6d4f8b` ClarityAI Crystal Video Upscaler node (#17192),
+  `0dfb874b0` 2K and 4K resolutions for the FLUX 3 Video nodes (#17200), `e3bee7ffc` MOSS-image color-depth control
+  (#17206; touches `comfy/lora.py`, `comfy/lora_convert.py`, `comfy/model_base.py`). No requirements change.
+  Skip-worktree stayed at 27 (no restore needed). GPU gate passed: torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090
+  and ran a CUDA op; `onnxruntime-gpu` 1.23.2 with CUDAExecutionProvider available. ComfyUI was not running on port
+  8888 and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-AusBoss` `bcff775..838e4fd`
+  (12 commits: Layout Boxes mask output, finer placement and rotation; Releases 2.16.0, 2.16.1, 2.17.0).
+  `pyproject.toml` change was version/keywords only; no reinstall. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm`, `ComfyUI-RMBG`, `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`.
 - 2026-10-19 (hundred-and-nineteenth sync, desktop, scheduled run): Local `main` started at `765a9195d`
   (hundred-and-eighteenth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **0** new
   `master` commits (`upstream/master` still `8f04fd6ec`, already merged), so no merge this run. Skip-worktree
