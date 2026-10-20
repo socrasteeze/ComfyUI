@@ -350,6 +350,18 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-20 (hundred-and-twenty-first sync, desktop, scheduled run): Local `main` started at `e6e6830df`
+  (hundred-and-twentieth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **1** new `master`
+  commit (`e3bee7ffc..b1a247c9c`, 1 file, +1/-1), merged clean as `7c7de3fa2`: `b1a247c9c` README notes MOSS image
+  support (#17212). Docs only; no requirements change. Skip-worktree stayed at 27 (no restore needed). GPU gate passed:
+  torch 2.9.1+cu130 sees the NVIDIA GeForce RTX 5090 and ran a CUDA op; `onnxruntime-gpu` 1.23.2 with
+  CUDAExecutionProvider available. ComfyUI was not running on port 8888 and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`: **1 fast-forwarded** -- `ComfyUI-LTXVideo` `44c8a36..220e1d4`
+  (2 commits: automated PR 2026-10-20, HDR node and example workflow updates). New `pyproject.toml` lists the same
+  dependencies as the existing `requirements.txt`; no reinstall. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`,
+  `comfyui-obvpm`, `ComfyUI-RMBG`, `one-node-flux-2-klein`, `RES4LYF`, `ComfyUI-HyperFlow-H3`,
+  `ComfyUI-Flux2Klein-Enhancer` (remote repository not found).
 - 2026-10-19 (hundred-and-twentieth sync, desktop, scheduled run): Local `main` started at `5c19da2be`
   (hundred-and-nineteenth tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **4** new `master`
   commits (`8f04fd6ec..e3bee7ffc`, 9 files, +463/-19), merged clean as `b4f3771fb`: `a2440bc77` HeyGen Voice 1.0
