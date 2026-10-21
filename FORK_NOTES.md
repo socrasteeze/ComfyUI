@@ -350,6 +350,7 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-21 (hundred-and-twenty-third sync, cloud container, scheduled run): Local `main` started at `ab0057d`, 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **6** `master` commits (`7ef1f42a3..87ed5a066`, 12 files, +753/-22), merged clean: Fibo 2.0 support (#17240), Bria FIBO 2.0 partner nodes (#17229), MiniMax-H3 LoRA fix (#17239), frontend package 1.57.1 (#17244), workflow templates bumps. `requirements.txt` changed (frontend package pin). `py_compile` clean on touched Python. No GPU in this container, so nothing runtime-checked. Custom nodes: none present in this container (`custom_nodes/` holds only the example files), so no fast-forwards were possible.
 - 2026-10-20 (hundred-and-twenty-second sync, desktop, scheduled run): Local `main` started at `7190542b5`
   (hundred-and-twenty-first tip), 0 ahead / 2 behind `origin/main`: `origin/main` already carried an un-logged merge
   `060e3ec9b` (pushed 2026-10-20 09:55 PT) of `fd734e958` BFL FLUX 3 Max partner nodes (#17202, 2 files, +307).
