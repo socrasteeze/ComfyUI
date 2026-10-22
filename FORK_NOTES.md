@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-22 (hundred-and-twenty-fourth sync, desktop): Local `main` started at `12a162dfd` (hundred-and-twenty-third
+  tip), 0 ahead / 4 behind `origin/main`: `origin/main` already carried an un-logged merge `2e238ccd5` of 3 upstream
+  commits (#17241 optional local agent via comfy-agent's v1 host, new `agent_requirements.txt`; #17224 Pad Image node;
+  #17249 `Pillow>=10.1.0`). Fast-forwarded to it, then `git fetch upstream` brought **12** `master` commits
+  (`7a2833204..f5ea88af1`, 26 files, +1587/-192), merged clean with zero conflicts: HeyGen Voice price
+  badge (#17257), Krea 3 ultra thinking mode (#17260), VEED Fabric/Lipsync/Background Removal/Clean Audio nodes
+  (#17242), Mirelo Video/Text to SFX nodes (#17265), workflow templates 0.11.94 (#17268), AGENTS.md model-integration
+  instructions (#17279), Gemma4 31B global attention fix (#17220), MOSS-Image edit LoRAs (#17296), qwen 3.x adaptive
+  tree MTP (#17273), offload stream sync before stealing a pin (#17297), NTK-aware rope scaling (#17290), Fibo2.0 T2I
+  negative prompt (#17285). All adopted; the fork's delta against upstream is patch-id identical before and after.
+  `requirements.txt` moved two pins, `comfyui-workflow-templates` 0.11.93 -> 0.11.94 and `comfy-kitchen` 0.2.39 ->
+  0.2.40; **not reinstalled this run** (dry run plans only those two plus three template sub-packages; no torch,
+  torchvision or onnxruntime). Until it is, qwen 3.x MTP decoding fails: #17273 calls
+  `comfy_kitchen.flash_attention_decode_tree_merge`, which 0.2.39 lacks. Gates: `ruff check .` clean on tracked files;
+  `py_compile` clean on the 24 changed modules; all changed modules import and built-in plus API nodes load (7 new
+  partner nodes register). `tests-unit` with a side-loaded pytest: 3114 tests / 202 failed / 92 errors before, 3129 /
+  219 / 92 after; every new failure is in `qwen35_decode_test.py`, which passes 38/38 against comfy-kitchen 0.2.40.
+  Skip-worktree stayed at 27. GPU gate passed before and after on both installs. ComfyUI was not running and was not
+  started. Custom-node fast-forwards were out of scope for this run and were not attempted.
 - 2026-10-21 (hundred-and-twenty-third sync, cloud container, scheduled run): Local `main` started at `ab0057d`, 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **6** `master` commits (`7ef1f42a3..87ed5a066`, 12 files, +753/-22), merged clean: Fibo 2.0 support (#17240), Bria FIBO 2.0 partner nodes (#17229), MiniMax-H3 LoRA fix (#17239), frontend package 1.57.1 (#17244), workflow templates bumps. `requirements.txt` changed (frontend package pin). `py_compile` clean on touched Python. No GPU in this container, so nothing runtime-checked. Custom nodes: none present in this container (`custom_nodes/` holds only the example files), so no fast-forwards were possible.
 - 2026-10-20 (hundred-and-twenty-second sync, desktop, scheduled run): Local `main` started at `7190542b5`
   (hundred-and-twenty-first tip), 0 ahead / 2 behind `origin/main`: `origin/main` already carried an un-logged merge
