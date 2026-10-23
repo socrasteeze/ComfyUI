@@ -350,6 +350,15 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-23 (hundred-and-twenty-sixth sync, desktop): Local `main` started at `c52592023` (hundred-and-twenty-fifth
+  tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **3** `master` commits (`d07dff456..9fe7ef764`,
+  11 files, +314/-41), merged clean as `0e8018292` with zero conflicts: ACEScg in Convert Image Color Space and Save
+  Image (Advanced) EXR (#17023), Comfy API console tips via new `app/product_tips.py` (#17052), attention bias
+  conditioning and image strength for MOSS-Image edit (#17320). All adopted. No `requirements.txt` change. Gates:
+  `py_compile` clean on the 8 changed non-test `.py` files and the changed modules import. Skip-worktree stayed at 27.
+  GPU gate passed (torch 2.9.1+cu130, CUDA True, RTX 5090, onnxruntime-gpu 1.23.2). The pins from the 125th sync are
+  still not reinstalled (aimdo 0.5.6, kitchen 0.2.39, templates 0.11.93 installed). ComfyUI on 8888 was running and was
+  not restarted, so it still serves the pre-merge code.
 - 2026-10-22 (hundred-and-twenty-fifth sync, desktop): Local `main` started at `d32702327` (hundred-and-twenty-fourth
   tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **9** `master` commits (`f5ea88af1..d07dff456`,
   34 files, +1783/-114), merged clean as `7052a6a9a` with zero conflicts: #17307 moves `comfy/comfy_api_env.py` and
