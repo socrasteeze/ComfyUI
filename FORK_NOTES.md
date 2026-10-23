@@ -350,6 +350,27 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-22 (hundred-and-twenty-fifth sync, desktop): Local `main` started at `d32702327` (hundred-and-twenty-fourth
+  tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **9** `master` commits (`f5ea88af1..d07dff456`,
+  34 files, +1783/-114), merged clean as `7052a6a9a` with zero conflicts: #17307 moves `comfy/comfy_api_env.py` and
+  `comfy/deploy_environment.py` to `app/`, Comfy-Aimdo 0.6.0 plus Dynamic VRAM KV caches part I (#17274), Meshy T2.5
+  Smart Topology nodes and HeyGen Voice Turbo list-price badge (#17280), PixVerse V6 Max (#17287), Bria Guided Remove
+  Background / Product Holding / Virtual Try-On (#17289), Ideogram Vector Generate SVG and Image to SVG (#17298),
+  workflow templates 0.11.96 (#17301), pytorch attention in the VAE on AMD (#17271), Flux2 VAE fuse and strip through
+  comfy-kitchen (#17196). All adopted; the fork's delta against upstream is patch-id identical before and after. Sweep
+  for the #17307 move: no tracked file, custom node, or `fork_tools/` file imports the old `comfy.*` paths; two stale
+  `.pyc` files are left in `comfy/__pycache__`, inert without their sources. `requirements.txt` moved two pins,
+  `comfyui-workflow-templates` 0.11.94 -> 0.11.96 and `comfy-aimdo` 0.5.6 -> 0.6.0; `comfy-kitchen` stays at 0.2.40,
+  which already carries the `group_norm_stats3d` kernel #17196 calls. **Not reinstalled this run**, and the installed
+  set is still kitchen 0.2.39, aimdo 0.5.6, templates 0.11.93 (dry run plans aimdo 0.6.0, kitchen 0.2.40, templates
+  0.11.96 plus three template sub-packages; no torch, torchvision or onnxruntime). Until it is, the merged tree imports
+  but fails at runtime: Dynamic VRAM model loads pass `pageout_callback=` to aimdo 0.5.6's `ModelVBAR(size, device)`,
+  the fused Flux2 VAE path calls `group_norm_stats3d`, and qwen 3.x MTP still needs kitchen 0.2.40. Gates: `ruff check
+  .` clean on tracked files; `py_compile` clean on the 33 changed `.py` files; all 27 changed non-test modules import
+  and built-in plus API nodes load (7 new partner nodes register). `tests-unit` with a side-loaded pytest: 3129 tests /
+  209 failed / 90 errors before, 3146 / 209 / 90 after; the failing set is identical and the 17 new tests pass.
+  Skip-worktree stayed at 27. GPU gate passed before and after on both installs. ComfyUI was not running and was not
+  started. Custom-node fast-forwards were out of scope.
 - 2026-10-22 (hundred-and-twenty-fourth sync, desktop): Local `main` started at `12a162dfd` (hundred-and-twenty-third
   tip), 0 ahead / 4 behind `origin/main`: `origin/main` already carried an un-logged merge `2e238ccd5` of 3 upstream
   commits (#17241 optional local agent via comfy-agent's v1 host, new `agent_requirements.txt`; #17224 Pad Image node;
