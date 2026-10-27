@@ -350,6 +350,18 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-27 (source-only sync): merged six upstream master commits through `7a9c6b595`.
+  Adopted the MOSS model-specific merge node, partner-node proxy handling, Kling 4 nodes,
+  Ascend documentation, and frontend/embedded-docs pin bumps. No conflicts or overlap
+  with the recorded local fixes. The operator authorized preserving existing local
+  launcher and inventory files in place. Changed Python source compiled, the changed
+  `comfy_extras` module imported with its MOSS registration, and the GPU acceleration
+  check passed for both runtimes. Pytest is absent from the portable runtime; the
+  documented fallback was used. Dependency installation is explicitly deferred:
+  frontend 1.57.4 and embedded docs 0.5.15 are required by source but remain pending.
+  No requirements installation, model job, service restart or push occurred. This is
+  source integration with runtime activation and dependency qualification still open.
+
 - 2026-10-23 (hundred-and-twenty-sixth sync, desktop): Local `main` started at `c52592023` (hundred-and-twenty-fifth
   tip), 0 ahead / 0 behind `origin/main`. `git fetch upstream` brought **3** `master` commits (`d07dff456..9fe7ef764`,
   11 files, +314/-41), merged clean as `0e8018292` with zero conflicts: ACEScg in Convert Image Color Space and Save
