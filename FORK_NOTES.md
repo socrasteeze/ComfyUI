@@ -350,6 +350,12 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-26 (source-only sync): merged one upstream master commit, `426f5eea5` (ComfyUI v0.43.0
+  version bump in `comfyui_version.py` and `pyproject.toml`). Adopted; no conflicts, no
+  `requirements.txt` change. `py_compile` clean and `comfyui_version` reports 0.43.0. Skip-worktree
+  stayed at 27. GPU gate passed (torch 2.9.1+cu130, onnxruntime-gpu 1.23.2, CUDA Conv inference).
+  The dependency pins deferred by the previous sync are still not installed. No service restart.
+
 - 2026-10-27 (source-only sync): merged seven upstream master commits through `e06965c4d`.
   Adopted the MOSS model-specific merge node, partner-node proxy handling, Kling 4 nodes,
   Ascend documentation, and frontend/workflow-template/embedded-docs pin bumps. No conflicts or overlap
