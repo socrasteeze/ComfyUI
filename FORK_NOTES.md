@@ -350,15 +350,15 @@ and cause.
 
 ## Sync Log
 
-- 2026-10-27 (source-only sync): merged six upstream master commits through `7a9c6b595`.
+- 2026-10-27 (source-only sync): merged seven upstream master commits through `e06965c4d`.
   Adopted the MOSS model-specific merge node, partner-node proxy handling, Kling 4 nodes,
-  Ascend documentation, and frontend/embedded-docs pin bumps. No conflicts or overlap
+  Ascend documentation, and frontend/workflow-template/embedded-docs pin bumps. No conflicts or overlap
   with the recorded local fixes. The operator authorized preserving existing local
   launcher and inventory files in place. Changed Python source compiled, the changed
   `comfy_extras` module imported with its MOSS registration, and the GPU acceleration
   check passed for both runtimes. Pytest is absent from the portable runtime; the
   documented fallback was used. Dependency installation is explicitly deferred:
-  frontend 1.57.4 and embedded docs 0.5.15 are required by source but remain pending.
+  frontend 1.57.4, workflow templates 0.11.97 and embedded docs 0.5.15 remain pending.
   No requirements installation, model job, service restart or push occurred. This is
   source integration with runtime activation and dependency qualification still open.
 
