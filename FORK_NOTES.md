@@ -350,6 +350,21 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-27 (source-only sync, dedicated backend checkout): this checkout's local `main` was a month
+  stale (`288225e93`, 1 ahead / 407 behind `origin/main`); its one local-only commit held only a
+  host-specific sync-log entry, so it was kept on a local backup branch, its details moved to the
+  untracked host notes, and `main` moved to `origin/main` (`14860f5f1`). Then merged three upstream
+  master commits through `08cf0284f`: Patina texture partner nodes (#17384), the VEED Dubbing node
+  (#17388), and the workflow templates 0.11.98 pin (#17391). All adopted; no conflicts or overlap
+  with the recorded local fixes. All 1030 tracked Python files compile (1028 before); pyflakes is
+  clean on the four changed files. `skip-worktree` was not needed: `update-index` ignores paths
+  beyond the `models` symlink, and no merged change touches `models/`. Deletion baseline stayed at
+  25. The host GPU kernel check passed; the ONNX CUDA Conv check could not run (no `onnx` package to
+  build the model). Dependency installation is deferred: this runtime still has frontend 1.53.6,
+  templates 0.11.66, embedded docs 0.5.12, comfy-kitchen 0.2.35 and comfy-aimdo 0.5.5, so
+  `comfy_api_nodes` fails to import (`comfy_kitchen.int8_decode`) until the pins are installed.
+  No requirements installation, service restart or model job occurred.
+
 - 2026-10-26 (source-only sync): merged one upstream master commit, `426f5eea5` (ComfyUI v0.43.0
   version bump in `comfyui_version.py` and `pyproject.toml`). Adopted; no conflicts, no
   `requirements.txt` change. `py_compile` clean and `comfyui_version` reports 0.43.0. Skip-worktree
