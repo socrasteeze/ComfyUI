@@ -350,6 +350,25 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-28 (source-only sync, dedicated backend checkout): local `main` started at `8068bdcfe`,
+  identical to `origin/main`. Merged ten already-fetched upstream master commits
+  (`08cf0284f..0df1646a9`): Python 3.12 lint configuration, Linux anonymous-file handling,
+  frontend 1.57.6, pinned frontend cache and release-tag lookup fixes, single-conditioning
+  concatenation fixes, BFL video upscale resolution targets, MiniMax H3 latent upscaler support,
+  and Sol-H3-VAE support. All adopted; no conflicts. The network review found no new telemetry,
+  analytics, tracking, or background request trigger; frontend release lookup replaces the
+  existing lookup, and BFL uses existing upload and execution endpoints. All five local fixes
+  remain intact; the fork source delta excluding this log is unchanged without diff context.
+  All 1031 tracked Python files compile in memory (1030 before). Conflict-marker and staged/
+  unstaged whitespace checks pass. Pyflakes could not run: the previous helper directory is
+  inaccessible and exposes no importable checker. No merged change touches `models/`, `input/`,
+  or `output/`; no index flags were changed. The baseline remains exactly 25 placeholder deletions
+  and two pre-existing untracked items. Dependency installation remains deferred, including the
+  frontend pin change from 1.57.4 to 1.57.6; the previously recorded stale runtime remains
+  unqualified. Build, import, contract, startup, GPU, hygiene-test, and full-suite gates were not
+  run by user choice. No requirements installation, service startup, model job, network request,
+  or push occurred.
+
 - 2026-10-27 (source-only sync, dedicated backend checkout): this checkout's local `main` was a month
   stale (`288225e93`, 1 ahead / 407 behind `origin/main`); its one local-only commit held only a
   host-specific sync-log entry, so it was kept on a local backup branch, its details moved to the

@@ -34,7 +34,7 @@ exclude = ["*.ipynb", "**/generated/*.pyi"]
 "fork_tools/prompt_guides/harness/patch_profiles.py" = ["T201"]
 
 [tool.pylint]
-master.py-version = "3.10"
+master.py-version = "3.12"
 master.extension-pkg-allow-list = [
   "pydantic",
 ]
