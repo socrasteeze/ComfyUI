@@ -350,6 +350,20 @@ and cause.
 
 ## Sync Log
 
+- 2026-10-31 (source-only sync, live checkout): local `main` fast-forwarded to `origin/main`
+  (`7e43a3aed`, 15 commits), then merged nine upstream master commits
+  (`0df1646a9..0dbfd493b`): MiniMax-H3 context windows and the H3 Max Recast, Extend, Reframe,
+  Insert, Lip Sync and Camera Control partner nodes, the VAE compute dtype node, Ideogram 4.5
+  region editing with context windows, Pruna P-Video Upscale, WaveSpeed upscale nodes moved to the
+  Comfy Router, `torch.equal` and concat-of-conds fixes, frontend release lookup stopping at the
+  first prerelease, and the workflow templates 0.11.100 pin. All adopted; no conflicts and no file
+  touched by both sides. The network review found no new host: the only new URL is a test fixture,
+  and the release lookup now makes fewer GitHub requests. All five local fixes remain intact.
+  Only `requirements.txt` moved: `comfyui-workflow-templates` 0.11.98 to 0.11.100, reinstall
+  pending. All 19 changed Python files compile and the staged diff has no whitespace errors.
+  Test baseline, full suites, build, import, startup and GPU gates were not run by user choice.
+  No requirements installation, service start or stop, or push occurred.
+
 - 2026-10-28 (source-only sync, dedicated backend checkout): local `main` started at `8068bdcfe`,
   identical to `origin/main`. Merged ten already-fetched upstream master commits
   (`08cf0284f..0df1646a9`): Python 3.12 lint configuration, Linux anonymous-file handling,
