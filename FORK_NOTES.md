@@ -350,6 +350,40 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-02 (sync, live checkout): local `main` started at `738ae5b21`, identical to
+  `origin/main`. Merged eight upstream master commits (`0dbfd493b..6b904b5fa`, 25 files, +924/-150) as `2705adea0`
+  with no conflicts: `execution_meta` in the job detail (#17397), ProRes and chroma-subsampling options for video
+  saving (#17463), the MTPHead unpack crash in prefetch queue cleanup (#17180), `fp8_e4m3fn_fast` no longer falling back
+  to bf16 compute with dynamic VRAM (#16941), Topaz Wonder 4 (#17491), the VAE Compute Dtype crash on the LTX 2.5
+  diffusion VAE decoder (#17487), TextGenerateV2 with Autogrow image inputs (#17492), and one AGENTS.md guideline
+  removal (#17482). All adopted; no file touched by both sides, so all five local fixes remain intact. The network
+  review of the added lines found no new URL, socket, subprocess or telemetry use. `requirements.txt` did not move.
+  Validation: the 24 changed `.py` files compile; the changed modules and `execution` import; the six test files the
+  window or the local fixes touch passed 60 before the merge and 155 after (the two new test files and the added
+  cases account for the difference), with a side-loaded pytest and no `pytest-asyncio`. A full `tests-unit`
+  collection was not used as a baseline: it imports `main`, which runs every custom node's prestartup script, and it
+  stops at collection without `pytest-asyncio` anyway. The dry run of `requirements.txt` planned no change (frontend
+  1.57.6, templates 0.11.100, embedded docs 0.5.15, comfy-aimdo 0.6.0, comfy-kitchen 0.2.40 were already installed
+  and torch, torchvision and onnxruntime-gpu untouched), so the pending pins from the previous sync are closed. GPU
+  gate passed on both runtimes (torch CUDA, `onnxruntime-gpu` 1.23.2, real Conv on CUDAExecutionProvider). Skip-worktree
+  stayed at 27. ComfyUI was not running on this install and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`, each incoming diff reviewed first (no obfuscation, no
+  exec/eval of downloaded content, no new outbound host, no credential access, no new binary beyond a vendored
+  asset byte-identical to the one `ComfyUI_VNCCS_Utils` already ships): **6 fast-forwarded** -- `ComfyUI-AusBoss`
+  `714b638e..099b57f7` (49 commits: H3 Prompt Writer node and route, line-up and snap-line tools, Releases up to
+  2.20.5), `ComfyUI-Continuity` `3146741a..5323a2e8` (54: Game Forge, MOSS-Image family, Krea 2 Edit V2 references,
+  `/continuity/download` and `/continuity/forge` routes, vendored Pose Studio), `ComfyUI-DaSiWa-Nodes`
+  `ab364c58..a4f7f057` (12: 0.5.37), `ComfyUI-UtilsCollection` `ab714016..a34f3b86` (19: 0.27.12), `ComfyUI_VNCCS_Utils`
+  `2b0f4041..334eee54` (1: 0.7.1), `comfyui-manager` `7e1af9c2..4c50a2bc` (61: DB updates and a graph-clear patch in
+  `js/comfyui-manager.js`). None of the six changed a requirements file or a dependency line, so no reinstall.
+  All 190 changed `.py` files compile. **New skip:** `ComfyUI-RMBG` is dirty and 28 behind; the incoming range changes
+  `requirements.txt` (unpins `protobuf`, adds `nobg` and `refiners`), which is the file carrying the local
+  `onnxruntime` guard, so it was not merged; when it is, keep the CPU `onnxruntime` line commented. `RES4LYF` is now
+  diverged (1 ahead, 4 behind) and was left. **Skipped known:** `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`
+  (local branches, no upstream), `ComfyUI-Flux2Klein-Enhancer` (remote repository not found). Dirty trees with
+  nothing incoming were left as they are, and folders installed by the Manager without a `.git` were not touched.
+
 - 2026-10-31 (source-only sync, live checkout): local `main` fast-forwarded to `origin/main`
   (`7e43a3aed`, 15 commits), then merged nine upstream master commits
   (`0df1646a9..0dbfd493b`): MiniMax-H3 context windows and the H3 Max Recast, Extend, Reframe,
