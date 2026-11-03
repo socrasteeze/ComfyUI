@@ -350,6 +350,29 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-03 (sync, live checkout): local `main` started at `b49b18cce`, identical to
+  `origin/main`. Merged ten upstream master commits (`6b904b5fa..2c75dc1b3`, 12 files, +339/-75) as `fdfef2785` with no
+  conflicts: PH3Image support (#17506), chroma subsampling input validation (#17501), Sonilo Music 1.5 (#17475), GPT-6.1
+  Terra and Sol (#17493), the Seedance 1.x deprecation (#17507), workflow templates 0.11.101 (#17512), embedded docs
+  0.5.16 (#17513), and v0.44.0. `local_web_sso` and `partner_node_token` default-on (#17490) was reverted upstream in
+  the same window (#17514), so it nets to nothing. All adopted. Only `pyproject.toml` was touched by both sides, in
+  separate hunks (upstream's version line, the fork's ruff per-file ignores), so all five local fixes remain intact. The
+  network review of the added lines found no new host, socket, subprocess or telemetry use; the only new endpoints are
+  Sonilo's, on the existing `/proxy` path. Validation: the 10 changed `.py` files compile; the changed modules import;
+  the eight test files covering the window and the local fixes passed 133 before and after with a side-loaded pytest;
+  `ruff check .` has no findings on tracked files. The full `tests-unit` suite and a server start were not run. `requirements.txt` moved, so it was reinstalled without `-U`:
+  templates 0.11.101 and embedded docs 0.5.16, with torch, torchvision and onnxruntime-gpu untouched. GPU gate passed
+  on both runtimes. Skip-worktree stayed at 27. ComfyUI was not running on this install and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`, each incoming diff reviewed first (no new outbound host, exec/eval,
+  credential access or binary): **2 fast-forwarded** -- `ComfyUI-AusBoss` `099b57f7..939d320b` (7 commits: H3 Prompt
+  Writer timeline and Sound and Music boxes, resize selected nodes together, larger Integer and Float) and
+  `ComfyUI-DaSiWa-Nodes` `a4f7f057..bb07f945` (1: 0.5.38, metadata saver writes empty values for undetected fields).
+  No requirements change in either. **Still skipped:** `ComfyUI-RMBG` (dirty, 28 behind; incoming changes
+  `requirements.txt`, the file carrying the local `onnxruntime` guard), `RES4LYF` (diverged, 1 ahead, 4 behind),
+  `ComfyUI-H3-Ref2VA-Accelerator` and `comfyui-obvpm` (local branches, no upstream), `ComfyUI-Flux2Klein-Enhancer`
+  (remote repository not found). Folders installed by the Manager without a `.git` were not touched.
+
 - 2026-11-02 (sync, live checkout): local `main` started at `738ae5b21`, identical to
   `origin/main`. Merged eight upstream master commits (`0dbfd493b..6b904b5fa`, 25 files, +924/-150) as `2705adea0`
   with no conflicts: `execution_meta` in the job detail (#17397), ProRes and chroma-subsampling options for video
