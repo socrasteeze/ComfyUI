@@ -350,6 +350,15 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-08 (sync, live checkout): local `main` started at `e3ffdfa52`. Merged 27 upstream master commits through
+  `fca60fe70` (v0.44.1, v0.44.2) with no conflicts, around uncommitted local edits that upstream does not touch. All
+  adopted. `requirements.txt` moved `comfy-kitchen` to 0.2.41 and `comfyui-workflow-templates` to 0.11.103; the pip dry
+  run named neither torch nor torchvision, both pins were installed, and the GPU gate passed on both installs. The 42
+  changed `.py` files compile. The seven changed test files passed 171 with a side-loaded pytest; the 4 failures in
+  `test_batched_marking.py` are `async` tests that need `pytest-asyncio`, which was not side-loaded. No pre-merge test
+  baseline was taken. `local_web_sso` and `partner_node_token` are default-on again (#17540), this time not reverted. The
+  network review of the non-partner added lines found no new host, socket, subprocess or telemetry use.
+
 - 2026-11-03 (sync, live checkout): local `main` started at `b49b18cce`, identical to
   `origin/main`. Merged ten upstream master commits (`6b904b5fa..2c75dc1b3`, 12 files, +339/-75) as `fdfef2785` with no
   conflicts: PH3Image support (#17506), chroma subsampling input validation (#17501), Sonilo Music 1.5 (#17475), GPT-6.1
