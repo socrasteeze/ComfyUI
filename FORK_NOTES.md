@@ -350,6 +350,15 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-09 (sync, live checkout): local `main` started at `a8aa13d3d`, identical to `origin/main`. Merged 4 upstream
+  master commits through `61e524bdb` (WeVisOne-VL, UltraTex texture rebaking, greedy-decoding repetition/presence
+  penalty, combined-linear prefetch fix; 21 files, +1649/-310) with no conflicts, around uncommitted local edits that
+  upstream does not touch. All adopted. `requirements.txt` did not move, so nothing was reinstalled. The 21 changed `.py`
+  files compile and the six changed `comfy_extras` modules import. `tests-unit/comfy_test` with a side-loaded pytest and
+  `pytest-asyncio`: 284 passed / 6 failed before, 286 passed / 6 failed after; the same six `test_seedvr2_internals.py`
+  cases fail on both sides, and the two new passes are upstream's `combined_linear_test.py`. GPU gate `ALL INSTALLS OK`.
+  The added lines name no new host, socket, subprocess or telemetry use.
+
 - 2026-11-08 (sync, live checkout): local `main` started at `e3ffdfa52`. Merged 27 upstream master commits through
   `fca60fe70` (v0.44.1, v0.44.2) with no conflicts, around uncommitted local edits that upstream does not touch. All
   adopted. `requirements.txt` moved `comfy-kitchen` to 0.2.41 and `comfyui-workflow-templates` to 0.11.103; the pip dry
