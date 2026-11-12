@@ -350,6 +350,15 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-11 (sync, live checkout): `origin/main` was `ed434a09d`; local `main` already held an unpushed, unlogged merge
+  from 2026-11-10 (`b61870461`, 8 upstream commits through `d9238b25d`: MiniMax H3 Image support, v0.45.0, Seedream 5.5,
+  Breeze TTS 2, LTX partner nodes, templates 0.11.105). Merged 8 more through `c5751c81a` (DirectML removed, frontend
+  1.59.1, templates 0.11.106, Concatenate Video conforms frame rate and audio, Krea and Wan nodes moved to Comfy Router)
+  with no conflicts, around uncommitted local edits that upstream does not touch. All 16 adopted; nothing here referenced
+  DirectML. Installed `comfyui-frontend-package==1.59.1` and `comfyui-workflow-templates==0.11.106`. Full `tests-unit` with
+  a side-loaded pytest and `pytest-asyncio`: the same 42 failures before and after (video codec cases: ProRes, EXR float
+  pixels, frame buffers; plus `test_no_owner_id_in_asset_modules`), none new. GPU gate OK on both installs. The added
+  `.py` lines name no new host, socket, subprocess or telemetry use. The running server was not restarted.
 - 2026-11-09 (sync, live checkout): local `main` started at `a8aa13d3d`, identical to `origin/main`. Merged 4 upstream
   master commits through `61e524bdb` (WeVisOne-VL, UltraTex texture rebaking, greedy-decoding repetition/presence
   penalty, combined-linear prefetch fix; 21 files, +1649/-310) with no conflicts, around uncommitted local edits that
