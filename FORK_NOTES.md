@@ -350,6 +350,11 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-12 (sync, live checkout): local `main` started at `f1e49724d`, identical to `origin/main`. Merged 2 upstream
+  master commits through `c1eece62c` (Gemini partner nodes Hydrogen/Argon and Carbon, workflow templates 0.11.107) with
+  no conflicts, around the same uncommitted local edits. Both adopted. Installed `comfyui-workflow-templates==0.11.107`.
+  Full `tests-unit`: the same 42 failures as the 2026-11-11 run, none new. GPU gate OK on both installs. The running
+  server was not restarted.
 - 2026-11-11 (sync, live checkout): `origin/main` was `ed434a09d`; local `main` already held an unpushed, unlogged merge
   from 2026-11-10 (`b61870461`, 8 upstream commits through `d9238b25d`: MiniMax H3 Image support, v0.45.0, Seedream 5.5,
   Breeze TTS 2, LTX partner nodes, templates 0.11.105). Merged 8 more through `c5751c81a` (DirectML removed, frontend
