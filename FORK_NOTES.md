@@ -350,6 +350,12 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-13 (sync, live checkout): local `main` started at `b5f70b9e2`, identical to `origin/main`. Merged 10 upstream
+  master commits through `102350eb9` (split-image-channels node, single-channel PNG in the advanced save node, an APG
+  fix at cfg 1.0, partner-node updates for Luma, HeyGen, Topaz, Kling, FishAudio, OpenRouter and the Claude node) with
+  no conflicts, around the same uncommitted local edits. All adopted. No requirements change, no pip install. Full
+  `tests-unit`: the same 42 failures before and after the merge, none new. GPU gate OK on both installs. The running
+  server was not restarted.
 - 2026-11-12 (sync, live checkout): local `main` started at `f1e49724d`, identical to `origin/main`. Merged 2 upstream
   master commits through `c1eece62c` (Gemini partner nodes Hydrogen/Argon and Carbon, workflow templates 0.11.107) with
   no conflicts, around the same uncommitted local edits. Both adopted. Installed `comfyui-workflow-templates==0.11.107`.
