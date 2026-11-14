@@ -350,6 +350,11 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-14 (sync, live checkout): local `main` started at `0c6ad9466`, identical to `origin/main`. Merged 1 upstream
+  master commit, `eee59185f` (a mesh input on Create Camera Info, `comfy_extras/nodes_camera.py` only), with no
+  conflicts, around the same uncommitted local edits. Adopted. No requirements change, no pip install. Full
+  `tests-unit`: the same 42 failures before and after the merge, none new; `comfy_extras.nodes_camera` imports. GPU
+  gate OK on both installs. The running server was not restarted.
 - 2026-11-13 (sync, live checkout): local `main` started at `b5f70b9e2`, identical to `origin/main`. Merged 10 upstream
   master commits through `102350eb9` (split-image-channels node, single-channel PNG in the advanced save node, an APG
   fix at cfg 1.0, partner-node updates for Luma, HeyGen, Topaz, Kling, FishAudio, OpenRouter and the Claude node) with
