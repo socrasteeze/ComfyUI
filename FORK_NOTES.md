@@ -350,6 +350,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-14 (second sync, live checkout): local `main` started at `1e84fe1c5`, identical to `origin/main`. Merged 1
+  upstream master commit, `4a9636acd` (embedded tokenizers for vocabulary-pruned Qwen checkpoints: `comfy/sd.py`,
+  `comfy/sd1_clip.py`, `comfy/text_encoders/qwen35.py`, `comfy_extras/nodes_model_merging.py` and a new test), with no
+  conflicts, around the same uncommitted local edits. Adopted. No requirements change, no pip install. Full
+  `tests-unit`: the same 42 failures before and after the merge, none new. The new `embedded_tokenizer_test.py` passes
+  4 of 4 run on its own file; selected with `-k` from the `tests-unit` root it showed 2 failures and the run ended
+  without a summary, so that cause was not captured. GPU gate OK on both installs. The running server was not restarted.
 - 2026-11-14 (sync, live checkout): local `main` started at `0c6ad9466`, identical to `origin/main`. Merged 1 upstream
   master commit, `eee59185f` (a mesh input on Create Camera Info, `comfy_extras/nodes_camera.py` only), with no
   conflicts, around the same uncommitted local edits. Adopted. No requirements change, no pip install. Full
