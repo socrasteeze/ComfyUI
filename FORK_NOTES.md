@@ -350,6 +350,11 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-15 (fourth sync, live checkout): local `main` started at `ae1a0efa0`, identical to `origin/main`. Merged 1
+  upstream master commit, `c844cb672` (warns when a CUDA 13 capable GPU is not running CUDA 13: `comfy/model_management.py`
+  and `main.py`), with no conflicts, around the same uncommitted local edits. Adopted. No requirements change. Checked
+  by compile of both touched files and the GPU gate on both installs (OK); the unit suite was not rerun for a 22-line
+  warning-only change. The running server was not restarted.
 - 2026-11-14 (third sync, live checkout): local `main` started at `03d50036d`, identical to `origin/main`. Merged 2
   upstream master commits, `ba546e921` (Video Deflicker node and a faster RAFT optical flow: `comfy/ldm/raft/model.py`,
   `comfy_extras/nodes_video_deflicker.py`, `comfy_extras/nodes_void.py`, `comfy_extras/void_noise_warp.py`, `nodes.py`)
