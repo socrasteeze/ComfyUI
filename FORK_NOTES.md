@@ -350,6 +350,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-14 (third sync, live checkout): local `main` started at `03d50036d`, identical to `origin/main`. Merged 2
+  upstream master commits, `ba546e921` (Video Deflicker node and a faster RAFT optical flow: `comfy/ldm/raft/model.py`,
+  `comfy_extras/nodes_video_deflicker.py`, `comfy_extras/nodes_void.py`, `comfy_extras/void_noise_warp.py`, `nodes.py`)
+  and `e08cc0030` (video token id no longer hardcoded: `comfy/text_encoders/qwen35.py` and its test), with no conflicts,
+  around the same uncommitted local edits. Adopted. No requirements change, no pip install. Full `tests-unit`: the same
+  42 failures before and after the merge, identical list, none new; `embedded_tokenizer_test.py` passes 6 of 6 on its
+  own file. GPU gate OK on both installs. The running server was not restarted.
 - 2026-11-14 (second sync, live checkout): local `main` started at `1e84fe1c5`, identical to `origin/main`. Merged 1
   upstream master commit, `4a9636acd` (embedded tokenizers for vocabulary-pruned Qwen checkpoints: `comfy/sd.py`,
   `comfy/sd1_clip.py`, `comfy/text_encoders/qwen35.py`, `comfy_extras/nodes_model_merging.py` and a new test), with no
