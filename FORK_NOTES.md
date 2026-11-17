@@ -350,6 +350,16 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-16 (fifth sync, live checkout): local `main` started at `7e43a3aed`, 115 behind `origin/main` (the
+  fourth sync was pushed from elsewhere); fast-forwarded to `d3fb26e38` first. Merged 9 upstream master commits,
+  `e9afbccc2` through `31f24e8bc`, as `71be56676` with no conflicts: CUDA warning colour, PAN2 support, Bria RMBG 3.0
+  in Remove Image Background, Seedance 2.5 Flash, OpenRouter models, Claude Fable 5.2 in the Claude node, the dynamic
+  VRAM buffer restore fix (CORE-716), and template/docs bumps. All adopted. `requirements.txt` moved
+  (templates 0.11.110, docs 0.5.17); reinstalled without `-U` after a dry run showed no torch. That reinstall also
+  cleared pins left pending by earlier syncs (aimdo 0.6.0, kitchen 0.2.41, frontend 1.59.1); before it, `import nodes`
+  failed on `comfy_kitchen.int8_decode`. Gates: `py_compile` on the 15 changed `.py` files, import of `nodes`,
+  `comfy_extras.nodes_wan` and `comfy.ldm.pan2.model`, and the GPU gate (all passed). No pytest in this venv, so the
+  new unit test did not run. Skip-worktree count stayed at 25. The server was not running and was not started.
 - 2026-11-15 (fourth sync, live checkout): local `main` started at `ae1a0efa0`, identical to `origin/main`. Merged 1
   upstream master commit, `c844cb672` (warns when a CUDA 13 capable GPU is not running CUDA 13: `comfy/model_management.py`
   and `main.py`), with no conflicts, around the same uncommitted local edits. Adopted. No requirements change. Checked
