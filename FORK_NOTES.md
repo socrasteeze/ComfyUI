@@ -357,7 +357,9 @@ and cause.
   with no conflicts; both touch `comfy_api_nodes` only. All adopted. Installed pins already matched
   `requirements.txt`, so no reinstall. Gates: `py_compile` on the 4 changed files, import of `nodes` and both changed
   modules, and the GPU gate (all passed). Skip-worktree count stayed at 25. The server was not running and was not
-  started.
+  started. One more upstream commit landed during the sync, `f9f01c2ce` (workflow templates 0.11.112,
+  `requirements.txt` only); merged with no conflicts and reinstalled without `-U` after a dry run showed no torch.
+  Import of `nodes` and the GPU gate passed again.
 - 2026-11-16 (fifth sync, live checkout): local `main` started at `7e43a3aed`, 115 behind `origin/main` (the
   fourth sync was pushed from elsewhere); fast-forwarded to `d3fb26e38` first. Merged 9 upstream master commits,
   `e9afbccc2` through `31f24e8bc`, as `71be56676` with no conflicts: CUDA warning colour, PAN2 support, Bria RMBG 3.0
