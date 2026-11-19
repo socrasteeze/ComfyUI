@@ -350,6 +350,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-19 (sixth sync, live checkout): local `main` started at `9961077c6`, 1 ahead of `origin/main`: an unlogged,
+  unpushed merge of 20 upstream commits through `d5d59c401` (v0.46.0, frontend 1.59.6, templates 0.11.111, Kling 4.0
+  and HeyGen Avatar 6 partner nodes, `--force-output-rerun`, Qwen3-1.7B in Generate Text, SenseNova). Merged the
+  remaining 2 upstream master commits, `995456d01` (Tripo Smart UV) and `c8abeb00a` (Ideogram 4.6), as `19a91bdb9`
+  with no conflicts; both touch `comfy_api_nodes` only. All adopted. Installed pins already matched
+  `requirements.txt`, so no reinstall. Gates: `py_compile` on the 4 changed files, import of `nodes` and both changed
+  modules, and the GPU gate (all passed). Skip-worktree count stayed at 25. The server was not running and was not
+  started.
 - 2026-11-16 (fifth sync, live checkout): local `main` started at `7e43a3aed`, 115 behind `origin/main` (the
   fourth sync was pushed from elsewhere); fast-forwarded to `d3fb26e38` first. Merged 9 upstream master commits,
   `e9afbccc2` through `31f24e8bc`, as `71be56676` with no conflicts: CUDA warning colour, PAN2 support, Bria RMBG 3.0
