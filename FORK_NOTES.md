@@ -200,6 +200,16 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-19 (laptop `master`): local `master` started at `d3e39aa79`, 84 ahead and 41 behind
+  `upstream/master`. Merged the 41 commits through `f9f01c2ce` as `c3ab7836c` with no conflicts: v0.46.0,
+  Video Deflicker node and faster RAFT optical flow, SenseNova thinking and generation speedups, Qwen3-1.7B in
+  Generate Text, `--force-output-rerun`, the dynamic VRAM buffer restore fix, Kling 4.0, HeyGen Avatar 6,
+  Tripo Smart UV and Ideogram 4.6 partner nodes, and template/docs bumps. All adopted. `requirements.txt`
+  moved (frontend 1.59.6, templates 0.11.112, docs 0.5.17); reinstalled without `-U` after a dry run showed
+  no torch, torchvision or `onnxruntime`. Gates: `py_compile` on the 65 changed `.py` files, import of
+  `nodes` and the 7 changed `comfy_extras` modules, the `.m2v` touchpoint, and a real Conv
+  `InferenceSession` on `CUDAExecutionProvider` (all passed). Deletion baseline stayed at 1. The server was
+  not running and was not started.
 - 2026-09-20 (twenty-second sync, laptop `master`): Adopted 26 upstream commits
   through `c194dd00`, spanning the v0.37.0 release tag. Headline changes:
   Qwen-Image 2.1 support (CORE-423, #16400) with transformer-block compile
