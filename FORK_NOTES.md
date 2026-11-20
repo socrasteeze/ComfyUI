@@ -200,6 +200,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-20 (laptop `master`): local `master` started at `fbebf230e`, identical to `origin/master`. Merged 4
+  upstream master commits, `4ee8e523b` through `4806189de`, as `8c616e925` with no conflicts: frontend 1.59.10, Sync.so
+  nodes moved to Comfy Router, Mirelo Video to SFX auto-downscale above 2160p, and Kling 4.0 4K and HDR output. All
+  adopted. `requirements.txt` moved (frontend 1.59.10); reinstalled without `-U` after a dry run showed only the
+  frontend package. Gates: `py_compile` on the 7 changed files, import of `nodes` and the 3 changed node modules, the
+  `.m2v` touchpoint, and a real Conv `InferenceSession` on `CUDAExecutionProvider` (all passed). Deletion baseline
+  stayed at 1. The server was not started.
 - 2026-11-19 (laptop `master`, second pass): local `master` started at `0b3035884`, identical to `origin/master`.
   Merged 6 upstream master commits, `c223fca26` through `199442068`, as `52b5aa915` with no conflicts: Creatify
   Boreal-H3 and Aurora 2.0 partner nodes, clearer partner-node aspect-ratio errors, a ModelMergeMiniMaxH3 node, SPZ v4
