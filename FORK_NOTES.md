@@ -350,6 +350,12 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-19 (seventh sync, live checkout): local `main` started at `6ceb70ef9`, identical to `origin/main`. Merged 6
+  upstream master commits, `c223fca26` through `199442068`, as `9bca825fa` with no conflicts: Creatify Boreal-H3 and
+  Aurora 2.0 partner nodes, clearer partner-node aspect-ratio errors, a ModelMergeMiniMaxH3 node, SPZ v4 in
+  File3DToSplat, a README restructure with `docs/installation.md`, and a regression test for CVE-2024-12882. All
+  adopted. No requirements change. Gates: `py_compile` on the 8 changed files, import of `nodes` and the 3 changed
+  node modules, and the GPU gate (all passed). Skip-worktree count stayed at 25. The server was not started.
 - 2026-11-19 (sixth sync, live checkout): local `main` started at `9961077c6`, 1 ahead of `origin/main`: an unlogged,
   unpushed merge of 20 upstream commits through `d5d59c401` (v0.46.0, frontend 1.59.6, templates 0.11.111, Kling 4.0
   and HeyGen Avatar 6 partner nodes, `--force-output-rerun`, Qwen3-1.7B in Generate Text, SenseNova). Merged the
