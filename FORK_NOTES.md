@@ -200,6 +200,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-19 (laptop `master`, second pass): local `master` started at `0b3035884`, identical to `origin/master`.
+  Merged 6 upstream master commits, `c223fca26` through `199442068`, as `52b5aa915` with no conflicts: Creatify
+  Boreal-H3 and Aurora 2.0 partner nodes, clearer partner-node aspect-ratio errors, a ModelMergeMiniMaxH3 node, SPZ v4
+  in File3DToSplat, a README restructure with `docs/installation.md`, and a regression test for CVE-2024-12882. All
+  adopted. No requirements change. Gates: `py_compile` on the 8 changed files, import of `nodes` and the 3 changed
+  node modules, the `.m2v` touchpoint, and a real Conv `InferenceSession` on `CUDAExecutionProvider` (all passed).
+  Deletion baseline stayed at 1. The server was not started.
 - 2026-11-19 (laptop `master`): local `master` started at `d3e39aa79`, 84 ahead and 41 behind
   `upstream/master`. Merged the 41 commits through `f9f01c2ce` as `c3ab7836c` with no conflicts: v0.46.0,
   Video Deflicker node and faster RAFT optical flow, SenseNova thinking and generation speedups, Qwen3-1.7B in
