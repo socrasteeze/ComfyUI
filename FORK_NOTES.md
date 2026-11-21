@@ -350,6 +350,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-20 (ninth sync, live checkout): local `main` started at `8331f62ae`, identical to `origin/main`. Merged 8
+  upstream master commits, `94f4b7985` through `afcb984e7`, as `298281e9e` with no conflicts: HeyGen Decision and
+  Voice 1.0 Instant Clone TTS nodes, Gemini Decision nodes, two Rodin fixes, audio resample and downmix for mp3/aac
+  encoders, an API docs note, and workflow templates 0.11.114. All adopted. `requirements.txt` moved (templates
+  0.11.114); reinstalled without `-U` after a dry run showed only template packages. Gates: `py_compile` on the 5
+  changed files, import of `nodes` and the 3 changed node modules, and the ONNX Conv-on-CUDA check (all passed).
+  Skip-worktree count stayed at 25. The server was not started.
 - 2026-11-20 (eighth sync, live checkout): local `main` started at `2fd56a9f2`, identical to `origin/main`. Merged 4
   upstream master commits, `4ee8e523b` through `4806189de`, as `82d548e28` with no conflicts: frontend 1.59.10, Sync.so
   nodes moved to Comfy Router, Mirelo Video to SFX auto-downscale above 2160p, and Kling 4.0 4K and HDR output. All
