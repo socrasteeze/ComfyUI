@@ -356,7 +356,9 @@ and cause.
   encoders, an API docs note, and workflow templates 0.11.114. All adopted. `requirements.txt` moved (templates
   0.11.114); reinstalled without `-U` after a dry run showed only template packages. Gates: `py_compile` on the 5
   changed files, import of `nodes` and the 3 changed node modules, and the ONNX Conv-on-CUDA check (all passed).
-  Skip-worktree count stayed at 25. The server was not started.
+  Skip-worktree count stayed at 25. The server was not started. One more upstream commit landed afterwards,
+  `cff733b7e` (README troubleshooting section, docs only); merged as `c44f9a1d6` with no conflicts and no gates
+  needed.
 - 2026-11-20 (eighth sync, live checkout): local `main` started at `2fd56a9f2`, identical to `origin/main`. Merged 4
   upstream master commits, `4ee8e523b` through `4806189de`, as `82d548e28` with no conflicts: frontend 1.59.10, Sync.so
   nodes moved to Comfy Router, Mirelo Video to SFX auto-downscale above 2160p, and Kling 4.0 4K and HDR output. All
