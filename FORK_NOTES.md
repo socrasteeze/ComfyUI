@@ -200,6 +200,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-20 (laptop `master`, second pass): local `master` started at `148febe8b`, identical to `origin/master`.
+  Merged 9 upstream master commits, `94f4b7985` through `cff733b7e`, as `88bb2dc5d` with no conflicts: HeyGen Decision
+  and Voice 1.0 Instant Clone TTS nodes, Gemini Decision nodes, two Rodin fixes, audio resample and downmix for
+  mp3/aac encoders, API docs notes, workflow templates 0.11.114, and a README troubleshooting section. All adopted.
+  `requirements.txt` moved (templates 0.11.114); reinstalled without `-U` after a dry run showed only template
+  packages. Gates: `py_compile` on the 5 changed files, import of `nodes` and the 3 changed node modules, the `.m2v`
+  touchpoint, and a real Conv `InferenceSession` on `CUDAExecutionProvider` (all passed). Deletion baseline stayed
+  at 1. The server was not started.
 - 2026-11-20 (laptop `master`): local `master` started at `fbebf230e`, identical to `origin/master`. Merged 4
   upstream master commits, `4ee8e523b` through `4806189de`, as `8c616e925` with no conflicts: frontend 1.59.10, Sync.so
   nodes moved to Comfy Router, Mirelo Video to SFX auto-downscale above 2160p, and Kling 4.0 4K and HDR output. All
