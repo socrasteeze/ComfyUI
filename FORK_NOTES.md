@@ -350,6 +350,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-21 (tenth sync, live checkout): local `main` started at `e5fa69d23`, identical to `origin/main`. Merged 7
+  upstream master commits, `0072b8680` through `4bff04177`, as `071e2fab5` with no conflicts: an openapi note for the
+  agent feature flag, a per-start `server_boot_id` feature flag, Pruna P-Video-2 Pro Avatar and Reference to Video
+  nodes, frontend 1.59.11, comfy-kitchen 0.2.42, lower Flux activation memory for UltraTex sequences, and context
+  window accumulators kept on the intermediate device. All adopted. `requirements.txt` moved (frontend 1.59.11,
+  comfy-kitchen 0.2.42); the dry run showed only those two packages. Gates: `py_compile` on the 8 changed Python
+  files, import of `nodes` and the 5 changed modules, and the GPU gate before the merge (all passed). Skip-worktree
+  count stayed at 27. The server was running during the merge, so the reinstall waits until it is stopped.
 - 2026-11-20 (ninth sync, live checkout): local `main` started at `8331f62ae`, identical to `origin/main`. Merged 8
   upstream master commits, `94f4b7985` through `afcb984e7`, as `298281e9e` with no conflicts: HeyGen Decision and
   Voice 1.0 Instant Clone TTS nodes, Gemini Decision nodes, two Rodin fixes, audio resample and downmix for mp3/aac
