@@ -200,6 +200,15 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-21 (laptop `master`): local `master` started at `f49477ecc`, identical to `origin/master`. Merged 7 upstream
+  master commits, `0072b8680` through `4bff04177`, as `69eba06c0` with no conflicts: an openapi note for the agent
+  feature flag, a per-start `server_boot_id` feature flag, Pruna P-Video-2 Pro Avatar and Reference to Video nodes,
+  frontend 1.59.11, comfy-kitchen 0.2.42, lower Flux activation memory for UltraTex sequences, and context window
+  accumulators kept on the intermediate device. All adopted. `requirements.txt` moved (frontend 1.59.11,
+  comfy-kitchen 0.2.42); reinstalled without `-U` after a dry run showed only those two packages. Gates:
+  `py_compile` on the 8 changed Python files, import of `nodes` and the 5 changed modules, and a real Conv
+  `InferenceSession` on `CUDAExecutionProvider` (all passed). Deletion baseline stayed at 1. The server was not
+  started.
 - 2026-11-20 (laptop `master`, second pass): local `master` started at `148febe8b`, identical to `origin/master`.
   Merged 9 upstream master commits, `94f4b7985` through `cff733b7e`, as `88bb2dc5d` with no conflicts: HeyGen Decision
   and Voice 1.0 Instant Clone TTS nodes, Gemini Decision nodes, two Rodin fixes, audio resample and downmix for
