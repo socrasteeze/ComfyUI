@@ -357,7 +357,8 @@ and cause.
   window accumulators kept on the intermediate device. All adopted. `requirements.txt` moved (frontend 1.59.11,
   comfy-kitchen 0.2.42); the dry run showed only those two packages. Gates: `py_compile` on the 8 changed Python
   files, import of `nodes` and the 5 changed modules, and the GPU gate before the merge (all passed). Skip-worktree
-  count stayed at 27. The server was running during the merge, so the reinstall waits until it is stopped.
+  count stayed at 27. The server was running during the merge, so the reinstall ran after it was stopped, without
+  `-U`; the import and the GPU gate passed again afterwards. The server was not restarted.
 - 2026-11-20 (ninth sync, live checkout): local `main` started at `8331f62ae`, identical to `origin/main`. Merged 8
   upstream master commits, `94f4b7985` through `afcb984e7`, as `298281e9e` with no conflicts: HeyGen Decision and
   Voice 1.0 Instant Clone TTS nodes, Gemini Decision nodes, two Rodin fixes, audio resample and downmix for mp3/aac
