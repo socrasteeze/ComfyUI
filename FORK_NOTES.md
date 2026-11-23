@@ -200,6 +200,12 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-23 (laptop `master`): local `master` started at `e2e1da0a3`, identical to `origin/master`. Merged 8 upstream
+  master commits, `4708f03f6` through `830ccd9ee`, as `368c309b0` with no conflicts: a named error when an LTXV node gets
+  a VAE that cannot encode video, Wan 2.2 VAE strips on MPS plus its cleanup, and partner nodes (ElevenLabs SFX v3,
+  TypeSafe, video rotation kept on resize, Gemini 4 Neon, Meshy N1 texture and Image to Relief). All adopted.
+  `requirements.txt` did not move, so nothing was reinstalled. Gates: `py_compile` on the 11 changed Python files and
+  import of both changed `comfy_extras` modules. No GPU gate script exists on this install. The server was not restarted.
 - 2026-11-21 (laptop `master`): local `master` started at `f49477ecc`, identical to `origin/master`. Merged 7 upstream
   master commits, `0072b8680` through `4bff04177`, as `69eba06c0` with no conflicts: an openapi note for the agent
   feature flag, a per-start `server_boot_id` feature flag, Pruna P-Video-2 Pro Avatar and Reference to Video nodes,
