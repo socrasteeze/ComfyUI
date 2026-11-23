@@ -350,6 +350,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-23 (eleventh sync, live checkout): local `main` started at `dee53707c`, identical to `origin/main`. Merged 8
+  upstream master commits, `4708f03f6` through `830ccd9ee`, as `2f865a9c7` with no conflicts: a named error when an LTXV
+  node gets a VAE that cannot encode video, Wan 2.2 VAE strips on MPS plus its cleanup, and partner nodes (ElevenLabs
+  SFX v3, TypeSafe, video rotation kept on resize, Gemini 4 Neon, Meshy N1 texture and Image to Relief). All adopted.
+  `requirements.txt` did not move, so nothing was reinstalled. Gates: `py_compile` on the 11 changed Python files, import
+  of both changed `comfy_extras` modules, and the GPU gate after the merge (both installs OK). Skip-worktree count stayed
+  at 27. Uncommitted local edits in five tracked files were present and untouched by the merge. The running server was
+  not restarted. The other backends are listed in the host-side backend inventory.
 - 2026-11-21 (tenth sync, live checkout): local `main` started at `e5fa69d23`, identical to `origin/main`. Merged 7
   upstream master commits, `0072b8680` through `4bff04177`, as `071e2fab5` with no conflicts: an openapi note for the
   agent feature flag, a per-start `server_boot_id` feature flag, Pruna P-Video-2 Pro Avatar and Reference to Video
