@@ -200,6 +200,14 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-24 (laptop `master`): local `master` started at `2a2656520`, identical to `origin/master`. Merged 8 upstream
+  master commits, `720e92363` through `62879ac7f`, as `9d0f82d56` with no conflicts: the Claude node moved to Comfy
+  Router, w3 and w5 quantization formats, workflow templates 0.11.117 and 0.11.118, the Video Deflicker warp fixed on
+  Apple MPS, an empty stylesheet served when `user.css` is missing, no startup crash on missing custom node folders,
+  and an OpenAI ChatGPT V2 node with GPT-6.2 Astra and Sol models. All adopted. `requirements.txt` moved (templates
+  0.11.118); reinstalled without `-U` after a dry run showed only template packages. Gates: `py_compile` on the 14
+  changed Python files and import of the changed `comfy_extras` module (both passed); `onnxruntime-gpu` still owns the
+  ONNX binaries. Deletion baseline stayed at 1. The server was not restarted.
 - 2026-11-23 (laptop `master`): local `master` started at `e2e1da0a3`, identical to `origin/master`. Merged 8 upstream
   master commits, `4708f03f6` through `830ccd9ee`, as `368c309b0` with no conflicts: a named error when an LTXV node gets
   a VAE that cannot encode video, Wan 2.2 VAE strips on MPS plus its cleanup, and partner nodes (ElevenLabs SFX v3,
