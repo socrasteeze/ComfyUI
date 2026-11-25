@@ -200,6 +200,10 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-25 (laptop `master`, second pass): local `master` started at `7f4dcbb8f`, identical to `origin/master`.
+  Merged 1 upstream master commit, `ef507153a` (streaming text previews in the TextGenerateV2 node), as `8e722bbe7` with
+  no conflicts. Adopted. No requirements change. Gates: `py_compile` on the 5 changed non-test Python files. Deletion
+  baseline stayed at 1. The server was not started.
 - 2026-11-25 (laptop `master`): local `master` started at `c08b230cb`, identical to `origin/master`. Merged 6 upstream
   master commits, `b461f9eac` through `f40a4fbb2`, as `f6627c9a8` with no conflicts: a `local_mcp_connect` feature flag,
   a frontend revert and then frontend 1.59.15, no int8 linears on GB300, Recraft Vectorizer Pro and shape stacking, and
