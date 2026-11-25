@@ -200,6 +200,13 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-25 (laptop `master`): local `master` started at `c08b230cb`, identical to `origin/master`. Merged 6 upstream
+  master commits, `b461f9eac` through `f40a4fbb2`, as `f6627c9a8` with no conflicts: a `local_mcp_connect` feature flag,
+  a frontend revert and then frontend 1.59.15, no int8 linears on GB300, Recraft Vectorizer Pro and shape stacking, and
+  Meshy task ids as STRING. All adopted. `requirements.txt` moved (frontend 1.59.15); reinstalled without `-U` after a
+  dry run showed only the frontend package. Gates: `py_compile` on the 7 changed Python files and import of `nodes` and
+  the changed partner-node and `comfy.ops` modules (all passed); `onnxruntime-gpu` still owns the ONNX binaries.
+  Deletion baseline stayed at 1. The server was not running and was not started.
 - 2026-11-24 (laptop `master`): local `master` started at `2a2656520`, identical to `origin/master`. Merged 8 upstream
   master commits, `720e92363` through `62879ac7f`, as `9d0f82d56` with no conflicts: the Claude node moved to Comfy
   Router, w3 and w5 quantization formats, workflow templates 0.11.117 and 0.11.118, the Video Deflicker warp fixed on
