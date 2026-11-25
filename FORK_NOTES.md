@@ -350,6 +350,33 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-25 (twelfth sync, live checkout): local `main` started at `7dd6efbe2`, identical to `origin/main`. Merged 14
+  upstream master commits, `720e92363` through `f40a4fbb2`, as `e4300e00c` with no conflicts: frontend 1.59.15 and
+  workflow templates 0.11.118, w3/w5 quantization formats, no int8 linears on GB300, a missing custom-nodes folder no
+  longer crashing startup, an empty stylesheet served when `user.css` is missing, the Video Deflicker MPS warp fix, a
+  `local_mcp_connect` feature flag, and partner nodes (Claude moved to Comfy Router, ChatGPT V2 with GPT-6.2 models,
+  Recraft Vectorizer Pro, Meshy task ids as STRING). All adopted. Upstream touched `main.py` and `server.py`, which held
+  uncommitted local edits in non-overlapping hunks, so `git merge` would have refused: the two files were copied aside,
+  restored, merged, and the edits re-applied with `git merge-file` against a CRLF base (`git cat-file --filters`; an LF
+  base from plain `git show` conflicts on every line under `core.autocrlf`). No stash. `requirements.txt` moved
+  (frontend 1.59.15, templates 0.11.118); the dry run showed only those packages and reinstall ran without `-U`.
+  Gates: `py_compile` on the 20 changed Python files plus the locally edited `app/logger.py`, import of `nodes`,
+  `server`, `main` and the 8 other changed modules, and the GPU gate before the merge and after the reinstall (both
+  installs OK). Skip-worktree count
+  stayed at 27. The server was not running and was not started.
+
+  Custom nodes, `git fetch` + `git merge --ff-only`, each incoming diff reviewed first (no new outbound host, no
+  exec/eval of downloaded content, no credential access, no binary; new `subprocess` use is test code and Manager's
+  `git ls-remote` update check): **7 fast-forwarded** -- `ComfyUI_VNCCS_Utils` `4edb4c7..e4ea9ea` (0.7.8),
+  `ComfyUI-AusBoss` `c636d73..07bb4d7` (87 commits: up to 2.28.1, Pause for Shot and Photo Camera nodes),
+  `ComfyUI-ConditioningKrea2Rebalance` `53c147c..f70951c` (11: block-LoRA nodes for Krea 2, MiniMax H3 and MOSS Image,
+  sigma rebalance, bulk LoRA folder; **removes Omni Node** -- no saved workflow used it), `ComfyUI-Continuity`
+  `1caf78d..8da273d` (4: Slate editor look, UI harness), `ComfyUI-DaSiWa-Nodes` `cbba3bd..3f47d92` (2: 0.5.63),
+  `comfyui-manager` `c39db72d..ef84421c` (16: 3.43.3, background Check Update, DB), `ComfyUI-UtilsCollection`
+  `5de34fb..3c63c4d` (6: H3 prompt-preset wording). No dependency line changed in any of them (version and description
+  only), so no reinstall; all 117 changed `.py` files compile. **Skipped known:** `ComfyUI-RMBG` (dirty, now 13
+  behind), `RES4LYF` (diverged, 1 ahead, 2 behind), `ComfyUI-H3-Ref2VA-Accelerator`, `comfyui-obvpm`,
+  `one-node-flux-2-klein` (dirty), `ComfyUI-HyperFlow-H3`, `ComfyUI-Flux2Klein-Enhancer` (remote repository not found).
 - 2026-11-23 (eleventh sync, live checkout): local `main` started at `dee53707c`, identical to `origin/main`. Merged 8
   upstream master commits, `4708f03f6` through `830ccd9ee`, as `2f865a9c7` with no conflicts: a named error when an LTXV
   node gets a VAE that cannot encode video, Wan 2.2 VAE strips on MPS plus its cleanup, and partner nodes (ElevenLabs
