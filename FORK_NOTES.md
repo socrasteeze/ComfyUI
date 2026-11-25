@@ -350,6 +350,11 @@ and cause.
 
 ## Sync Log
 
+- 2026-11-25 (thirteenth sync, live checkout): local `main` started at `f7a40c36c`, identical to `origin/main`. Merged 1
+  upstream master commit, `ef507153a` (streaming text previews in the TextGenerateV2 node, new
+  `comfy/text_encoders/token_stream.py`), as `11b691ed9` with no conflicts. Adopted. No requirements change. Gates:
+  `py_compile` on the 7 changed Python files, import of `nodes` and the 5 changed modules, and the GPU gate (both
+  installs OK). Skip-worktree count stayed at 27. The server was not running and was not started.
 - 2026-11-25 (twelfth sync, live checkout): local `main` started at `7dd6efbe2`, identical to `origin/main`. Merged 14
   upstream master commits, `720e92363` through `f40a4fbb2`, as `e4300e00c` with no conflicts: frontend 1.59.15 and
   workflow templates 0.11.118, w3/w5 quantization formats, no int8 linears on GB300, a missing custom-nodes folder no
